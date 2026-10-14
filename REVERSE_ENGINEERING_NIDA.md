@@ -10,16 +10,34 @@ that could not be confirmed on this machine.
 
 ---
 
-## 1. Target
+## 1. Target and environment
+
+Recorded precisely, because a reverse-engineering result is only meaningful
+alongside the exact build it was taken from.
 
 | Property | Value |
 | :-- | :-- |
+| Host OS | Windows 11 Enterprise, 26H2, build 26300.9550 |
+| Analysis host | Windows only - no macOS or Linux machine was involved |
 | Binary | `C:\Windows\System32\kbdkni.dll` |
-| Size / version | 24576 bytes, 10.0.26100.2454 (Windows 11 24H2+) |
+| Size | 24576 bytes |
+| DLL file version | 10.0.26100.2454 (`WinBuild.160101.0800`) |
 | Keyboard layout ID | `00010453` |
 | Display name | Khmer (NiDA) |
 | Authority | NiDA - National Information Communications Technology Development Authority, Cambodia |
-| Comparison layout | `kbdkhmr.dll`, KLID `00000453`, "Khmer" (legacy) |
+| Comparison layout | `kbdkhmr.dll`, KLID `00000453`, "Khmer" (legacy), file version 10.0.26100.8972 |
+
+Note the gap between the OS build and the DLL versions: the keyboard layout
+DLLs still carry a `26100` base version while the host runs `26300`. The
+keyboard subsystem is versioned independently of the OS release, so a `26100`
+DLL on a `26300` host is expected and not a stale-file problem.
+
+### Scope limit
+
+Every finding in this document comes from Windows: the DLL tables were decoded
+on Windows and verified against the Windows `ToUnicodeEx` API. The
+macOS and Linux layouts built from this spec have **not** been loaded on
+macOS or Linux - see the platform sections for what that means in practice.
 
 ---
 
@@ -47,6 +65,11 @@ mismatches       : 0     -> slot 2 is the Control character, now verified
 
 `scripts/verify_tables.ps1` re-runs this comparison and exits non-zero on any
 disagreement, so the claim is reproducible rather than asserted.
+
+Both paths run on Windows, and both see the layout as Windows sees it. A
+cross-platform check is deliberately *not* claimed: the behavioural oracle is
+the Windows API, so it cannot independently predict what macOS or Linux will do
+with a layout built from these tables.
 
 The structural decode also produced facts the behavioural probe cannot see
 (section 10).
