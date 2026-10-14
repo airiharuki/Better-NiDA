@@ -25,9 +25,12 @@ cross-checking the result against Windows itself:
 | :-- | :-- |
 | Structural: walk `KbdLayerDescriptor()` tables in `kbdkni.dll` | `scripts/dump_kbd_tables.ps1` |
 | Behavioural: probe `ToUnicodeEx()` per key and modifier state | `scripts/dump_layout.ps1` |
+| Behavioural: same probe with Control held | `scripts/dump_layout_control.ps1` |
 | Cross-check: both paths must agree exactly | `scripts/verify_tables.ps1` |
+| Cross-check: secondary tables vs Control behaviour | `scripts/verify_control.ps1` |
 
-**Result: 144 of 144 comparisons agree, zero mismatches.**
+**Result: 144 of 144 comparisons agree, zero mismatches**, plus 4 of 4 on the
+Control probe.
 
 ### Key findings
 
@@ -40,6 +43,8 @@ cross-checking the result against Windows itself:
 - The driver has **no `Shift+AltGr` state**, so the Khmer symbol block
   `U+19E0..U+19FF` that the legacy `kbdkhmr.dll` layout exposes is unreachable
   in NiDA.
+- Each key is defined in exactly one table: the main map and the fallback
+  tables have **zero overlapping virtual keys**.
 - Multi-character output is keyed by `(virtual key, modifier number)`, not as a
   chord string - getting this wrong reverses the two code points.
 
@@ -59,6 +64,8 @@ Full details, including the exact binary layout of every table, are in
 | [tables_kbdus.json](tables_kbdus.json) / [.csv](tables_kbdus.csv) | Same for US, used as the structural control |
 | [kni_layout.csv](kni_layout.csv) | Behavioural probe of NiDA (`ToUnicodeEx`) |
 | [khmr_layout.csv](khmr_layout.csv) | Behavioural probe of legacy Khmer |
+| [kni_control.csv](kni_control.csv) | Behavioural probe of NiDA with Control held |
+| [us_control.csv](us_control.csv) | Same probe for US, used to test a table-role claim |
 
 Character names come from the official Unicode Character Database
 (`scripts/data/unicode_names.json`), so no name in the spec is hand-typed.
@@ -77,7 +84,9 @@ Better-NiDA/
 ├── scripts/
 │   ├── dump_kbd_tables.ps1       # Decode the DLL's KbdLayerDescriptor tables
 │   ├── dump_layout.ps1           # Probe layout behaviour via ToUnicodeEx
+│   ├── dump_layout_control.ps1   # Probe again with Control held
 │   ├── verify_tables.ps1         # Assert the two paths agree (CI-friendly)
+│   ├── verify_control.ps1        # Check secondary tables vs Control behaviour
 │   ├── build_unicode_names.ps1   # Refresh official Unicode character names
 │   ├── export_nida_spec.ps1      # Build nida_layout.json
 │   ├── render_docs.ps1           # Render markdown tables from the spec
@@ -101,6 +110,10 @@ Better-NiDA/
 
 # 3. prove the decode is correct (non-zero exit on any mismatch)
 .\scripts\verify_tables.ps1 -TablesCsv tables_kbdkni.csv -ProbeCsv kni_layout.csv
+
+# 3b. settle the Control reading of the secondary tables
+.\scripts\dump_layout_control.ps1
+.\scripts\verify_control.ps1
 
 # 4. rebuild the specification
 .\scripts\build_unicode_names.ps1

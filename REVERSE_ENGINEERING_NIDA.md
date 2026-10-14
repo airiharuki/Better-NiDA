@@ -33,10 +33,16 @@ Two independent paths were used, and they agree exactly:
 2. **Behavioural (oracle).** Ask Windows what each key produces by calling
    `ToUnicodeEx()` for every scan code in every modifier state. This is
    completely independent of any assumption about the file format.
+3. **Control probe.** Repeat the probe with `VK_CONTROL` held, to test the one
+   reading the first oracle could not settle: whether slot 2 of the
+   special-keys table is the Control character.
 
 ```
 comparisons made : 144  (NiDA, 48 keys x Normal/Shift/AltGr)
 mismatches       : 0
+
+control probe    : 4    (special keys x Control)
+mismatches       : 0     -> slot 2 is the Control character, now verified
 ```
 
 `scripts/verify_tables.ps1` re-runs this comparison and exits non-zero on any
@@ -92,15 +98,21 @@ For `kbdkni.dll`:
 
 | Index | `cStates` | `cbEntry` | Entries | Role |
 | :-- | :-- | :-- | :-- | :-- |
-| 0 | 3 | 8 | 4 | special control keys (Backspace, Escape, Enter, Ctrl+C) |
+| 0 | 3 | 8 | 4 | special keys (Backspace, Escape, Enter, Ctrl+C) |
 | 1 | 4 | 10 | 49 | **main character map** |
-| 2 | 2 | 6 | 5 | control characters (Tab, keypad `+ - * /`) |
-| 3 | 1 | 4 | 10 | keypad digits `0-9` -> digits |
+| 2 | 2 | 6 | 5 | base characters for keys missing from table 1 |
+| 3 | 1 | 4 | 10 | base characters for the keypad digits |
 
 Only table 1 has a slot count equal to the layout's modifier-state count, so it
 is the only one whose slots are confirmed to be indexed by modifier number -
 and that is the one the `ToUnicodeEx` cross-check validates. The others are
 emitted with neutral slot labels (section 7).
+
+Tables 2 and 3 are disjoint from the main table: for all three layouts dumped
+(NiDA, legacy Khmer, US) no virtual key appears in both, so each key is defined
+exactly once. NiDA's table 2 holds only the 5 keys the main table omits (Tab and
+the keypad operators); US, whose main table has just 3 exception entries, holds
+47.
 
 `kbdus.dll` uses the identical four-table shape with the same state counts,
 which is what confirms the format is a general one rather than something fitted
@@ -266,7 +278,8 @@ The 49th main-table entry has no scan code on a 104-key board: keypad decimal
 
 ## 7. Secondary tables
 
-**Special control keys** (table 0, three slots):
+**Special keys** (table 0, three slots). Slot 2 is **verified** to be the
+Control character - see section 2:
 
 | Key | Normal | Shift | Control |
 | :-- | :-- | :-- | :-- |
@@ -275,18 +288,24 @@ The 49th main-table entry has no scan code on a 104-key board: keypad decimal
 | Enter | `U+000D` | `U+000D` | `U+000A` (Line feed) |
 | Ctrl+C | `U+0003` | `U+0003` | `U+0003` |
 
-**Control-character map** (table 2, five entries): a key listed here emits the
-given character when held with Control - Tab, keypad `+ - * /`.
+**Base-character fallback** (tables 2 and 3). These carry the *unshifted*
+character for keys that are **absent from the main table**, not control
+characters:
 
-**Keypad digits** (table 3, ten entries): keypad `0`-`9` produce the matching
-ASCII digits.
+| Table | Entries | Keys |
+| :-- | :-- | :-- |
+| 2 | 5 | Tab, keypad `+ - * /` |
+| 3 | 10 | keypad `0`-`9` -> matching digits |
 
-The slot-to-modifier mapping is only *verified* for the main table, where the
-`ToUnicodeEx` cross-check confirms it. For the tables above the slots are
-reported neutrally as `Slot0`, `Slot1`, ... in the JSON; the Control reading for
-table 0 is inferred from the values themselves (`Ctrl+Backspace` really is
-Delete and `Ctrl+Enter` really is Line feed in Windows), not from the layout
-declaring it.
+For all three layouts dumped (NiDA, legacy Khmer, US) the main table and tables
+2/3 are **completely disjoint** - 0 overlapping virtual keys - so each key is
+defined exactly once. An earlier draft of this document described table 2 as a
+"control-character map"; that was wrong, and the Control probe disproved it:
+holding Ctrl on Tab or the keypad operators produces nothing, while table 2's
+values equal the plain unshifted character.
+
+Slot labels in the JSON are neutral (`Slot0`, `Slot1`, ...) for these tables,
+because their slots are not modifier-indexed in the way the main table's are.
 
 ---
 
@@ -364,6 +383,14 @@ Stated plainly so the record is honest about its limits:
 
 None of these affect the character mapping, which is fully verified.
 
+### Resolved by the Control probe
+
+The one reading previously listed as unverified is now settled. Table 0's third
+slot was inferred to be the Control character; probing `ToUnicodeEx` with
+`VK_CONTROL` held confirms it on all 4 keys. The probe also disproved the
+earlier "table 2 is a control-character map" claim: holding Control on those
+keys emits nothing, and their stored values are the plain unshifted characters.
+
 ---
 
 ## 12. Reproducing
@@ -380,6 +407,10 @@ None of these affect the character mapping, which is fully verified.
 # cross-check the two; exits 1 on any disagreement
 .\scripts\verify_tables.ps1 -TablesCsv tables_kbdkni.csv -ProbeCsv kni_layout.csv
 .\scripts\verify_tables.ps1 -TablesCsv tables_kbdkhmr.csv -ProbeCsv khmr_layout.csv
+
+# probe Control, then confirm the secondary tables against it
+.\scripts\dump_layout_control.ps1
+.\scripts\verify_control.ps1
 
 # refresh official Unicode names, then rebuild the spec
 .\scripts\build_unicode_names.ps1
@@ -398,3 +429,5 @@ None of these affect the character mapping, which is fully verified.
 | `tables_kbdus.json` / `.csv` | same for US, used as the structural control |
 | `kni_layout.csv` | behavioural probe of NiDA |
 | `khmr_layout.csv` | behavioural probe of legacy Khmer |
+| `kni_control.csv` | behavioural probe of NiDA with Control held |
+| `us_control.csv` | same probe for US, used to test table 2's role |

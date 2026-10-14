@@ -195,9 +195,9 @@ function Convert-Table($t) {
     }
 }
 $tableRoles = @{
-    0 = 'Special control keys. Slot 0/1/2 read as Normal/Shift/Control: Ctrl+Backspace is Delete and Ctrl+Enter is Line feed, both matching Windows.'
-    2 = 'Control-character map: a letter key emits this character when held with Control'
-    3 = 'Single-character map: numeric keypad digits'
+    0 = 'Special keys needing per-state entries. Slot 2 verified to be the Control character: Ctrl+Backspace is Delete and Ctrl+Enter is Line feed, matching ToUnicodeEx on all 4 keys.'
+    2 = 'Base characters for keys absent from the main table (Tab and the keypad operators). Verified equal to the unshifted character, NOT the Control character.'
+    3 = 'Base characters for the numeric keypad digits.'
 }
 $secondary = foreach ($t in ($tables.characterTables | Where-Object { $_.index -ne $main.index })) {
     [PSCustomObject]([ordered]@{

@@ -1885,7 +1885,7 @@
     "secondaryTables":  [
                             {
                                 "tableIndex":  0,
-                                "role":  "Special control keys. Slot 0/1/2 read as Normal/Shift/Control: Ctrl+Backspace is Delete and Ctrl+Enter is Line feed, both matching Windows.",
+                                "role":  "Special keys needing per-state entries. Slot 2 verified to be the Control character: Ctrl+Backspace is Delete and Ctrl+Enter is Line feed, matching ToUnicodeEx on all 4 keys.",
                                 "cStates":  3,
                                 "cbEntry":  8,
                                 "entryCount":  4,
@@ -2030,7 +2030,7 @@
                             },
                             {
                                 "tableIndex":  2,
-                                "role":  "Control-character map: a letter key emits this character when held with Control",
+                                "role":  "Base characters for keys absent from the main table (Tab and the keypad operators). Verified equal to the unshifted character, NOT the Control character.",
                                 "cStates":  2,
                                 "cbEntry":  6,
                                 "entryCount":  5,
@@ -2164,7 +2164,7 @@
                             },
                             {
                                 "tableIndex":  3,
-                                "role":  "Single-character map: numeric keypad digits",
+                                "role":  "Base characters for the numeric keypad digits.",
                                 "cStates":  1,
                                 "cbEntry":  4,
                                 "entryCount":  10,
