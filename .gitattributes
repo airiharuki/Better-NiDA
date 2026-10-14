@@ -1,5 +1,18 @@
-# Normalise line endings: PowerShell scripts are Windows-native, JSON stays LF.
+# Normalise line endings.
+#
+# *.ps1  PowerShell is Windows-native and tolerates CRLF.
+# *.sh   MUST stay LF. core.autocrlf=true on a Windows checkout would rewrite
+#        the shebang to "#!/usr/bin/env bash\r", which every shell rejects with
+#        "bad interpreter: /usr/bin/env: 'bash\r'". Pinning eol=lf keeps the
+#        installers working when the repo is cloned or copied to Linux/macOS.
+# *.mim  m17n input-method definitions, same reasoning as shell scripts.
+# *.json BOM-free: many JSON parsers reject a leading byte-order mark.
+# *.csv  CRLF plus BOM, so Excel opens the Khmer text correctly.
+
 *.ps1   text eol=crlf
+*.sh    text eol=lf
+*.mim   text eol=lf
 *.json  text eol=lf
 *.csv   text eol=crlf
 *.md    text eol=lf
+*.keylayout text eol=lf
