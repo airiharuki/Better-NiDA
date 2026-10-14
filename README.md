@@ -16,6 +16,64 @@ ligatures - as the reference specification any redesign must build on.
 
 ---
 
+## Platform Requirements
+
+### The reverse-engineering toolchain is Windows-only
+
+This is a hard limit, not a missing feature. The analysis works by loading
+Microsoft's own keyboard driver and asking Windows to interpret it:
+
+| | |
+| :-- | :-- |
+| Reads | `C:\Windows\System32\kbdkni.dll`, a Windows PE driver |
+| Loads it with | `kernel32!LoadLibrary` + its `KbdLayerDescriptor` export |
+| Oracle | `user32!ToUnicodeEx`, `MapVirtualKeyEx`, `LoadKeyboardLayout` |
+
+Neither the file nor the APIs exist on macOS or Linux, so **these scripts
+cannot run there, and cannot be ported** - there is no `kbdkni.dll` to read off
+a Mac. Any attempt to reproduce the decompilation elsewhere would be reverse
+engineering from the committed JSON, which is a weaker claim.
+
+Concretely, Windows-only:
+
+| Script | Why |
+| :-- | :-- |
+| `dump_kbd_tables.ps1` | `LoadLibrary`s the driver DLL and calls into it |
+| `dump_layout.ps1` | `ToUnicodeEx` behavioural probe |
+| `dump_layout_control.ps1` | `ToUnicodeEx` with Control held |
+| `export_nida_spec.ps1` | `MapVirtualKeyEx` for scan codes |
+| `build_platform_layouts.ps1` | `MapVirtualKeyEx` for scan codes |
+
+Runs anywhere PowerShell does (Windows, macOS, Linux) - pure data, no Win32:
+
+| Script | Note |
+| :-- | :-- |
+| `verify_tables.ps1` | compares the committed CSVs |
+| `verify_control.ps1` | compares the committed CSVs |
+| `verify_platform_layouts.ps1` | validates the committed layout files |
+| `build_unicode_names.ps1` | needs network access to the UCD |
+| `render_docs.ps1` | renders markdown from the spec |
+
+`verify_all.ps1` appears portable but is not: it drives the Windows-only
+scripts above, so it only completes on Windows. Run the individual portable
+scripts directly if you are elsewhere.
+
+### You do not need any of this to use the layouts
+
+macOS and Linux users never need to run the toolchain. The verified spec is
+committed as **`nida_layout.json`**, and the generated layouts are committed
+alongside it. Clone, install, type. See [`macos/`](macos/) and
+[`linux/`](linux/).
+
+If you *do* want to regenerate the platform files on a Mac or Linux box, the
+only blocker is one Win32 call: `build_platform_layouts.ps1` uses
+`MapVirtualKeyEx` to derive scan codes from virtual keys, and that mapping
+could be replaced with a static table to make the generator portable. Open an
+issue if you are interested - it is a small change, just not one made by
+necessity.
+
+---
+
 ## Reverse Engineering Results
 
 The layout is recovered by decoding the DLL's own data structures and then

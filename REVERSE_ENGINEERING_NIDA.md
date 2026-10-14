@@ -39,6 +39,26 @@ on Windows and verified against the Windows `ToUnicodeEx` API. The
 macOS and Linux layouts built from this spec have **not** been loaded on
 macOS or Linux - see the platform sections for what that means in practice.
 
+### Why this analysis is Windows-only
+
+Not an oversight, and not portable. The method depends on Microsoft's own
+driver and on Windows interpreting it:
+
+| Step | Windows dependency |
+| :-- | :-- |
+| Obtain the input data | `kbdkni.dll`, a Windows PE driver under `%SystemRoot%\System32` |
+| Read it in-process | `kernel32!LoadLibrary` + the `KbdLayerDescriptor` export |
+| Independent check | `user32!ToUnicodeEx`, `user32!MapVirtualKeyEx` |
+
+A Mac or Linux machine has neither the file nor the APIs, so there is nothing
+to decode there. The results could only be re-derived from the committed
+`nida_layout.json`, which would be a weaker claim than "read from the driver".
+
+Consequences for contributors: the decompilation and behavioural probe must run
+on Windows. The five data-only scripts (`verify_tables`, `verify_control`,
+`verify_platform_layouts`, `build_unicode_names`, `render_docs`) run anywhere
+PowerShell does.
+
 ---
 
 ## 2. Method

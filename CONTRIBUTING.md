@@ -29,8 +29,31 @@ the Windows `ToUnicodeEx` API, then generates the macOS and Linux layouts from
 that verified spec. Everything is driven by PowerShell scripts on Windows.
 
 ### Prerequisites
-- Windows 10/11 with PowerShell 5.1+ or PowerShell 7+
+
+- **Windows** 10/11 with PowerShell 5.1+ or PowerShell 7+, to run the full chain
 - Git
+
+The analysis toolchain is **Windows-only and cannot be ported**. It reads
+`C:\Windows\System32\kbdkni.dll` via `kernel32!LoadLibrary` and calls its
+`KbdLayerDescriptor` export, then uses `user32!ToUnicodeEx` and
+`MapVirtualKeyEx` as the oracle. Neither the driver nor those APIs exist on
+macOS or Linux.
+
+| Needs Windows | Runs anywhere |
+| :-- | :-- |
+| `dump_kbd_tables.ps1` | `verify_tables.ps1` |
+| `dump_layout.ps1` | `verify_control.ps1` |
+| `dump_layout_control.ps1` | `verify_platform_layouts.ps1` |
+| `export_nida_spec.ps1` | `build_unicode_names.ps1` (needs network) |
+| `build_platform_layouts.ps1` | `render_docs.ps1` |
+
+`verify_all.ps1` drives the Windows-only scripts, so it only completes on
+Windows - run the portable ones individually elsewhere.
+
+**If you are on macOS or Linux**, you can still do useful work: the five
+right-hand scripts run anywhere, the platform layouts are plain files you can
+edit and test, and testing them on real hardware is what we most need. See
+*Testing on real hardware* below.
 
 ### One command
 
