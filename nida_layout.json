@@ -1,0 +1,1330 @@
+﻿{
+    "LayoutName":  "Khmer (NIDA)",
+    "LayoutFile":  "KBDKNI.DLL",
+    "KLID":  "00010453",
+    "Locale":  "km-KH",
+    "Architecture":  "Windows Win32 Keyboard Layout Driver",
+    "ModifierMapping":  {
+                            "ModBit 0":  "State 0: Normal",
+                            "ModBit 1":  "State 1: Shift",
+                            "ModBit 2":  "State 2: Control",
+                            "ModBit 6":  "State 3: AltGr (Right Alt / Ctrl+Alt)"
+                        },
+    "SpecialKeys":  {
+                        "J":  "Khmer Sign Coeng (Subscript Generator) U+17D2",
+                        "Space":  "Zero-Width Space (ZWSP) U+200B",
+                        "Shift+Space":  "ASCII Space U+0020",
+                        "AltGr+Space":  "Non-Breaking Space (NBSP) U+00A0",
+                        "AltGr+1":  "Zero-Width Non-Joiner (ZWNJ) U+200C",
+                        "AltGr+`":  "Zero-Width Joiner (ZWJ) U+200D"
+                    },
+    "Ligatures":  [
+                      {
+                          "Key":  "Shift + A",
+                          "Codepoints":  "U+17B6 U+17C6",
+                          "Description":  "Khmer Vowel Sign AM"
+                      },
+                      {
+                          "Key":  "Shift + V",
+                          "Codepoints":  "U+17C1 U+17C7",
+                          "Description":  "Khmer Vowel Sign EH"
+                      },
+                      {
+                          "Key":  "Shift + ;",
+                          "Codepoints":  "U+17C4 U+17C7",
+                          "Description":  "Khmer Vowel Sign OH"
+                      },
+                      {
+                          "Key":  ", (Comma)",
+                          "Codepoints":  "U+17BB U+17C6",
+                          "Description":  "Khmer Vowel Sign OM"
+                      },
+                      {
+                          "Key":  "Shift + ,",
+                          "Codepoints":  "U+17BB U+17C7",
+                          "Description":  "Khmer Vowel Sign UH"
+                      }
+                  ],
+    "Keys":  [
+                 {
+                     "ScanCode":  "0x01",
+                     "VirtualKey":  "0x1B",
+                     "KeyLabel":  "Esc",
+                     "Normal":  {
+                                    "Text":  "\u001b",
+                                    "Codepoints":  [
+                                                       "U+001B"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "\u001b",
+                                   "Codepoints":  [
+                                                      "U+001B"
+                                                  ],
+                                   "IsLigature":  false
+                               },
+                     "AltGr":  null
+                 },
+                 {
+                     "ScanCode":  "0x02",
+                     "VirtualKey":  "0x31",
+                     "KeyLabel":  "1",
+                     "Normal":  {
+                                    "Text":  "១",
+                                    "Codepoints":  [
+                                                       "U+17E1"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "!",
+                                   "Codepoints":  [
+                                                      "U+0021"
+                                                  ],
+                                   "IsLigature":  false
+                               },
+                     "AltGr":  null
+                 },
+                 {
+                     "ScanCode":  "0x03",
+                     "VirtualKey":  "0x32",
+                     "KeyLabel":  "2",
+                     "Normal":  {
+                                    "Text":  "២",
+                                    "Codepoints":  [
+                                                       "U+17E2"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "ៗ",
+                                   "Codepoints":  [
+                                                      "U+17D7"
+                                                  ],
+                                   "IsLigature":  false
+                               },
+                     "AltGr":  {
+                                   "Text":  "@",
+                                   "Codepoints":  [
+                                                      "U+0040"
+                                                  ],
+                                   "IsLigature":  false
+                               }
+                 },
+                 {
+                     "ScanCode":  "0x04",
+                     "VirtualKey":  "0x33",
+                     "KeyLabel":  "3",
+                     "Normal":  {
+                                    "Text":  "៣",
+                                    "Codepoints":  [
+                                                       "U+17E3"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "\"",
+                                   "Codepoints":  [
+                                                      "U+0022"
+                                                  ],
+                                   "IsLigature":  false
+                               },
+                     "AltGr":  {
+                                   "Text":  "៑",
+                                   "Codepoints":  [
+                                                      "U+17D1"
+                                                  ],
+                                   "IsLigature":  false
+                               }
+                 },
+                 {
+                     "ScanCode":  "0x05",
+                     "VirtualKey":  "0x34",
+                     "KeyLabel":  "4",
+                     "Normal":  {
+                                    "Text":  "៤",
+                                    "Codepoints":  [
+                                                       "U+17E4"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "៛",
+                                   "Codepoints":  [
+                                                      "U+17DB"
+                                                  ],
+                                   "IsLigature":  false
+                               },
+                     "AltGr":  {
+                                   "Text":  "$",
+                                   "Codepoints":  [
+                                                      "U+0024"
+                                                  ],
+                                   "IsLigature":  false
+                               }
+                 },
+                 {
+                     "ScanCode":  "0x06",
+                     "VirtualKey":  "0x35",
+                     "KeyLabel":  "5",
+                     "Normal":  {
+                                    "Text":  "៥",
+                                    "Codepoints":  [
+                                                       "U+17E5"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "%",
+                                   "Codepoints":  [
+                                                      "U+0025"
+                                                  ],
+                                   "IsLigature":  false
+                               },
+                     "AltGr":  {
+                                   "Text":  "€",
+                                   "Codepoints":  [
+                                                      "U+20AC"
+                                                  ],
+                                   "IsLigature":  false
+                               }
+                 },
+                 {
+                     "ScanCode":  "0x07",
+                     "VirtualKey":  "0x36",
+                     "KeyLabel":  "6",
+                     "Normal":  {
+                                    "Text":  "៦",
+                                    "Codepoints":  [
+                                                       "U+17E6"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "៍",
+                                   "Codepoints":  [
+                                                      "U+17CD"
+                                                  ],
+                                   "IsLigature":  false
+                               },
+                     "AltGr":  {
+                                   "Text":  "៙",
+                                   "Codepoints":  [
+                                                      "U+17D9"
+                                                  ],
+                                   "IsLigature":  false
+                               }
+                 },
+                 {
+                     "ScanCode":  "0x08",
+                     "VirtualKey":  "0x37",
+                     "KeyLabel":  "7",
+                     "Normal":  {
+                                    "Text":  "៧",
+                                    "Codepoints":  [
+                                                       "U+17E7"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "័",
+                                   "Codepoints":  [
+                                                      "U+17D0"
+                                                  ],
+                                   "IsLigature":  false
+                               },
+                     "AltGr":  {
+                                   "Text":  "៚",
+                                   "Codepoints":  [
+                                                      "U+17DA"
+                                                  ],
+                                   "IsLigature":  false
+                               }
+                 },
+                 {
+                     "ScanCode":  "0x09",
+                     "VirtualKey":  "0x38",
+                     "KeyLabel":  "8",
+                     "Normal":  {
+                                    "Text":  "៨",
+                                    "Codepoints":  [
+                                                       "U+17E8"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "៏",
+                                   "Codepoints":  [
+                                                      "U+17CF"
+                                                  ],
+                                   "IsLigature":  false
+                               },
+                     "AltGr":  {
+                                   "Text":  "*",
+                                   "Codepoints":  [
+                                                      "U+002A"
+                                                  ],
+                                   "IsLigature":  false
+                               }
+                 },
+                 {
+                     "ScanCode":  "0x0A",
+                     "VirtualKey":  "0x39",
+                     "KeyLabel":  "9",
+                     "Normal":  {
+                                    "Text":  "៩",
+                                    "Codepoints":  [
+                                                       "U+17E9"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "(",
+                                   "Codepoints":  [
+                                                      "U+0028"
+                                                  ],
+                                   "IsLigature":  false
+                               },
+                     "AltGr":  {
+                                   "Text":  "{",
+                                   "Codepoints":  [
+                                                      "U+007B"
+                                                  ],
+                                   "IsLigature":  false
+                               }
+                 },
+                 {
+                     "ScanCode":  "0x0B",
+                     "VirtualKey":  "0x30",
+                     "KeyLabel":  "0",
+                     "Normal":  {
+                                    "Text":  "០",
+                                    "Codepoints":  [
+                                                       "U+17E0"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  ")",
+                                   "Codepoints":  [
+                                                      "U+0029"
+                                                  ],
+                                   "IsLigature":  false
+                               },
+                     "AltGr":  {
+                                   "Text":  "}",
+                                   "Codepoints":  [
+                                                      "U+007D"
+                                                  ],
+                                   "IsLigature":  false
+                               }
+                 },
+                 {
+                     "ScanCode":  "0x0C",
+                     "VirtualKey":  "0xBD",
+                     "KeyLabel":  "-",
+                     "Normal":  {
+                                    "Text":  "ឥ",
+                                    "Codepoints":  [
+                                                       "U+17A5"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "៌",
+                                   "Codepoints":  [
+                                                      "U+17CC"
+                                                  ],
+                                   "IsLigature":  false
+                               },
+                     "AltGr":  {
+                                   "Text":  "×",
+                                   "Codepoints":  [
+                                                      "U+00D7"
+                                                  ],
+                                   "IsLigature":  false
+                               }
+                 },
+                 {
+                     "ScanCode":  "0x0D",
+                     "VirtualKey":  "0xBB",
+                     "KeyLabel":  "=",
+                     "Normal":  {
+                                    "Text":  "ឲ",
+                                    "Codepoints":  [
+                                                       "U+17B2"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "=",
+                                   "Codepoints":  [
+                                                      "U+003D"
+                                                  ],
+                                   "IsLigature":  false
+                               },
+                     "AltGr":  {
+                                   "Text":  "៎",
+                                   "Codepoints":  [
+                                                      "U+17CE"
+                                                  ],
+                                   "IsLigature":  false
+                               }
+                 },
+                 {
+                     "ScanCode":  "0x0E",
+                     "VirtualKey":  "0x08",
+                     "KeyLabel":  "Backspace",
+                     "Normal":  {
+                                    "Text":  "\b",
+                                    "Codepoints":  [
+                                                       "U+0008"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "\b",
+                                   "Codepoints":  [
+                                                      "U+0008"
+                                                  ],
+                                   "IsLigature":  false
+                               },
+                     "AltGr":  null
+                 },
+                 {
+                     "ScanCode":  "0x0F",
+                     "VirtualKey":  "0x09",
+                     "KeyLabel":  "Tab",
+                     "Normal":  {
+                                    "Text":  "\t",
+                                    "Codepoints":  [
+                                                       "U+0009"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "\t",
+                                   "Codepoints":  [
+                                                      "U+0009"
+                                                  ],
+                                   "IsLigature":  false
+                               },
+                     "AltGr":  null
+                 },
+                 {
+                     "ScanCode":  "0x10",
+                     "VirtualKey":  "0x51",
+                     "KeyLabel":  "Q",
+                     "Normal":  {
+                                    "Text":  "ឆ",
+                                    "Codepoints":  [
+                                                       "U+1786"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "ឈ",
+                                   "Codepoints":  [
+                                                      "U+1788"
+                                                  ],
+                                   "IsLigature":  false
+                               },
+                     "AltGr":  null
+                 },
+                 {
+                     "ScanCode":  "0x11",
+                     "VirtualKey":  "0x57",
+                     "KeyLabel":  "W",
+                     "Normal":  {
+                                    "Text":  "ឹ",
+                                    "Codepoints":  [
+                                                       "U+17B9"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "ឺ",
+                                   "Codepoints":  [
+                                                      "U+17BA"
+                                                  ],
+                                   "IsLigature":  false
+                               },
+                     "AltGr":  null
+                 },
+                 {
+                     "ScanCode":  "0x12",
+                     "VirtualKey":  "0x45",
+                     "KeyLabel":  "E",
+                     "Normal":  {
+                                    "Text":  "េ",
+                                    "Codepoints":  [
+                                                       "U+17C1"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "ែ",
+                                   "Codepoints":  [
+                                                      "U+17C2"
+                                                  ],
+                                   "IsLigature":  false
+                               },
+                     "AltGr":  {
+                                   "Text":  "ឯ",
+                                   "Codepoints":  [
+                                                      "U+17AF"
+                                                  ],
+                                   "IsLigature":  false
+                               }
+                 },
+                 {
+                     "ScanCode":  "0x13",
+                     "VirtualKey":  "0x52",
+                     "KeyLabel":  "R",
+                     "Normal":  {
+                                    "Text":  "រ",
+                                    "Codepoints":  [
+                                                       "U+179A"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "ឬ",
+                                   "Codepoints":  [
+                                                      "U+17AC"
+                                                  ],
+                                   "IsLigature":  false
+                               },
+                     "AltGr":  {
+                                   "Text":  "ឫ",
+                                   "Codepoints":  [
+                                                      "U+17AB"
+                                                  ],
+                                   "IsLigature":  false
+                               }
+                 },
+                 {
+                     "ScanCode":  "0x14",
+                     "VirtualKey":  "0x54",
+                     "KeyLabel":  "T",
+                     "Normal":  {
+                                    "Text":  "ត",
+                                    "Codepoints":  [
+                                                       "U+178F"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "ទ",
+                                   "Codepoints":  [
+                                                      "U+1791"
+                                                  ],
+                                   "IsLigature":  false
+                               },
+                     "AltGr":  null
+                 },
+                 {
+                     "ScanCode":  "0x15",
+                     "VirtualKey":  "0x59",
+                     "KeyLabel":  "Y",
+                     "Normal":  {
+                                    "Text":  "យ",
+                                    "Codepoints":  [
+                                                       "U+1799"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "ួ",
+                                   "Codepoints":  [
+                                                      "U+17BD"
+                                                  ],
+                                   "IsLigature":  false
+                               },
+                     "AltGr":  null
+                 },
+                 {
+                     "ScanCode":  "0x16",
+                     "VirtualKey":  "0x55",
+                     "KeyLabel":  "U",
+                     "Normal":  {
+                                    "Text":  "ុ",
+                                    "Codepoints":  [
+                                                       "U+17BB"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "ូ",
+                                   "Codepoints":  [
+                                                      "U+17BC"
+                                                  ],
+                                   "IsLigature":  false
+                               },
+                     "AltGr":  null
+                 },
+                 {
+                     "ScanCode":  "0x17",
+                     "VirtualKey":  "0x49",
+                     "KeyLabel":  "I",
+                     "Normal":  {
+                                    "Text":  "ិ",
+                                    "Codepoints":  [
+                                                       "U+17B7"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "ី",
+                                   "Codepoints":  [
+                                                      "U+17B8"
+                                                  ],
+                                   "IsLigature":  false
+                               },
+                     "AltGr":  {
+                                   "Text":  "ឦ",
+                                   "Codepoints":  [
+                                                      "U+17A6"
+                                                  ],
+                                   "IsLigature":  false
+                               }
+                 },
+                 {
+                     "ScanCode":  "0x18",
+                     "VirtualKey":  "0x4F",
+                     "KeyLabel":  "O",
+                     "Normal":  {
+                                    "Text":  "ោ",
+                                    "Codepoints":  [
+                                                       "U+17C4"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "ៅ",
+                                   "Codepoints":  [
+                                                      "U+17C5"
+                                                  ],
+                                   "IsLigature":  false
+                               },
+                     "AltGr":  {
+                                   "Text":  "ឱ",
+                                   "Codepoints":  [
+                                                      "U+17B1"
+                                                  ],
+                                   "IsLigature":  false
+                               }
+                 },
+                 {
+                     "ScanCode":  "0x19",
+                     "VirtualKey":  "0x50",
+                     "KeyLabel":  "P",
+                     "Normal":  {
+                                    "Text":  "ផ",
+                                    "Codepoints":  [
+                                                       "U+1795"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "ភ",
+                                   "Codepoints":  [
+                                                      "U+1797"
+                                                  ],
+                                   "IsLigature":  false
+                               },
+                     "AltGr":  {
+                                   "Text":  "ឰ",
+                                   "Codepoints":  [
+                                                      "U+17B0"
+                                                  ],
+                                   "IsLigature":  false
+                               }
+                 },
+                 {
+                     "ScanCode":  "0x1A",
+                     "VirtualKey":  "0xDB",
+                     "KeyLabel":  "[",
+                     "Normal":  {
+                                    "Text":  "ៀ",
+                                    "Codepoints":  [
+                                                       "U+17C0"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "ឿ",
+                                   "Codepoints":  [
+                                                      "U+17BF"
+                                                  ],
+                                   "IsLigature":  false
+                               },
+                     "AltGr":  {
+                                   "Text":  "ឩ",
+                                   "Codepoints":  [
+                                                      "U+17A9"
+                                                  ],
+                                   "IsLigature":  false
+                               }
+                 },
+                 {
+                     "ScanCode":  "0x1B",
+                     "VirtualKey":  "0xDD",
+                     "KeyLabel":  "]",
+                     "Normal":  {
+                                    "Text":  "ឪ",
+                                    "Codepoints":  [
+                                                       "U+17AA"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "ឧ",
+                                   "Codepoints":  [
+                                                      "U+17A7"
+                                                  ],
+                                   "IsLigature":  false
+                               },
+                     "AltGr":  {
+                                   "Text":  "ឳ",
+                                   "Codepoints":  [
+                                                      "U+17B3"
+                                                  ],
+                                   "IsLigature":  false
+                               }
+                 },
+                 {
+                     "ScanCode":  "0x1C",
+                     "VirtualKey":  "0x0D",
+                     "KeyLabel":  "Enter",
+                     "Normal":  {
+                                    "Text":  "\r",
+                                    "Codepoints":  [
+                                                       "U+000D"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "\r",
+                                   "Codepoints":  [
+                                                      "U+000D"
+                                                  ],
+                                   "IsLigature":  false
+                               },
+                     "AltGr":  null
+                 },
+                 {
+                     "ScanCode":  "0x1E",
+                     "VirtualKey":  "0x41",
+                     "KeyLabel":  "A",
+                     "Normal":  {
+                                    "Text":  "ា",
+                                    "Codepoints":  [
+                                                       "U+17B6"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "ាំ",
+                                   "Codepoints":  [
+                                                      "U+17B6",
+                                                      "U+17C6"
+                                                  ],
+                                   "Names":  [
+                                                 "KHMER VOWEL SIGN AA",
+                                                 "KHMER SIGN NIKAHIT"
+                                             ],
+                                   "IsLigature":  true,
+                                   "Description":  "Srak AM"
+                               },
+                     "AltGr":  null
+                 },
+                 {
+                     "ScanCode":  "0x1F",
+                     "VirtualKey":  "0x53",
+                     "KeyLabel":  "S",
+                     "Normal":  {
+                                    "Text":  "ស",
+                                    "Codepoints":  [
+                                                       "U+179F"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "ៃ",
+                                   "Codepoints":  [
+                                                      "U+17C3"
+                                                  ],
+                                   "IsLigature":  false
+                               },
+                     "AltGr":  null
+                 },
+                 {
+                     "ScanCode":  "0x20",
+                     "VirtualKey":  "0x44",
+                     "KeyLabel":  "D",
+                     "Normal":  {
+                                    "Text":  "ដ",
+                                    "Codepoints":  [
+                                                       "U+178A"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "ឌ",
+                                   "Codepoints":  [
+                                                      "U+178C"
+                                                  ],
+                                   "IsLigature":  false
+                               },
+                     "AltGr":  null
+                 },
+                 {
+                     "ScanCode":  "0x21",
+                     "VirtualKey":  "0x46",
+                     "KeyLabel":  "F",
+                     "Normal":  {
+                                    "Text":  "ថ",
+                                    "Codepoints":  [
+                                                       "U+1790"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "ធ",
+                                   "Codepoints":  [
+                                                      "U+1792"
+                                                  ],
+                                   "IsLigature":  false
+                               },
+                     "AltGr":  null
+                 },
+                 {
+                     "ScanCode":  "0x22",
+                     "VirtualKey":  "0x47",
+                     "KeyLabel":  "G",
+                     "Normal":  {
+                                    "Text":  "ង",
+                                    "Codepoints":  [
+                                                       "U+1784"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "អ",
+                                   "Codepoints":  [
+                                                      "U+17A2"
+                                                  ],
+                                   "IsLigature":  false
+                               },
+                     "AltGr":  null
+                 },
+                 {
+                     "ScanCode":  "0x23",
+                     "VirtualKey":  "0x48",
+                     "KeyLabel":  "H",
+                     "Normal":  {
+                                    "Text":  "ហ",
+                                    "Codepoints":  [
+                                                       "U+17A0"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "ះ",
+                                   "Codepoints":  [
+                                                      "U+17C7"
+                                                  ],
+                                   "IsLigature":  false
+                               },
+                     "AltGr":  null
+                 },
+                 {
+                     "ScanCode":  "0x24",
+                     "VirtualKey":  "0x4A",
+                     "KeyLabel":  "J",
+                     "Normal":  {
+                                    "Text":  "្",
+                                    "Codepoints":  [
+                                                       "U+17D2"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "ញ",
+                                   "Codepoints":  [
+                                                      "U+1789"
+                                                  ],
+                                   "IsLigature":  false
+                               },
+                     "AltGr":  null
+                 },
+                 {
+                     "ScanCode":  "0x25",
+                     "VirtualKey":  "0x4B",
+                     "KeyLabel":  "K",
+                     "Normal":  {
+                                    "Text":  "ក",
+                                    "Codepoints":  [
+                                                       "U+1780"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "គ",
+                                   "Codepoints":  [
+                                                      "U+1782"
+                                                  ],
+                                   "IsLigature":  false
+                               },
+                     "AltGr":  null
+                 },
+                 {
+                     "ScanCode":  "0x26",
+                     "VirtualKey":  "0x4C",
+                     "KeyLabel":  "L",
+                     "Normal":  {
+                                    "Text":  "ល",
+                                    "Codepoints":  [
+                                                       "U+179B"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "ឡ",
+                                   "Codepoints":  [
+                                                      "U+17A1"
+                                                  ],
+                                   "IsLigature":  false
+                               },
+                     "AltGr":  null
+                 },
+                 {
+                     "ScanCode":  "0x27",
+                     "VirtualKey":  "0xBA",
+                     "KeyLabel":  ";",
+                     "Normal":  {
+                                    "Text":  "ើ",
+                                    "Codepoints":  [
+                                                       "U+17BE"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "ោះ",
+                                   "Codepoints":  [
+                                                      "U+17C4",
+                                                      "U+17C7"
+                                                  ],
+                                   "Names":  [
+                                                 "KHMER VOWEL SIGN OO",
+                                                 "KHMER SIGN REAHMUK"
+                                             ],
+                                   "IsLigature":  true,
+                                   "Description":  "Srak AOH"
+                               },
+                     "AltGr":  {
+                                   "Text":  "៖",
+                                   "Codepoints":  [
+                                                      "U+17D6"
+                                                  ],
+                                   "IsLigature":  false
+                               }
+                 },
+                 {
+                     "ScanCode":  "0x28",
+                     "VirtualKey":  "0xDE",
+                     "KeyLabel":  "\u0027",
+                     "Normal":  {
+                                    "Text":  "់",
+                                    "Codepoints":  [
+                                                       "U+17CB"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "៉",
+                                   "Codepoints":  [
+                                                      "U+17C9"
+                                                  ],
+                                   "IsLigature":  false
+                               },
+                     "AltGr":  {
+                                   "Text":  "ៈ",
+                                   "Codepoints":  [
+                                                      "U+17C8"
+                                                  ],
+                                   "IsLigature":  false
+                               }
+                 },
+                 {
+                     "ScanCode":  "0x29",
+                     "VirtualKey":  "0xC0",
+                     "KeyLabel":  "`",
+                     "Normal":  {
+                                    "Text":  "«",
+                                    "Codepoints":  [
+                                                       "U+00AB"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "»",
+                                   "Codepoints":  [
+                                                      "U+00BB"
+                                                  ],
+                                   "IsLigature":  false
+                               },
+                     "AltGr":  null
+                 },
+                 {
+                     "ScanCode":  "0x2B",
+                     "VirtualKey":  "0xDC",
+                     "KeyLabel":  "\\",
+                     "Normal":  {
+                                    "Text":  "ឮ",
+                                    "Codepoints":  [
+                                                       "U+17AE"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "ឭ",
+                                   "Codepoints":  [
+                                                      "U+17AD"
+                                                  ],
+                                   "IsLigature":  false
+                               },
+                     "AltGr":  {
+                                   "Text":  "\\",
+                                   "Codepoints":  [
+                                                      "U+005C"
+                                                  ],
+                                   "IsLigature":  false
+                               }
+                 },
+                 {
+                     "ScanCode":  "0x2C",
+                     "VirtualKey":  "0x5A",
+                     "KeyLabel":  "Z",
+                     "Normal":  {
+                                    "Text":  "ឋ",
+                                    "Codepoints":  [
+                                                       "U+178B"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "ឍ",
+                                   "Codepoints":  [
+                                                      "U+178D"
+                                                  ],
+                                   "IsLigature":  false
+                               },
+                     "AltGr":  null
+                 },
+                 {
+                     "ScanCode":  "0x2D",
+                     "VirtualKey":  "0x58",
+                     "KeyLabel":  "X",
+                     "Normal":  {
+                                    "Text":  "ខ",
+                                    "Codepoints":  [
+                                                       "U+1781"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "ឃ",
+                                   "Codepoints":  [
+                                                      "U+1783"
+                                                  ],
+                                   "IsLigature":  false
+                               },
+                     "AltGr":  null
+                 },
+                 {
+                     "ScanCode":  "0x2E",
+                     "VirtualKey":  "0x43",
+                     "KeyLabel":  "C",
+                     "Normal":  {
+                                    "Text":  "ច",
+                                    "Codepoints":  [
+                                                       "U+1785"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "ជ",
+                                   "Codepoints":  [
+                                                      "U+1787"
+                                                  ],
+                                   "IsLigature":  false
+                               },
+                     "AltGr":  null
+                 },
+                 {
+                     "ScanCode":  "0x2F",
+                     "VirtualKey":  "0x56",
+                     "KeyLabel":  "V",
+                     "Normal":  {
+                                    "Text":  "វ",
+                                    "Codepoints":  [
+                                                       "U+179C"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "េះ",
+                                   "Codepoints":  [
+                                                      "U+17C1",
+                                                      "U+17C7"
+                                                  ],
+                                   "Names":  [
+                                                 "KHMER VOWEL SIGN E",
+                                                 "KHMER SIGN REAHMUK"
+                                             ],
+                                   "IsLigature":  true,
+                                   "Description":  "Srak EH"
+                               },
+                     "AltGr":  null
+                 },
+                 {
+                     "ScanCode":  "0x30",
+                     "VirtualKey":  "0x42",
+                     "KeyLabel":  "B",
+                     "Normal":  {
+                                    "Text":  "ប",
+                                    "Codepoints":  [
+                                                       "U+1794"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "ព",
+                                   "Codepoints":  [
+                                                      "U+1796"
+                                                  ],
+                                   "IsLigature":  false
+                               },
+                     "AltGr":  null
+                 },
+                 {
+                     "ScanCode":  "0x31",
+                     "VirtualKey":  "0x4E",
+                     "KeyLabel":  "N",
+                     "Normal":  {
+                                    "Text":  "ន",
+                                    "Codepoints":  [
+                                                       "U+1793"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "ណ",
+                                   "Codepoints":  [
+                                                      "U+178E"
+                                                  ],
+                                   "IsLigature":  false
+                               },
+                     "AltGr":  null
+                 },
+                 {
+                     "ScanCode":  "0x32",
+                     "VirtualKey":  "0x4D",
+                     "KeyLabel":  "M",
+                     "Normal":  {
+                                    "Text":  "ម",
+                                    "Codepoints":  [
+                                                       "U+1798"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "ំ",
+                                   "Codepoints":  [
+                                                      "U+17C6"
+                                                  ],
+                                   "IsLigature":  false
+                               },
+                     "AltGr":  null
+                 },
+                 {
+                     "ScanCode":  "0x33",
+                     "VirtualKey":  "0xBC",
+                     "KeyLabel":  ",",
+                     "Normal":  {
+                                    "Text":  "ុំ",
+                                    "Codepoints":  [
+                                                       "U+17BB",
+                                                       "U+17C6"
+                                                   ],
+                                    "Names":  [
+                                                  "KHMER VOWEL SIGN U",
+                                                  "KHMER SIGN NIKAHIT"
+                                              ],
+                                    "IsLigature":  true,
+                                    "Description":  "Srak OM"
+                                },
+                     "Shift":  {
+                                   "Text":  "ុះ",
+                                   "Codepoints":  [
+                                                      "U+17BB",
+                                                      "U+17C7"
+                                                  ],
+                                   "Names":  [
+                                                 "KHMER VOWEL SIGN U",
+                                                 "KHMER SIGN REAHMUK"
+                                             ],
+                                   "IsLigature":  true,
+                                   "Description":  "Srak UH"
+                               },
+                     "AltGr":  {
+                                   "Text":  ",",
+                                   "Codepoints":  [
+                                                      "U+002C"
+                                                  ],
+                                   "IsLigature":  false
+                               }
+                 },
+                 {
+                     "ScanCode":  "0x34",
+                     "VirtualKey":  "0xBE",
+                     "KeyLabel":  ".",
+                     "Normal":  {
+                                    "Text":  "។",
+                                    "Codepoints":  [
+                                                       "U+17D4"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "៕",
+                                   "Codepoints":  [
+                                                      "U+17D5"
+                                                  ],
+                                   "IsLigature":  false
+                               },
+                     "AltGr":  {
+                                   "Text":  ".",
+                                   "Codepoints":  [
+                                                      "U+002E"
+                                                  ],
+                                   "IsLigature":  false
+                               }
+                 },
+                 {
+                     "ScanCode":  "0x35",
+                     "VirtualKey":  "0xBF",
+                     "KeyLabel":  "/",
+                     "Normal":  {
+                                    "Text":  "៊",
+                                    "Codepoints":  [
+                                                       "U+17CA"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "?",
+                                   "Codepoints":  [
+                                                      "U+003F"
+                                                  ],
+                                   "IsLigature":  false
+                               },
+                     "AltGr":  {
+                                   "Text":  "/",
+                                   "Codepoints":  [
+                                                      "U+002F"
+                                                  ],
+                                   "IsLigature":  false
+                               }
+                 },
+                 {
+                     "ScanCode":  "0x37",
+                     "VirtualKey":  "0x6A",
+                     "KeyLabel":  "Multiply",
+                     "Normal":  {
+                                    "Text":  "*",
+                                    "Codepoints":  [
+                                                       "U+002A"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "*",
+                                   "Codepoints":  [
+                                                      "U+002A"
+                                                  ],
+                                   "IsLigature":  false
+                               },
+                     "AltGr":  null
+                 },
+                 {
+                     "ScanCode":  "0x39",
+                     "VirtualKey":  "0x20",
+                     "KeyLabel":  "Space",
+                     "Normal":  {
+                                    "Text":  "​",
+                                    "Codepoints":  [
+                                                       "U+200B"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  " ",
+                                   "Codepoints":  [
+                                                      "U+0020"
+                                                  ],
+                                   "IsLigature":  false
+                               },
+                     "AltGr":  {
+                                   "Text":  " ",
+                                   "Codepoints":  [
+                                                      "U+00A0"
+                                                  ],
+                                   "IsLigature":  false
+                               }
+                 },
+                 {
+                     "ScanCode":  "0x4A",
+                     "VirtualKey":  "0x6D",
+                     "KeyLabel":  "Subtract",
+                     "Normal":  {
+                                    "Text":  "-",
+                                    "Codepoints":  [
+                                                       "U+002D"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "-",
+                                   "Codepoints":  [
+                                                      "U+002D"
+                                                  ],
+                                   "IsLigature":  false
+                               },
+                     "AltGr":  null
+                 },
+                 {
+                     "ScanCode":  "0x4E",
+                     "VirtualKey":  "0x6B",
+                     "KeyLabel":  "Add",
+                     "Normal":  {
+                                    "Text":  "+",
+                                    "Codepoints":  [
+                                                       "U+002B"
+                                                   ],
+                                    "IsLigature":  false
+                                },
+                     "Shift":  {
+                                   "Text":  "+",
+                                   "Codepoints":  [
+                                                      "U+002B"
+                                                  ],
+                                   "IsLigature":  false
+                               },
+                     "AltGr":  null
+                 }
+             ]
+}
