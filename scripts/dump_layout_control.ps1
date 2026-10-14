@@ -42,6 +42,8 @@ public static class ControlProbe
     [DllImport("user32.dll", CharSet = CharSet.Unicode)]
     static extern IntPtr LoadKeyboardLayout(string id, uint flags);
     [DllImport("user32.dll")]
+    static extern bool UnloadKeyboardLayout(IntPtr hkl);
+    [DllImport("user32.dll")]
     static extern uint MapVirtualKeyEx(uint code, uint mapType, IntPtr hkl);
     [DllImport("user32.dll", CharSet = CharSet.Unicode)]
     static extern int ToUnicodeEx(uint vk, uint sc, byte[] keyState,
@@ -52,7 +54,19 @@ public static class ControlProbe
 
     public static string[] Run(string klid, int[] vks)
     {
-        IntPtr hkl = LoadKeyboardLayout(klid, 1);
+        // flags 0, NOT KLF_ACTIVATE(1): ToUnicodeEx and MapVirtualKeyEx both
+        // take the HKL explicitly. Activating the layout and leaving it loaded
+        // accumulates duplicate entries in the user's input method list.
+        IntPtr hkl = LoadKeyboardLayout(klid, 0);
+        try {
+            return Probe(klid, vks, hkl);
+        } finally {
+            UnloadKeyboardLayout(hkl);
+        }
+    }
+
+    static string[] Probe(string klid, int[] vks, IntPtr hkl)
+    {
 
         var sc = new Dictionary<int, uint>();
         for (uint s = 1; s <= 0xFF; s++) {

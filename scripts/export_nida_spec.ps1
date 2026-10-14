@@ -64,17 +64,27 @@ public static class ScanCodes {
     [DllImport("user32.dll", CharSet = CharSet.Unicode)]
     static extern IntPtr LoadKeyboardLayout(string id, uint flags);
     [DllImport("user32.dll")]
+    static extern bool UnloadKeyboardLayout(IntPtr hkl);
+    [DllImport("user32.dll")]
     static extern uint MapVirtualKeyEx(uint code, uint mapType, IntPtr hkl);
     public static Dictionary<int, string> Build(string klid) {
-        IntPtr hkl = LoadKeyboardLayout(klid, 1);
-        var map = new Dictionary<int, string>();
-        for (uint sc = 1; sc <= 0xFF; sc++) {
-            uint vk = MapVirtualKeyEx(sc, 1 /* MAPVK_VSC_TO_VK */, hkl);
-            if (vk == 0 || vk > 0xFF) continue;
-            if (!map.ContainsKey((int)vk))
-                map[(int)vk] = sc.ToString("X2", CultureInfo.InvariantCulture);
+        // flags 0, NOT KLF_ACTIVATE(1): MapVirtualKeyEx takes the HKL
+        // explicitly, so there is no reason to activate the layout. Activating
+        // and never unloading leaves duplicate entries in the user's input
+        // method list after repeated runs.
+        IntPtr hkl = LoadKeyboardLayout(klid, 0);
+        try {
+            var map = new Dictionary<int, string>();
+            for (uint sc = 1; sc <= 0xFF; sc++) {
+                uint vk = MapVirtualKeyEx(sc, 1 /* MAPVK_VSC_TO_VK */, hkl);
+                if (vk == 0 || vk > 0xFF) continue;
+                if (!map.ContainsKey((int)vk))
+                    map[(int)vk] = sc.ToString("X2", CultureInfo.InvariantCulture);
+            }
+            return map;
+        } finally {
+            UnloadKeyboardLayout(hkl);
         }
-        return map;
     }
 }
 "@

@@ -111,16 +111,26 @@ public static class ScanMap2 {
     [DllImport("user32.dll", CharSet = CharSet.Unicode)]
     static extern IntPtr LoadKeyboardLayout(string id, uint flags);
     [DllImport("user32.dll")]
+    static extern bool UnloadKeyboardLayout(IntPtr hkl);
+    [DllImport("user32.dll")]
     static extern uint MapVirtualKeyEx(uint code, uint mapType, IntPtr hkl);
     public static Dictionary<int, int> Build(string klid) {
-        IntPtr hkl = LoadKeyboardLayout(klid, 1);
-        var map = new Dictionary<int, int>();
-        for (uint sc = 1; sc <= 0xFF; sc++) {
-            uint vk = MapVirtualKeyEx(sc, 1, hkl);
-            if (vk == 0 || vk > 0xFF) continue;
-            if (!map.ContainsKey((int)vk)) map[(int)vk] = (int)sc;
+        // flags 0, NOT KLF_ACTIVATE(1): loading must not change the machine's
+        // active layout, and the HKL is unloaded again below. Repeated
+        // KLF_ACTIVATE calls across many script runs accumulate duplicate
+        // entries in the user's input method list.
+        IntPtr hkl = LoadKeyboardLayout(klid, 0);
+        try {
+            var map = new Dictionary<int, int>();
+            for (uint sc = 1; sc <= 0xFF; sc++) {
+                uint vk = MapVirtualKeyEx(sc, 1, hkl);
+                if (vk == 0 || vk > 0xFF) continue;
+                if (!map.ContainsKey((int)vk)) map[(int)vk] = (int)sc;
+            }
+            return map;
+        } finally {
+            UnloadKeyboardLayout(hkl);
         }
-        return map;
     }
 }
 "@

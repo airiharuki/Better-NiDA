@@ -44,8 +44,13 @@ if (-not ([System.Management.Automation.PSTypeName]'KbdDumper').Type) {
     Add-Type -TypeDefinition $code
 }
 
-$hklKni = [KbdDumper]::LoadKeyboardLayout("00010453", 1)
-$hklKhmr = [KbdDumper]::LoadKeyboardLayout("00000453", 1)
+# Load without KLF_ACTIVATE (flags 0): ToUnicodeEx and MapVirtualKeyEx both
+# take the HKL explicitly, so activating the layout is unnecessary. Loading
+# with KLF_ACTIVATE and never unloading is what left duplicate Khmer and
+# English entries in the user's input method list after repeated runs, so both
+# layouts are unloaded again at the end of this script.
+$hklKni = [KbdDumper]::LoadKeyboardLayout("00010453", 0)
+$hklKhmr = [KbdDumper]::LoadKeyboardLayout("00000453", 0)
 
 function Dump-Layout($hkl, $layoutName) {
     $results = @()
@@ -119,3 +124,7 @@ $kniData | Export-Csv -Path $kniPath -NoTypeInformation -Encoding UTF8
 $khmrData | Export-Csv -Path $khmrPath -NoTypeInformation -Encoding UTF8
 
 Write-Output ("dumped {0} and {1}" -f (Split-Path -Leaf $kniPath), (Split-Path -Leaf $khmrPath))
+
+# Balance the two LoadKeyboardLayout calls above.
+[KbdDumper]::UnloadKeyboardLayout($hklKni) | Out-Null
+[KbdDumper]::UnloadKeyboardLayout($hklKhmr) | Out-Null
