@@ -83,6 +83,19 @@ method for anyone who needs those.
 > checklist in `macos/README.md` - and the honest position is that these are
 > untested on real hardware. Please open an issue if something misbehaves.
 
+### Help us test them
+
+This is the most useful thing you can contribute right now. If you have a Mac
+or a Linux box:
+
+1. Install the layout ([`macos/`](macos/) or [`linux/`](linux/))
+2. Work through the checklist in that directory's README
+3. Open a **Testing Report** issue - even "it works" is worth recording
+
+The automated checks catch a malformed file. They cannot tell you whether your
+desktop will list the layout at all, which is exactly the bug we would most
+likely have shipped.
+
 ---
 
 ## Artifacts
@@ -142,13 +155,30 @@ One command rebuilds and re-verifies everything from scratch:
 .\scripts\verify_all.ps1
 ```
 
-It runs all eight generation stages followed by three checks, and exits
-non-zero if any stage or check fails. To verify the committed artifacts without
-regenerating them (for CI):
+It runs nine generation stages followed by four checks, and exits non-zero if
+any stage or check fails:
+
+```
+1-3  decode driver tables (kbdkni, kbdkhmr, kbdus)
+4-6  probe layout behaviour, with and without Control
+7    refresh official Unicode character names
+8    rebuild nida_layout.json
+9    generate the macOS .keylayout and Linux XKB files
+
+CHECK  NiDA tables vs ToUnicodeEx            144/144, 0 mismatches
+CHECK  legacy Khmer tables vs ToUnicodeEx    144/144, 0 mismatches
+CHECK  secondary tables vs Control             4/4
+CHECK  macOS + Linux layout files            structural
+```
+
+To verify the committed artifacts without regenerating them (for CI):
 
 ```powershell
 .\scripts\verify_all.ps1 -SkipRegenerate
 ```
+
+The generated artifacts are byte-identical to the committed ones, so the
+pipeline is deterministic: any diff after a clean run means something changed.
 
 Individually:
 
@@ -166,13 +196,23 @@ Individually:
 .\scripts\verify_tables.ps1 -TablesCsv tables_kbdkni.csv -ProbeCsv kni_layout.csv
 .\scripts\verify_control.ps1
 
-# 4. rebuild the specification
+# 4. rebuild the specification and the platform layouts
 .\scripts\build_unicode_names.ps1
 .\scripts\export_nida_spec.ps1
+.\scripts\build_platform_layouts.ps1
+
+# 5. validate the generated platform files
+.\scripts\verify_platform_layouts.ps1
 ```
 
 The regenerated artifacts are byte-identical to the committed ones, so the
 outputs are reproducible and any diff after a run means something changed.
+
+> **Generated files.** `nida_layout.json`, `tables_kbd*.json`, `macos/*.keylayout`
+> and `linux/nida*` are all produced by the scripts above. Hand edits work
+> today but are overwritten on the next run - change the generator instead.
+> The platform layouts you *install* (`~/.xkb/symbols/nida`,
+> `~/Library/Keyboard Layouts/...`) are yours to edit freely.
 
 Requires Windows (the tools load the driver DLLs and call Windows keyboard APIs)
 and Windows PowerShell 5.1 or later.

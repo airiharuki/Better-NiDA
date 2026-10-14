@@ -3,3 +3,6 @@ contact_links:
   - name: GitHub Community Discussions
     url: https://github.com/airiharuki/Better-NiDA/discussions
     about: Ask general questions, share ideas, or discuss layout ergonomics with the community.
+  - name: Have you actually tested the macOS or Linux layout?
+    url: https://github.com/airiharuki/Better-NiDA/issues/new?template=testing_report.md
+    about: The layouts were built and checked on Windows only. A short report from real hardware is the most useful contribution to this project right now.

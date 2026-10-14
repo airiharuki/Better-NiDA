@@ -24,24 +24,77 @@ This project is governed by the [Contributor Covenant Code of Conduct](CODE_OF_C
 
 ## Development & Verification Workflow
 
-The project uses PowerShell and Win32 interop scripts to decode and cross-verify layout tables directly against Windows keyboard binaries.
+The project decodes the Windows driver tables and cross-checks them against
+the Windows `ToUnicodeEx` API, then generates the macOS and Linux layouts from
+that verified spec. Everything is driven by PowerShell scripts on Windows.
 
 ### Prerequisites
 - Windows 10/11 with PowerShell 5.1+ or PowerShell 7+
 - Git
 
-### Verifying Layout Consistency
-Before submitting a pull request that alters table data or decoding scripts, run the validation suite to ensure 100% parity with native drivers:
+### One command
 
 ```powershell
-# Cross-check decoded tables against Win32 ToUnicodeEx API
-powershell -ExecutionPolicy Bypass -File scripts/verify_tables.ps1
-
-# Regenerate complete nida_layout.json spec
-powershell -ExecutionPolicy Bypass -File scripts/export_nida_spec.ps1
+pwsh ./scripts/verify_all.ps1
 ```
 
-All checks should pass with **0 mismatches**.
+This regenerates **everything** - the decoded tables, both behavioural probes,
+the Unicode name table, `nida_layout.json`, and the macOS + Linux layouts - and
+then runs four checks. It exits non-zero if any stage or check fails, so it is
+safe to run in CI.
+
+```
+1-3  decode driver tables (kbdkni, kbdkhmr, kbdus)
+4-6  probe layout behaviour, with and without Control
+7    refresh official Unicode character names
+8    rebuild nida_layout.json
+9    generate the macOS .keylayout and Linux XKB files
+CHECK  NiDA tables vs ToUnicodeEx        144/144, 0 mismatches
+CHECK  legacy Khmer tables vs ToUnicodeEx 144/144, 0 mismatches
+CHECK  secondary tables vs Control        4/4
+CHECK  macOS + Linux layout files         structural
+```
+
+To verify the committed artifacts without regenerating them:
+
+```powershell
+pwsh ./scripts/verify_all.ps1 -SkipRegenerate
+```
+
+### The generator is the source of truth
+
+`macos/*.keylayout`, `linux/nida` and `linux/nida_legacy` are **generated**
+files. Editing them by hand works today but is overwritten on the next run.
+Change `scripts/build_platform_layouts.ps1` instead, and re-run the chain.
+
+The same applies to `nida_layout.json` and the `tables_kbd*.json` files.
+
+### What the checks do and do not prove
+
+The four checks are real, and a failure is meaningful. But be precise about
+what they cover:
+
+- The three Windows checks compare the decoded tables against the Windows
+  `ToUnicodeEx` API. They prove the decode is faithful **to Windows**.
+- The platform check validates structure only: XML well-formedness, no
+  duplicate key codes, a non-empty base layer, ligatures compared byte-for-byte
+  against `nida_layout.json`, XKB brace and level sanity, and every base symbol
+  present.
+
+**None of them loads a layout on macOS or Linux.** The analysis host is Windows
+(26H2, build 26300.9550) and no Mac or Linux machine has been involved. If you
+have one, see below - it is the most useful contribution available.
+
+### Testing on real hardware
+
+| Platform | How to check |
+| :-- | :-- |
+| Linux | `cd linux && ./install.sh && ./verify.sh` - prints the active keymap and a key checklist |
+| macOS | `cd macos && ./install.sh`, then the checklist in `macos/README.md` |
+
+Please report what you find - even "it works" is worth recording, and "it does
+not appear in the menu" is exactly the kind of bug structural checks cannot
+catch. Use the *Testing Report* issue template.
 
 ---
 
@@ -81,9 +134,13 @@ We enforce the **[Conventional Commits specification](https://www.conventionalco
 
 Better-NiDA adheres strictly to **[Semantic Versioning 2.0.0](https://semver.org/)** (`MAJOR.MINOR.PATCH`):
 
-1. **`MAJOR`**: Incompatible layout changes (e.g., breaking key repositioning, major remapping of primary characters).
-2. **`MINOR`**: Backwards-compatible functionality (e.g., new secondary layers, extra ligature definitions, new platform export formats).
-3. **`PATCH`**: Backwards-compatible bug fixes and documentation improvements (e.g., table corrections, typo fixes, script improvements).
+1. **`MAJOR`**: Incompatible layout changes (e.g., breaking key repositioning, major remapping of primary characters). Also a change that alters any generated artifact - `nida_layout.json`, `macos/*.keylayout`, `linux/nida*` - in a way that changes what a user types.
+2. **`MINOR`**: Backwards-compatible functionality (e.g., new secondary layers, extra ligature definitions, a new platform target such as QMK/ZMK firmware).
+3. **`PATCH`**: Backwards-compatible bug fixes and documentation improvements (e.g., table corrections, tooling fixes, documentation).
+
+Because the platform layouts are generated from the spec, a change to
+`scripts/` that alters the generator's output is a user-visible layout change:
+judge it as MAJOR or MINOR, not PATCH, even though the diff may look small.
 
 Git tags follow the format: `v<MAJOR>.<MINOR>.<PATCH>` (e.g., `v0.1.0`, `v0.2.0`).
 
