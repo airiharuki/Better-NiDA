@@ -17,6 +17,18 @@ by the size of the diff.
 
 ### Added
 
+- Nothing yet.
+
+### Fixed
+
+- Nothing yet.
+
+---
+
+## [0.3.1] - 2026-10-14
+
+### Added
+
 - **Self-contained installers as release assets.** `install-nida.sh` (Linux) and
   `install-nida-macos.command` (macOS, double-clickable) each embed the layout
   data, so installing no longer requires cloning the repository. The payload is
@@ -44,6 +56,17 @@ by the size of the diff.
 - The reverse-engineering toolchain is documented as **Windows-only and not
   portable**, with the exact split between the five scripts that call Win32 and
   the five that are portable.
+
+### Notes on the version number
+
+This release adds no new typing behaviour: the layout files themselves shipped
+in 0.3.0, and this changes only how they are delivered. It also carries a bug
+fix. That reads as a PATCH, hence 0.3.1.
+
+A stricter reading of the MINOR clause ("new backwards-compatible
+functionality") would call downloadable installers a new capability and put
+this at 0.4.0. The judgement made here is that the *capability* is the layout,
+not its packaging. Easy to renumber if you disagree.
 
 ---
 
@@ -161,7 +184,8 @@ Reported alongside each release because the claims are specific:
 The last row is the important one. Everything above it can be checked on a
 Windows machine; that one cannot.
 
-[Unreleased]: https://github.com/airiharuki/Better-NiDA/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/airiharuki/Better-NiDA/compare/v0.3.1...HEAD
+[0.3.1]: https://github.com/airiharuki/Better-NiDA/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/airiharuki/Better-NiDA/compare/v0.2.1...v0.3.0
 [0.2.1]: https://github.com/airiharuki/Better-NiDA/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/airiharuki/Better-NiDA/compare/v0.1.0...v0.2.0
