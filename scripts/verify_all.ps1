@@ -85,19 +85,20 @@ Write-Host "Khmer layout verification chain" -ForegroundColor White
 Write-Host "repository: $root"
 
 if (-not $SkipRegenerate) {
-    Invoke-Stage -Name '1/9 Decode driver tables (kbdkni)'    -Script 'dump_kbd_tables.ps1'     -Arguments @('-Dll', 'kbdkni.dll')
-    Invoke-Stage -Name '2/9 Decode driver tables (kbdkhmr)'   -Script 'dump_kbd_tables.ps1'     -Arguments @('-Dll', 'kbdkhmr.dll')
-    Invoke-Stage -Name '3/9 Decode driver tables (kbdus)'     -Script 'dump_kbd_tables.ps1'     -Arguments @('-Dll', 'kbdus.dll')
-    Invoke-Stage -Name '4/9 Probe layout behaviour'           -Script 'dump_layout.ps1'
-    Invoke-Stage -Name '5/9 Probe Control behaviour (NiDA)'   -Script 'dump_layout_control.ps1'
+    Invoke-Stage -Name '1/10 Decode driver tables (kbdkni)'   -Script 'dump_kbd_tables.ps1'     -Arguments @('-Dll', 'kbdkni.dll')
+    Invoke-Stage -Name '2/10 Decode driver tables (kbdkhmr)'  -Script 'dump_kbd_tables.ps1'     -Arguments @('-Dll', 'kbdkhmr.dll')
+    Invoke-Stage -Name '3/10 Decode driver tables (kbdus)'    -Script 'dump_kbd_tables.ps1'     -Arguments @('-Dll', 'kbdus.dll')
+    Invoke-Stage -Name '4/10 Probe layout behaviour'          -Script 'dump_layout.ps1'
+    Invoke-Stage -Name '5/10 Probe Control behaviour (NiDA)'  -Script 'dump_layout_control.ps1'
     # US control probe: the layout whose table 2 holds 47 entries, used to
     # establish that tables 2/3 are base-character fallbacks rather than a
     # control-character map. See REVERSE_ENGINEERING_NIDA.md section 7.
-    Invoke-Stage -Name '6/9 Probe Control behaviour (US)'     -Script 'dump_layout_control.ps1' `
+    Invoke-Stage -Name '6/10 Probe Control behaviour (US)'    -Script 'dump_layout_control.ps1' `
         -Arguments @('-TablesCsv', 'tables_kbdus.csv', '-Klid', '00000409', '-OutCsv', 'us_control.csv')
-    Invoke-Stage -Name '7/9 Build Unicode name table'         -Script 'build_unicode_names.ps1'
-    Invoke-Stage -Name '8/9 Rebuild nida_layout.json'         -Script 'export_nida_spec.ps1'
-    Invoke-Stage -Name '9/9 Generate macOS + Linux layouts'   -Script 'build_platform_layouts.ps1'
+    Invoke-Stage -Name '7/10 Build Unicode name table'        -Script 'build_unicode_names.ps1'
+    Invoke-Stage -Name '8/10 Rebuild nida_layout.json'        -Script 'export_nida_spec.ps1'
+    Invoke-Stage -Name '9/10 Generate macOS + Linux layouts'  -Script 'build_platform_layouts.ps1'
+    Invoke-Stage -Name '10/10 Build self-contained installers' -Script 'build_installers.ps1'
 } else {
     Write-Host "`n-SkipRegenerate: verifying the committed artifacts as-is." -ForegroundColor Yellow
 }

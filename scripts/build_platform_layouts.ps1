@@ -53,6 +53,10 @@ if (-not $OutRoot) { $OutRoot = $root }
 function New-Utf8File([string]$Path, [string]$Content) {
     $dir = Split-Path -Parent $Path
     if (-not (Test-Path $dir)) { New-Item -ItemType Directory -Path $dir -Force | Out-Null }
+    # Force LF. StringBuilder.AppendLine() uses Environment.NewLine, which is
+    # CRLF on Windows, so without this the XKB files would ship with CRLF and a
+    # CRLF-tainted tab-separated key line is not something to hand to xkbcomp.
+    $Content = $Content.Replace("`r`n", "`n")
     [System.IO.File]::WriteAllText($Path, $Content, (New-Object System.Text.UTF8Encoding $false))
 }
 

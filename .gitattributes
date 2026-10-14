@@ -16,3 +16,8 @@
 *.csv   text eol=crlf
 *.md    text eol=lf
 *.keylayout text eol=lf
+
+# The XKB symbols files have no extension, so no wildcard above matched them
+# and core.autocrlf=true checked them out as CRLF. Name them explicitly.
+/linux/nida        text eol=lf
+/linux/nida_legacy text eol=lf
