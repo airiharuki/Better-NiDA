@@ -112,11 +112,22 @@ and Windows PowerShell 5.1 or later.
 
 ---
 
+## Contributing & Community
+
+Contributions are warmly welcomed! Please read:
+- **[CONTRIBUTING.md](CONTRIBUTING.md)**: Development workflow, Conventional Commits specification, and PR guidelines.
+- **[CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)**: Community standards and Contributor Covenant pledge.
+
+---
+
 ## Versioning
 
-This project follows [Semantic Versioning](https://semver.org/) and
+This project follows [Semantic Versioning 2.0.0](https://semver.org/) and
 [Conventional Commits](https://www.conventionalcommits.org/).
+
+---
 
 ## License
 
 MIT License. See [LICENSE](LICENSE).
+
