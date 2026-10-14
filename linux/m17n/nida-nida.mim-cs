@@ -1,0 +1,41 @@
+;; Character set definition for the Khmer NiDA m17n input method.
+;;
+;; m17n needs a character set to know how to handle the code points the input
+;; method produces. Khmer is not a special encoding, it is plain Unicode, so
+;; we reuse the standard defvar mapping for the characters we actually emit.
+;;
+;; Install alongside nida-nida.mim.
+
+(define-cs nida-nida-cs
+  '((U+0020 U+0020 U+0020)
+    (U+0022 U+0022 U+0022)
+    (U+0024 U+0024 U+0024)
+    (U+0025 U+0025 U+0025)
+    (U+0028 U+0028 U+0028)
+    (U+0029 U+0029 U+0029)
+    (U+002A U+002A U+002A)
+    (U+002B U+002B U+002B)
+    (U+002C U+002C U+002C)
+    (U+002E U+002E U+002E)
+    (U+002F U+002F U+002F)
+    (U+003B U+003B U+003B)
+    (U+003D U+003D U+003D)
+    (U+003F U+003F U+003F)
+    (U+0040 U+0040 U+0040)
+    (U+005C U+005C U+005C)
+    (U+007B U+007B U+007B)
+    (U+007D U+007D U+007D)
+    (U+00AB U+00AB U+00AB)
+    (U+00BB U+00BB U+00BB)
+    (U+00D7 U+00D7 U+00D7)
+    (U+1780-17A2 U+1780-17A2 U+1780-17A2)
+    (U+17B0-17C7 U+17B0-17C7 U+17B0-17C7)
+    (U+17D0-17D2 U+17D0-17D2 U+17D0-17D2)
+    (U+17D4-17D5 U+17D4-17D5 U+17D4-17D5)
+    (U+17D7-17DA U+17D7-17DA U+17D7-17DA)
+    (U+17DB U+17DB U+17DB)
+    (U+17E0-17E9 U+17E0-17E9 U+17E0-17E9)
+    (U+200B U+200B U+200B)
+    (U+200C U+200C U+200C)
+    (U+200D U+200D U+200D)
+    (U+20AC U+20AC U+20AC)))

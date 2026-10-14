@@ -53,6 +53,38 @@ Full details, including the exact binary layout of every table, are in
 
 ---
 
+## Khmer NiDA Layout - for macOS & Linux
+
+The same layouts, generated from the verified spec above and shipped for both
+platforms. Two variants, since the two Windows layouts genuinely differ:
+
+| | Coeng `្` | Zero-width space | Modifier states |
+| :-- | :-- | :-- | :-- |
+| **Khmer NiDA** | `J` | `Space` | 4 |
+| **Khmer NiDA Legacy** | `Space` | `/` | 5 (incl. Shift+AltGr) |
+
+| Platform | Files | Ligatures | Install |
+| :-- | :-- | :-- | :-- |
+| macOS | [`macos/`](macos/) | **full** - macOS emits multi-character output | [`macos/install.sh`](macos/install.sh) or a double-clickable `.pkg` |
+| Linux | [`linux/`](linux/) | partial - XKB emits one character per level | [`linux/install.sh`](linux/install.sh) |
+
+**macOS is the better-supported target.** A macOS keylayout can emit several
+characters from one key press, so all five ligatures work. XKB maps each key to
+exactly one character per level, so those five keys emit only their first code
+point on Linux; the affected lines are marked `LIGATURE truncated`. Everything
+else - including the coeng and the zero-width space - is faithful on both.
+
+On Linux, [`linux/m17n/`](linux/m17n/) provides a ligature-capable input
+method for anyone who needs those.
+
+> **Testing status.** Both platforms were generated and structurally validated
+> on Windows (the analysis host). They have **not** been loaded on macOS or
+> Linux. Each platform ships a test script - `linux/verify.sh` and the
+> checklist in `macos/README.md` - and the honest position is that these are
+> untested on real hardware. Please open an issue if something misbehaves.
+
+---
+
 ## Artifacts
 
 | File | Contents |
@@ -81,12 +113,16 @@ Better-NiDA/
 ├── tables_kbd*.json / .csv       # Tables decoded from the driver DLLs
 ├── kni_layout.csv                # Behavioural probe: NiDA
 ├── khmr_layout.csv               # Behavioural probe: legacy Khmer
+├── macos/                        # macOS .keylayout layouts + installer
+├── linux/                        # XKB layouts + installer + optional m17n
 ├── scripts/
 │   ├── dump_kbd_tables.ps1       # Decode the DLL's KbdLayerDescriptor tables
 │   ├── dump_layout.ps1           # Probe layout behaviour via ToUnicodeEx
 │   ├── dump_layout_control.ps1   # Probe again with Control held
 │   ├── verify_tables.ps1         # Assert the two paths agree (CI-friendly)
 │   ├── verify_control.ps1        # Check secondary tables vs Control behaviour
+│   ├── build_platform_layouts.ps1 # Generate the macOS + Linux layouts
+│   ├── verify_platform_layouts.ps1 # Validate the generated platform files
 │   ├── verify_all.ps1            # Rebuild and verify everything, one command
 │   ├── build_unicode_names.ps1   # Refresh official Unicode character names
 │   ├── export_nida_spec.ps1      # Build nida_layout.json

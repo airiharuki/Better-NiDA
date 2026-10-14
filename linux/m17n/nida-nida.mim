@@ -1,0 +1,132 @@
+;; m17n input method for Khmer NiDA.
+;;
+;; WHY THIS EXISTS
+;;   An XKB layout maps each key to exactly ONE keysym per level, so the five
+;;   multi-character ligatures in the Windows driver (Shift+A, Shift+V, Shift+;,
+;;   comma) cannot be produced by linux/nida - that file emits only the first
+;;   code point. An m17n input method can emit several characters per key,
+;;   so this file restores full parity.
+;;
+;; This is the OPTIONAL, power-user path. If you only need plain Khmer typing,
+;; use linux/nida instead: it needs no extra packages and works everywhere.
+;;
+;; INSTALL
+;;   mkdir -p ~/.m17n
+;;   cp nida-nida.mim ~/.m17n/
+;;   cp nida-nida.mim-cs ~/.m17n/
+;;   cp nida-nida.map ~/.m17n/
+;;
+;; Then either select "NiDA" in your desktop's input method menu, or set it as
+;; the XIM input method:
+;;
+;;   export XMODIFIERS=@im=nida
+;;   export GTK_IM_MODULE=m17n
+;;   export QT_IM_MODULE=m17n
+;;
+;; TESTING WITHOUT A DESKTOP
+;;   m17n-db < nida-nida.mim > /tmp/nida.mimdb   # must be silent = valid
+;;   m17n-view -i nida-nida.mim                   # interactive check
+;;
+;; Editing: this is plain text and deliberately unminified. Change a code point,
+;; save, and re-run m17n-db; no recompilation is needed.
+
+(input-method nida nida-nida)
+
+(description "Khmer NiDA (m17n, with ligature support)")
+
+;; ---------------------------------------------------------------------------
+;; macros: the compound marks emitted by the ligature keys
+;; ---------------------------------------------------------------------------
+(define-macro macron
+  (U+17B6 U+17C6))          ; srak AM   (ាំ)
+
+(define-macro macron1
+  (U+17C1 U+17C7))          ; srah EH   (េះ)
+
+(define-macro macron2
+  (U+17C4 U+17C7))          ; srah AOH  (ោះ)
+
+(define-macro macronsak
+  (U+17BB U+17C6))          ; srak OM   (ុំ)
+
+(define-macro macronsak1
+  (U+17BB U+17C7))          ; srak UH   (ុះ)
+
+;; ---------------------------------------------------------------------------
+;; base mapping
+;; ---------------------------------------------------------------------------
+(map
+ (altgr map
+  (seq
+   "1" U+200C)              ; ZWNJ
+   "2" U+0040)              ; @
+   "3" U+17D1)              ; viriam
+   "4" U+0024)              ; $
+   "5" U+20AC)              ; euro
+   "6" U+17D9)              ; phnak muan
+   "7" U+17DA)              ; koomuut
+   "8" U+002A)              ; *
+   "9" U+007B)              ; {
+   "0" U+007D)              ; }
+   "-" U+00D7)              ; multiply
+
+  (seq
+   "`" U+200D)              ; ZWJ
+
+  (seq
+   "\\" U+005C)             ; backslash
+   "," U+002C
+   "." U+002E
+   "/" U+002F)))
+
+(map
+ (shift map
+  (seq
+   "1" U+0021)
+   "2" U+17D7)              ; lek to
+   "3" U+0022)
+   "4" U+17DB)              ; riel
+   "5" U+0025)
+   "6" U+17CD)              ; toandakhiat
+   "7" U+17D0)              ; samyok sannya
+   "8" U+17CF)              ; ahsda
+   "9" U+0028)
+   "0" U+0029)
+   "-" U+17CC)              ; robat
+   "=" U+003D)
+
+  (seq "A" macron)          ; <-- ligature
+  (seq "V" macron1)         ; <-- ligature
+  (seq ";" macron2)         ; <-- ligature
+  (seq "," macronsak1)      ; <-- ligature
+
+  (seq
+   "Q" U+1788) ("W" U+17BA) ("E" U+17C2) ("R" U+17AC) ("T" U+1791)
+   ("Y" U+17BD) ("U" U+17BC) ("I" U+17B8) ("O" U+17C5) ("P" U+1797)
+   ("[" U+17BF) ("]" U+17A7)
+   ("A" U+17B6) ("S" U+17C3) ("D" U+178C) ("F" U+1792) ("G" U+17A2)
+   ("H" U+17C7) ("J" U+1789) ("K" U+1782) ("L" U+17A1)
+   (";" U+17BE) ("'" U+17C9) ("\\" U+17AD)
+   ("Z" U+178D) ("X" U+1783) ("C" U+1787) ("B" U+1796) ("N" U+178E)
+   ("M" U+17C6) ("," U+17BB)
+   ("." U+17D5) ("/" U+003F) ("`" U+00BB)))
+
+(map
+ (basic map
+  (seq
+   "1" U+17E1) ("2" U+17E2) ("3" U+17E3) ("4" U+17E4) ("5" U+17E5)
+   ("6" U+17E6) ("7" U+17E7) ("8" U+17E8) ("9" U+17E9) ("0" U+17E0)
+   "-" U+17A5) ("=" U+17B2)
+
+  (seq "A" U+17B6) ("S" U+179F) ("D" U+178A) ("F" U+1790) ("G" U+1784)
+  ("H" U+17A0) ("J" U+17D2) ("K" U+1780) ("L" U+179B)
+  (";" U+17BE) ("'" U+17CB) ("\\" U+17AE)
+  ("Q" U+1786) ("W" U+17B9) ("E" U+17C1) ("R" U+179A) ("T" U+178F)
+  ("Y" U+1799) ("U" U+17BB) ("I" U+17B7) ("O" U+17C4) ("P" U+1795)
+  ("[" U+17C0) ("]" U+17AA)
+  ("Z" U+178B) ("X" U+1781) ("C" U+1785) ("V" U+179C) ("B" U+1794)
+  ("N" U+1793) ("M" U+1798) ("." U+17D4) ("/" U+17CA) ("`" U+00AB)
+  ("." U+17D4)
+  ("," macronsak)           ; <-- ligature, unshifted
+
+  (seq " " U+200B)))        ; ZWSP: the spacebar carries the word separator
