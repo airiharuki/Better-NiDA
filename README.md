@@ -180,6 +180,7 @@ Character names come from the official Unicode Character Database
 ```
 Better-NiDA/
 ├── REVERSE_ENGINEERING_NIDA.md   # Full technical specification
+├── ROADMAP.md                    # Plan for improving on NiDA
 ├── CHANGELOG.md                  # Release history
 ├── nida_layout.json              # Authoritative NiDA layout spec
 ├── tables_kbd*.json / .csv       # Tables decoded from the driver DLLs
