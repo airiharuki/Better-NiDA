@@ -52,10 +52,6 @@ param(
     [string]$Dll = 'kbdkni.dll',
 
     [Parameter(Mandatory = $false)]
-    [ValidateSet('khmer-nida', 'khmer-legacy', 'us')]
-    [string]$Layout = 'khmer-nida',
-
-    [Parameter(Mandatory = $false)]
     [string]$OutPrefix = $null
 )
 

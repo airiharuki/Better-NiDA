@@ -395,6 +395,15 @@ keys emits nothing, and their stored values are the plain unshifted characters.
 
 ## 12. Reproducing
 
+Everything at once:
+
+```powershell
+.\scripts\verify_all.ps1                    # rebuild + verify, from scratch
+.\scripts\verify_all.ps1 -SkipRegenerate    # verify committed artifacts only
+```
+
+Stage by stage:
+
 ```powershell
 # structural decode of every layout
 .\scripts\dump_kbd_tables.ps1 -Dll kbdkni.dll
@@ -416,6 +425,9 @@ keys emits nothing, and their stored values are the plain unshifted characters.
 .\scripts\build_unicode_names.ps1
 .\scripts\export_nida_spec.ps1
 ```
+
+The regenerated artifacts are byte-identical to the committed ones, so the
+pipeline is deterministic: any diff after a clean run means a real change.
 
 ---
 

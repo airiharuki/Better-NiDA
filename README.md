@@ -87,6 +87,7 @@ Better-NiDA/
 │   ├── dump_layout_control.ps1   # Probe again with Control held
 │   ├── verify_tables.ps1         # Assert the two paths agree (CI-friendly)
 │   ├── verify_control.ps1        # Check secondary tables vs Control behaviour
+│   ├── verify_all.ps1            # Rebuild and verify everything, one command
 │   ├── build_unicode_names.ps1   # Refresh official Unicode character names
 │   ├── export_nida_spec.ps1      # Build nida_layout.json
 │   ├── render_docs.ps1           # Render markdown tables from the spec
@@ -99,6 +100,22 @@ Better-NiDA/
 
 ## Reproducing
 
+One command rebuilds and re-verifies everything from scratch:
+
+```powershell
+.\scripts\verify_all.ps1
+```
+
+It runs all eight generation stages followed by three checks, and exits
+non-zero if any stage or check fails. To verify the committed artifacts without
+regenerating them (for CI):
+
+```powershell
+.\scripts\verify_all.ps1 -SkipRegenerate
+```
+
+Individually:
+
 ```powershell
 # 1. decode the driver tables
 .\scripts\dump_kbd_tables.ps1 -Dll kbdkni.dll
@@ -107,18 +124,19 @@ Better-NiDA/
 
 # 2. probe the layouts behaviourally
 .\scripts\dump_layout.ps1
+.\scripts\dump_layout_control.ps1
 
 # 3. prove the decode is correct (non-zero exit on any mismatch)
 .\scripts\verify_tables.ps1 -TablesCsv tables_kbdkni.csv -ProbeCsv kni_layout.csv
-
-# 3b. settle the Control reading of the secondary tables
-.\scripts\dump_layout_control.ps1
 .\scripts\verify_control.ps1
 
 # 4. rebuild the specification
 .\scripts\build_unicode_names.ps1
 .\scripts\export_nida_spec.ps1
 ```
+
+The regenerated artifacts are byte-identical to the committed ones, so the
+outputs are reproducible and any diff after a run means something changed.
 
 Requires Windows (the tools load the driver DLLs and call Windows keyboard APIs)
 and Windows PowerShell 5.1 or later.

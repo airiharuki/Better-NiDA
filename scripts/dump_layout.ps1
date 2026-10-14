@@ -1,5 +1,25 @@
 using assembly System.Windows.Forms;
 
+<#
+.SYNOPSIS
+    Behavioural probe of the NiDA and legacy Khmer layouts.
+
+.DESCRIPTION
+    Asks Windows directly what each key produces, via ToUnicodeEx, for every
+    scan code in every modifier state. This is the independent oracle the
+    structural decode in dump_kbd_tables.ps1 is checked against.
+
+    Kept deliberately separate from the table dump: the two paths must not
+    share assumptions, or agreeing proves nothing.
+
+.EXAMPLE
+    .\scripts\dump_layout.ps1
+#>
+[CmdletBinding()]
+param(
+    [Parameter(Mandatory = $false)] [string]$OutDir = $null
+)
+
 $code = @"
 using System;
 using System.Text;
@@ -86,10 +106,16 @@ function Dump-Layout($hkl, $layoutName) {
     return $results
 }
 
-$kniData = Dump-Layout $hklKni "Khmer (NIDA)"
+$kniData = Dump-Layout $hklKni "Khmer (NiDA)"
 $khmrData = Dump-Layout $hklKhmr "Khmer"
 
-$kniData | Export-Csv -Path "kni_layout.csv" -NoTypeInformation -Encoding UTF8
-$khmrData | Export-Csv -Path "khmr_layout.csv" -NoTypeInformation -Encoding UTF8
+# Resolve next to the repository root rather than against the current directory,
+# so the probe can be run from anywhere (scripts/verify_all.ps1 relies on this).
+if (-not $OutDir) { $OutDir = Join-Path $PSScriptRoot '..' }
+$kniPath = Join-Path $OutDir 'kni_layout.csv'
+$khmrPath = Join-Path $OutDir 'khmr_layout.csv'
 
-Write-Output "Successfully dumped kni_layout.csv and khmr_layout.csv"
+$kniData | Export-Csv -Path $kniPath -NoTypeInformation -Encoding UTF8
+$khmrData | Export-Csv -Path $khmrPath -NoTypeInformation -Encoding UTF8
+
+Write-Output ("dumped {0} and {1}" -f (Split-Path -Leaf $kniPath), (Split-Path -Leaf $khmrPath))
