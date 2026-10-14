@@ -207,6 +207,12 @@ public class KbdDecode
             int cbEntry = U8(rec + 9);
             if (cStates == 0 || cbEntry != 2 * (1 + cStates)) continue;
 
+            // Only a table whose width equals the layout's modifier-state count
+            // is known to be indexed by modifier number (and that one is
+            // confirmed by the ToUnicodeEx cross-check). The others are dumped
+            // with neutral slot labels rather than guessed at.
+            bool stateIndexed = (cStates == states.Count);
+
             var entries = new List<string>();
             for (int o = p;; o += cbEntry) {
                 int vk = U16(o);
@@ -218,6 +224,7 @@ public class KbdDecode
                 for (int i = 0; i < cStates; i++) {
                     ushort w = U16(o + 2 + i * 2);
                     int modNum = i < states.Count ? states[i] : i;
+                    string slotName = stateIndexed ? ModStateName(modNum) : ("Slot" + i);
                     string val = "", note = "";
                     if (w == NONE) {
                         note = "no-character";
@@ -229,12 +236,11 @@ public class KbdDecode
                         val = ((char)w).ToString();
                     }
                     fields.Add(string.Format("{{ \"modNumber\": {0}, \"name\": {1}, \"unicode\": {2}, \"text\": {3}, \"note\": {4} }}",
-                        modNum, Esc(ModStateName(modNum)),
+                        modNum, Esc(slotName),
                         Esc(w == NONE || w == LIGATURE ? null : U(w)), Esc(val), Esc(note)));
                     csv.Add(string.Format("{0},{1},\"{2}\",\"{3}\",{4},{5},{6},\"{7}\",\"{8}\",\"{9}\"",
                         t, vk, Esc(VkName(vk)).Replace("\"", "\"\""), Esc(VkLegend(vk)).Replace("\"", "\"\""),
-                        i, modNum,
-                        ModStateName(modNum), val.Replace("\"", "\"\""),
+                        i, modNum, slotName, val.Replace("\"", "\"\""),
                         (w == NONE || w == LIGATURE) ? (w == LIGATURE ? "0xF002" : "0xF000") : U(w), note));
                 }
                 entries.Add(string.Format("        {{ \"vk\": {0}, \"vkName\": {1}, \"usLegend\": {2}, \"states\": [ {3} ] }}",

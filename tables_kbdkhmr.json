@@ -22,10 +22,10 @@
   ],
   "characterTables": [
     { "index": 0, "cStates": 3, "cbEntry": 8, "entryCount": 4, "entries": [
-        { "vk": 8, "vkName": "Backspace", "usLegend": "Backspace", "states": [ { "modNumber": 0, "name": "Normal", "unicode": "U+0008", "text": "\u0008", "note": "" }, { "modNumber": 1, "name": "Shift", "unicode": "U+0008", "text": "\u0008", "note": "" }, { "modNumber": 2, "name": "Control", "unicode": "U+007F", "text": "\u007f", "note": "" } ] },
-        { "vk": 27, "vkName": "Esc", "usLegend": "Esc", "states": [ { "modNumber": 0, "name": "Normal", "unicode": "U+001B", "text": "\u001b", "note": "" }, { "modNumber": 1, "name": "Shift", "unicode": "U+001B", "text": "\u001b", "note": "" }, { "modNumber": 2, "name": "Control", "unicode": "U+001B", "text": "\u001b", "note": "" } ] },
-        { "vk": 13, "vkName": "Enter", "usLegend": "Enter", "states": [ { "modNumber": 0, "name": "Normal", "unicode": "U+000D", "text": "\r", "note": "" }, { "modNumber": 1, "name": "Shift", "unicode": "U+000D", "text": "\r", "note": "" }, { "modNumber": 2, "name": "Control", "unicode": "U+000A", "text": "\n", "note": "" } ] },
-        { "vk": 3, "vkName": "VK_03", "usLegend": "VK_03", "states": [ { "modNumber": 0, "name": "Normal", "unicode": "U+0003", "text": "\u0003", "note": "" }, { "modNumber": 1, "name": "Shift", "unicode": "U+0003", "text": "\u0003", "note": "" }, { "modNumber": 2, "name": "Control", "unicode": "U+0003", "text": "\u0003", "note": "" } ] }
+        { "vk": 8, "vkName": "Backspace", "usLegend": "Backspace", "states": [ { "modNumber": 0, "name": "Slot0", "unicode": "U+0008", "text": "\u0008", "note": "" }, { "modNumber": 1, "name": "Slot1", "unicode": "U+0008", "text": "\u0008", "note": "" }, { "modNumber": 2, "name": "Slot2", "unicode": "U+007F", "text": "\u007f", "note": "" } ] },
+        { "vk": 27, "vkName": "Esc", "usLegend": "Esc", "states": [ { "modNumber": 0, "name": "Slot0", "unicode": "U+001B", "text": "\u001b", "note": "" }, { "modNumber": 1, "name": "Slot1", "unicode": "U+001B", "text": "\u001b", "note": "" }, { "modNumber": 2, "name": "Slot2", "unicode": "U+001B", "text": "\u001b", "note": "" } ] },
+        { "vk": 13, "vkName": "Enter", "usLegend": "Enter", "states": [ { "modNumber": 0, "name": "Slot0", "unicode": "U+000D", "text": "\r", "note": "" }, { "modNumber": 1, "name": "Slot1", "unicode": "U+000D", "text": "\r", "note": "" }, { "modNumber": 2, "name": "Slot2", "unicode": "U+000A", "text": "\n", "note": "" } ] },
+        { "vk": 3, "vkName": "VK_03", "usLegend": "VK_03", "states": [ { "modNumber": 0, "name": "Slot0", "unicode": "U+0003", "text": "\u0003", "note": "" }, { "modNumber": 1, "name": "Slot1", "unicode": "U+0003", "text": "\u0003", "note": "" }, { "modNumber": 2, "name": "Slot2", "unicode": "U+0003", "text": "\u0003", "note": "" } ] }
     ] },
     { "index": 1, "cStates": 5, "cbEntry": 12, "entryCount": 49, "entries": [
         { "vk": 49, "vkName": "1", "usLegend": "1", "states": [ { "modNumber": 0, "name": "Normal", "unicode": "U+17E1", "text": "១", "note": "" }, { "modNumber": 1, "name": "Shift", "unicode": "U+0021", "text": "!", "note": "" }, { "modNumber": 2, "name": "Control", "unicode": "U+20AD", "text": "₭", "note": "" }, { "modNumber": 3, "name": "AltGr", "unicode": "U+0031", "text": "1", "note": "" }, { "modNumber": 4, "name": "ShiftAltGr", "unicode": "U+19E1", "text": "᧡", "note": "" } ] },
@@ -79,23 +79,23 @@
         { "vk": 110, "vkName": "Decimal", "usLegend": ".", "states": [ { "modNumber": 0, "name": "Normal", "unicode": "U+002E", "text": ".", "note": "" }, { "modNumber": 1, "name": "Shift", "unicode": "U+002E", "text": ".", "note": "" }, { "modNumber": 2, "name": "Control", "unicode": null, "text": "", "note": "no-character" }, { "modNumber": 3, "name": "AltGr", "unicode": null, "text": "", "note": "no-character" }, { "modNumber": 4, "name": "ShiftAltGr", "unicode": null, "text": "", "note": "no-character" } ] }
     ] },
     { "index": 2, "cStates": 2, "cbEntry": 6, "entryCount": 5, "entries": [
-        { "vk": 9, "vkName": "Tab", "usLegend": "Tab", "states": [ { "modNumber": 0, "name": "Normal", "unicode": "U+0009", "text": "\t", "note": "" }, { "modNumber": 1, "name": "Shift", "unicode": "U+0009", "text": "\t", "note": "" } ] },
-        { "vk": 107, "vkName": "Add", "usLegend": "+", "states": [ { "modNumber": 0, "name": "Normal", "unicode": "U+002B", "text": "+", "note": "" }, { "modNumber": 1, "name": "Shift", "unicode": "U+002B", "text": "+", "note": "" } ] },
-        { "vk": 111, "vkName": "Divide", "usLegend": "/", "states": [ { "modNumber": 0, "name": "Normal", "unicode": "U+002F", "text": "/", "note": "" }, { "modNumber": 1, "name": "Shift", "unicode": "U+002F", "text": "/", "note": "" } ] },
-        { "vk": 106, "vkName": "Multiply", "usLegend": "*", "states": [ { "modNumber": 0, "name": "Normal", "unicode": "U+002A", "text": "*", "note": "" }, { "modNumber": 1, "name": "Shift", "unicode": "U+002A", "text": "*", "note": "" } ] },
-        { "vk": 109, "vkName": "Subtract", "usLegend": "-", "states": [ { "modNumber": 0, "name": "Normal", "unicode": "U+002D", "text": "-", "note": "" }, { "modNumber": 1, "name": "Shift", "unicode": "U+002D", "text": "-", "note": "" } ] }
+        { "vk": 9, "vkName": "Tab", "usLegend": "Tab", "states": [ { "modNumber": 0, "name": "Slot0", "unicode": "U+0009", "text": "\t", "note": "" }, { "modNumber": 1, "name": "Slot1", "unicode": "U+0009", "text": "\t", "note": "" } ] },
+        { "vk": 107, "vkName": "Add", "usLegend": "+", "states": [ { "modNumber": 0, "name": "Slot0", "unicode": "U+002B", "text": "+", "note": "" }, { "modNumber": 1, "name": "Slot1", "unicode": "U+002B", "text": "+", "note": "" } ] },
+        { "vk": 111, "vkName": "Divide", "usLegend": "/", "states": [ { "modNumber": 0, "name": "Slot0", "unicode": "U+002F", "text": "/", "note": "" }, { "modNumber": 1, "name": "Slot1", "unicode": "U+002F", "text": "/", "note": "" } ] },
+        { "vk": 106, "vkName": "Multiply", "usLegend": "*", "states": [ { "modNumber": 0, "name": "Slot0", "unicode": "U+002A", "text": "*", "note": "" }, { "modNumber": 1, "name": "Slot1", "unicode": "U+002A", "text": "*", "note": "" } ] },
+        { "vk": 109, "vkName": "Subtract", "usLegend": "-", "states": [ { "modNumber": 0, "name": "Slot0", "unicode": "U+002D", "text": "-", "note": "" }, { "modNumber": 1, "name": "Slot1", "unicode": "U+002D", "text": "-", "note": "" } ] }
     ] },
     { "index": 3, "cStates": 1, "cbEntry": 4, "entryCount": 10, "entries": [
-        { "vk": 96, "vkName": "Numpad 0", "usLegend": "0", "states": [ { "modNumber": 0, "name": "Normal", "unicode": "U+0030", "text": "0", "note": "" } ] },
-        { "vk": 97, "vkName": "Numpad 1", "usLegend": "1", "states": [ { "modNumber": 0, "name": "Normal", "unicode": "U+0031", "text": "1", "note": "" } ] },
-        { "vk": 98, "vkName": "Numpad 2", "usLegend": "2", "states": [ { "modNumber": 0, "name": "Normal", "unicode": "U+0032", "text": "2", "note": "" } ] },
-        { "vk": 99, "vkName": "Numpad 3", "usLegend": "3", "states": [ { "modNumber": 0, "name": "Normal", "unicode": "U+0033", "text": "3", "note": "" } ] },
-        { "vk": 100, "vkName": "Numpad 4", "usLegend": "4", "states": [ { "modNumber": 0, "name": "Normal", "unicode": "U+0034", "text": "4", "note": "" } ] },
-        { "vk": 101, "vkName": "Numpad 5", "usLegend": "5", "states": [ { "modNumber": 0, "name": "Normal", "unicode": "U+0035", "text": "5", "note": "" } ] },
-        { "vk": 102, "vkName": "Numpad 6", "usLegend": "6", "states": [ { "modNumber": 0, "name": "Normal", "unicode": "U+0036", "text": "6", "note": "" } ] },
-        { "vk": 103, "vkName": "Numpad 7", "usLegend": "7", "states": [ { "modNumber": 0, "name": "Normal", "unicode": "U+0037", "text": "7", "note": "" } ] },
-        { "vk": 104, "vkName": "Numpad 8", "usLegend": "8", "states": [ { "modNumber": 0, "name": "Normal", "unicode": "U+0038", "text": "8", "note": "" } ] },
-        { "vk": 105, "vkName": "Numpad 9", "usLegend": "9", "states": [ { "modNumber": 0, "name": "Normal", "unicode": "U+0039", "text": "9", "note": "" } ] }
+        { "vk": 96, "vkName": "Numpad 0", "usLegend": "0", "states": [ { "modNumber": 0, "name": "Slot0", "unicode": "U+0030", "text": "0", "note": "" } ] },
+        { "vk": 97, "vkName": "Numpad 1", "usLegend": "1", "states": [ { "modNumber": 0, "name": "Slot0", "unicode": "U+0031", "text": "1", "note": "" } ] },
+        { "vk": 98, "vkName": "Numpad 2", "usLegend": "2", "states": [ { "modNumber": 0, "name": "Slot0", "unicode": "U+0032", "text": "2", "note": "" } ] },
+        { "vk": 99, "vkName": "Numpad 3", "usLegend": "3", "states": [ { "modNumber": 0, "name": "Slot0", "unicode": "U+0033", "text": "3", "note": "" } ] },
+        { "vk": 100, "vkName": "Numpad 4", "usLegend": "4", "states": [ { "modNumber": 0, "name": "Slot0", "unicode": "U+0034", "text": "4", "note": "" } ] },
+        { "vk": 101, "vkName": "Numpad 5", "usLegend": "5", "states": [ { "modNumber": 0, "name": "Slot0", "unicode": "U+0035", "text": "5", "note": "" } ] },
+        { "vk": 102, "vkName": "Numpad 6", "usLegend": "6", "states": [ { "modNumber": 0, "name": "Slot0", "unicode": "U+0036", "text": "6", "note": "" } ] },
+        { "vk": 103, "vkName": "Numpad 7", "usLegend": "7", "states": [ { "modNumber": 0, "name": "Slot0", "unicode": "U+0037", "text": "7", "note": "" } ] },
+        { "vk": 104, "vkName": "Numpad 8", "usLegend": "8", "states": [ { "modNumber": 0, "name": "Slot0", "unicode": "U+0038", "text": "8", "note": "" } ] },
+        { "vk": 105, "vkName": "Numpad 9", "usLegend": "9", "states": [ { "modNumber": 0, "name": "Slot0", "unicode": "U+0039", "text": "9", "note": "" } ] }
     ] }
   ],
   "ligatures": [

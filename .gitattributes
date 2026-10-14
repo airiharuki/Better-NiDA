@@ -1,0 +1,5 @@
+# Normalise line endings: PowerShell scripts are Windows-native, JSON stays LF.
+*.ps1   text eol=crlf
+*.json  text eol=lf
+*.csv   text eol=crlf
+*.md    text eol=lf
