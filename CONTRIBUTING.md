@@ -167,6 +167,22 @@ judge it as MAJOR or MINOR, not PATCH, even though the diff may look small.
 
 Git tags follow the format: `v<MAJOR>.<MINOR>.<PATCH>` (e.g., `v0.1.0`, `v0.2.0`).
 
+### Changelog
+
+[CHANGELOG.md](CHANGELOG.md) follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+grouped by release with an `[Unreleased]` section at the top.
+
+When cutting a release:
+
+1. Move everything under `[Unreleased]` into a new version heading, and add the
+   compare link at the bottom.
+2. Tag the commit: `git tag -a vX.Y.Z -m "..."`, then `git push origin vX.Y.Z`.
+3. Create the GitHub release with `gh release create`, and attach any build
+   artifacts to it.
+
+Because the layouts are generated, judge the bump by what a user types, not by
+how large the diff is - see the versioning policy above.
+
 ---
 
 ## Pull Request Process

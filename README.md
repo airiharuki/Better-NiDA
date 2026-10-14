@@ -180,6 +180,7 @@ Character names come from the official Unicode Character Database
 ```
 Better-NiDA/
 ├── REVERSE_ENGINEERING_NIDA.md   # Full technical specification
+├── CHANGELOG.md                  # Release history
 ├── nida_layout.json              # Authoritative NiDA layout spec
 ├── tables_kbd*.json / .csv       # Tables decoded from the driver DLLs
 ├── kni_layout.csv                # Behavioural probe: NiDA
@@ -288,7 +289,9 @@ Contributions are warmly welcomed! Please read:
 ## Versioning
 
 This project follows [Semantic Versioning 2.0.0](https://semver.org/) and
-[Conventional Commits](https://www.conventionalcommits.org/).
+[Conventional Commits](https://www.conventionalcommits.org/). Release history
+is in **[CHANGELOG.md](CHANGELOG.md)**, formatted per
+[Keep a Changelog](https://keepachangelog.com/).
 
 ---
 
