@@ -16,13 +16,14 @@ ligatures - as the reference specification any redesign must build on.
 
 ### Design Philosophy: Where Three Lineages Meet
 
-**Better-NiDA** aims to unite the strengths of Cambodia's key typing innovations:
+**Better-NiDA** aims to unite the strengths of Cambodia's key typing innovations with original research:
 
-- **The Standardization of Khmer NiDA**: Rooted in the national standard taught across Cambodia and embedded in everyday operating systems. Better-NiDA respects existing muscle memory—stock keys and familiar Shift chords remain fully functional and additive.
-- **The Typing Ease of Khmerism (ក្ដារចុចខ្មែរនិយម)**: Inspired by Khmerism’s ergonomic breakthroughs in fluid, fatigue-free typing—slashing heavy Shift-key strain, introducing intuitive series-shifting (via `/`), and enabling natural double-tap vowel upgrades so you can type longer without exhaustion.
+- **The Standardization of Khmer NiDA**: Rooted in the national standard taught across Cambodia and embedded in everyday operating systems. Better-NiDA respects existing muscle memory—every stock key and familiar Shift chord remains fully functional and additive.
+- **The Ergonomic Ease of Khmerism (ក្ដារចុចខ្មែរនិយម)**: Inspired by Khmerism’s focus on fluid, fatigue-free typing—minimizing heavy Shift contortions and prioritizing finger comfort so typists can write long texts without strain.
 - **The Smart Sequencing of Khmer Angkor**: Drawing from the intelligent rule-based sequencing and contextual handling pioneered by the Khmer Angkor layout (Keyman / SIL) to resolve clusters cleanly into canonical Unicode.
+- **Better-NiDA's Original Research**: Introducing original ergonomic mechanisms, notably the **universal slash series switch (`/`)**—an original invention allowing typists to toggle consonant series and register shifters effortlessly as a trailing key without chording Shift—alongside additive double-tap vowel upgrades and zero-displacement layer mapping.
 
-> **The Better-NiDA Aim:** The nationwide muscle-memory of **NiDA**, the ergonomic typing ease of **Khmerism**, and the intelligent sequencing of **Khmer Angkor**.
+> **The Better-NiDA Aim:** The nationwide muscle-memory of **NiDA**, the ergonomic typing ease of **Khmerism**, and the intelligent sequencing of **Khmer Angkor**, powered by **Better-NiDA's original research**.
 
 ---
 
@@ -183,7 +184,7 @@ To address these inefficiencies, we are prototyping **Better-NiDA "Midpoint"** (
   - Runs natively on all platforms including macOS `.keylayout` with zero display latency.
 
 - **Sequence Layer (Input Method / IME-Buffered)**:
-  - **Universal Series Flip (`/`)**: Typing a consonant followed by `/` switches series or adds register shifters without holding Shift.
+  - **Universal Series Flip (`/`)**: An original Better-NiDA innovation—typing a base consonant followed by trailing `/` switches its series or appends appropriate register shifters (e.g. muusikatoan/traysap) without holding Shift.
   - **Additive Double-Tap Upgrades**: Typing a vowel twice upgrades it to its long or composite counterpart (e.g., `ii` $\rightarrow$ `ី`, `uu` $\rightarrow$ `ូ`, `aa` $\rightarrow$ `ាំ`).
   - Preserves 100% of stock Shift chords for total backwards compatibility.
 
