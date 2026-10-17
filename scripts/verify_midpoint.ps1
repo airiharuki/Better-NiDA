@@ -89,9 +89,10 @@ Write-Output "=== gate 2: additive compatibility ==="
 # Guardrail 3 of the source spec. Stock chords must keep working so typists can
 # mix chorded and sequence input. Shift+J is the single documented exception.
 #
-# Uppercase in the keystroke notation means "that letter with Shift", which only
-# exists for A-Z. Non-letter Shift chords (digits, ; ' , .) cannot be expressed
-# this way and are checked structurally against the static layers further down.
+# Expected values come from the raw key objects, NOT from Get-Stock. An earlier
+# version compared the legend lookup against itself, which cannot detect a lost
+# key - and a key WAS lost: usLegend is not unique, because the numpad period
+# also reads '.', so a legend-keyed lookup silently dropped the Khmer period.
 
 $regressions = New-Object System.Collections.ArrayList
 $shiftTested = 0
@@ -99,9 +100,10 @@ foreach ($k in $stock.keys) {
     $legend = $k.usLegend
     if ($legend -notmatch '^[A-Z]$') { continue }
     if ($STATIC_SHIFT.ContainsKey($legend)) { continue }   # Rule 2, intentional
+    $raw = $k.chars.Shift
+    if (-not $raw -or -not $raw.text) { continue }
     $shiftTested++
-    $want = Get-Stock $legend 'Shift'
-    if (-not $want) { continue }
+    $want = @($raw.text.ToCharArray() | ForEach-Object { [int]$_ })
     $res = ResolveKeys ([string]$legend)
     $got = (($res.Emitted | ForEach-Object { '{0:X4}' -f $_ }) -join ' ')
     $wantHex = (($want | ForEach-Object { '{0:X4}' -f $_ }) -join ' ')
@@ -109,25 +111,52 @@ foreach ($k in $stock.keys) {
 }
 Check ("{0} letter Shift chords preserved" -f $shiftTested) ($regressions.Count -eq 0) ($regressions -join '; ')
 
-# Unshifted keys must be preserved, with the three documented exceptions.
 $normalRegressions = New-Object System.Collections.ArrayList
 $normalTested = 0
-foreach ($k in $stock.keys) {
+
+# usLegend is not unique. The numpad period is also labelled '.', so 49 keys
+# yield 48 legends. A legend-keyed resolver can only return one of them, and we
+# keep the first, which is the main-area key carrying U+17D4/U+17D5. The numpad
+# key's ASCII comma and period are therefore not reachable through the engine.
+# Both remain reachable elsewhere - AltGr+, gives the comma, AltGr+. the period -
+# so nothing is lost from the layout, only from the legend-keyed lookup.
+#
+# This is a documented, named exclusion rather than a silent one.
+$seen = @{}
+$droppedIdx = @{}
+$dropped = New-Object System.Collections.ArrayList
+for ($ki = 0; $ki -lt $stock.keys.Count; $ki++) {
+    $legend = $stock.keys[$ki].usLegend
+    if ($seen.ContainsKey($legend)) {
+        $raw = $stock.keys[$ki].chars.Normal
+        $cps = if ($raw -and $raw.text) { ($raw.text.ToCharArray() | ForEach-Object { '{0:X4}' -f [int]$_ }) -join '+' } else { '(empty)' }
+        [void]$dropped.Add(("{0} -> {1}" -f $legend, $cps))
+        $droppedIdx[$ki] = $true
+        continue
+    }
+    $seen[$legend] = $true
+}
+
+for ($ki = 0; $ki -lt $stock.keys.Count; $ki++) {
+    if ($droppedIdx.ContainsKey($ki)) { continue }
+    $k = $stock.keys[$ki]
     $legend = $k.usLegend
-    # Legend letters are uppercase. Passing them through unchanged would make
-    # the resolver read them as Shift chords, so this gate must lower-case.
     $chars = (Legend-To-Chars $legend).ToLower()
     if ($chars.Length -ne 1) { continue }
     if ($STATIC_NORMAL.ContainsKey($chars)) { continue }
-    $want = Get-Stock $chars 'Normal'
-    if (-not $want) { continue }
+    $raw = $k.chars.Normal
+    if (-not $raw -or -not $raw.text) { continue }
     $normalTested++
+    $want = @($raw.text.ToCharArray() | ForEach-Object { [int]$_ })
     $res = ResolveKeys $chars
     $got = (($res.Emitted | ForEach-Object { '{0:X4}' -f $_ }) -join ' ')
     $wantHex = (($want | ForEach-Object { '{0:X4}' -f $_ }) -join ' ')
     if ($got -ne $wantHex) { [void]$normalRegressions.Add(("{0}: want {1} got {2}" -f $legend, $wantHex, $got)) }
 }
 Check ("{0} unshifted keys preserved (except ] and \)" -f $normalTested) ($normalRegressions.Count -eq 0) ($normalRegressions -join '; ')
+if ($dropped.Count -gt 0) {
+    Write-Output ("  NOTE  {0} key(s) dropped by the duplicate-legend lookup: {1}" -f $dropped.Count, ($dropped -join ', '))
+}
 
 # Non-letter Shift chords are untouched by every sequence rule, so they must be
 # byte-identical to stock. Verified directly on the static layers.

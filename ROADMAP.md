@@ -31,26 +31,46 @@ Not done:
 
 ## 2. Honest accounting: what Midpoint buys and costs
 
-Written before generating anything, so the project does not oversell itself.
+Measured with `scripts/score_midpoint.ps1`, which inverts the engine: given text,
+it finds the cheapest way to type it, as a shortest-path search rather than
+greedy. 213 characters of hand-written Khmer (see the caveat below).
 
-| Goal | Midpoint's effect | Measured? |
-| :-- | :-- | :-- |
-| Shift usage | Large reduction claimed (24.5% → 2.5%) | **No.** Hand-traced on 3 words only |
-| Raw keystroke count | **Goes up.** ~37% more keys on the traced words | Partly |
-| Character coverage | Unchanged. Still 118 characters | Yes |
-| Typist retraining | Near zero. 100% of unshifted A–Z preserved | Yes, gated |
-| Typing lag | 31 of 49 keys pending on Linux/Windows; 0 on macOS | Yes |
+| | stock NiDA | Midpoint | |
+| :-- | --: | --: | :-- |
+| keypresses | 211 | 245 | **+16.1%** |
+| needing Shift | 38 | 4 | **−89.5%** |
+| needing AltGr | 5 | 5 | — |
+| total presses | 254 | 254 | — |
+| **KSPC** | **1.192** | **1.192** | **0.0%** |
+| Shift share of keys | 18.0% | 1.6% | — |
 
-**Midpoint trades keystroke count for Shift.** It wins on KSPC and loses on raw
-keys. Whether that is the right trade is a question for typists, not for us,
-and it is testable — see 3.1.
+**The headline result is that Midpoint is a wash on KSPC.** It removes almost
+every mandatory `Shift` press, then spends precisely those keystrokes on extra
+keys to do it. Total effort is identical to three decimal places.
 
-Two things Midpoint is genuinely good at, independent of the above:
+That does not make it useless — it relocates the effort from modifier fatigue to
+keystroke count, which some typists will prefer and some will not. But it is a
+different proposition from the one the research claimed, and the variant should
+be described that way rather than as a speedup.
 
-- `ំ` and `ះ` move to unshifted `]` and `\`. They are the most common
-  word-final marks in Khmer, so this removes a Shift press almost every word.
+The baseline `Shift` share measures 18.0% here, against the 24.5% the research
+spec assumed. Different corpus, different method; the direction agrees but the
+figures are not interchangeable.
+
+**Caveat, and it is a large one.** This corpus is hand-written and 213
+characters long. It is not frequency-weighted and cannot be trusted as a
+representative sample. It is enough to falsify a claim, which is what it was
+built for; it is not enough to support one. See 3.1.
+
+Two things Midpoint does that hold regardless of the above, because they are not
+about volume:
+
+- `ំ` and `ះ` move to unshifted `]` and `\`. They are the most common word-final
+  marks in Khmer, so this removes a `Shift` press almost every word.
 - `Shift+J` can no longer produce a stray `ញ` mid-cluster, which was causing
   rollover typos.
+- 100% of unshifted A–Z is preserved, so retraining is near zero. Gated, not
+  asserted.
 
 ---
 
@@ -58,19 +78,25 @@ Two things Midpoint is genuinely good at, independent of the above:
 
 ### 3.1 Measure the claim first
 
-Cheapest item on the list, and it gates everything after it. If Midpoint does
-not actually reduce Shift, there is no reason to generate three platform files.
+**Done.** `scripts/score_midpoint.ps1` inverts the engine: given text, it finds
+the cheapest way to type it, as a shortest-path search rather than greedy, and
+reports keypresses, modifier load, and KSPC for stock NiDA and Midpoint side by
+side. Ties in cost break toward fewer modifier presses, which is the axis the two
+layouts actually compete on.
 
-- [ ] Add an inverse mode to the engine: given text, find the cheapest
-      keystrokes, and report the Shift rate. The engine already resolves
-      keystrokes → characters; this inverts it.
-- [ ] Implement it as a proper shortest-path search, not greedy. Greedy will
-      pick `Shift` when a sequence is cheaper and will understate our own gain.
-- [ ] Run it on the smoke corpus to sanity-check, then on a real corpus.
-- [ ] Re-measure after every rule change. Publish the numbers, including the
-      ones that make Midpoint look worse.
+The result is in section 2, and it is not the one the research predicted: KSPC is
+identical, because the `Shift` presses Midpoint saves are exactly the extra keys
+it costs.
 
-This needs no corpus to *build* — only to trust. That is why it goes first.
+- [x] Inverse mode on the engine, as a shortest-path search
+- [x] Report keypresses, modifier load, KSPC and Shift share, both layouts
+- [x] Correct the claim in section 2 rather than re-running until it looked better
+- [ ] **Re-measure on a real corpus.** The 213-character sample can falsify a
+      claim but cannot support one. Everything downstream inherits this caveat.
+- [ ] Re-measure after every future rule change, and publish the delta
+
+Because the verdict is "a wash on volume, better on fatigue", the remaining
+question is subjective and needs people, not more arithmetic: 3.5.
 
 ### 3.2 Linux — the reference target
 
@@ -229,11 +255,19 @@ deliver it** — it requires an IME. See section 6, question 1.
 
 | Risk | Consequence | Mitigation |
 | :-- | :-- | :-- |
-| Midpoint does not reduce real-world Shift load | The variant is not worth shipping | 3.1 before any platform work |
+| Midpoint does not reduce total effort | It is a lateral move, not an improvement | **Partly realised.** KSPC is a wash; only typists can say if the trade is worth it (3.5) |
+| A 213-character hand-written corpus misleads us | Every number here is provisional | 3.1 re-measure on a real corpus before any release |
 | m17n prefix semantics diverge from the engine | Silent corruption on Linux only | Generate from the engine; cross-check both directions |
 | Sequence rules feel slower than Shift | Typists revert to stock | 3.5 typist testing before promotion |
 | `Shift+AltGr` for second series is too awkward | macOS variant underperforms | Test it early; it is a one-line change if rejected |
 | Nothing is tested on real hardware | Unknown unknowns, as now | 3.5 |
+
+**A known lossy case, recorded so it is not rediscovered as a mystery:** `usLegend`
+is not unique in `nida_layout.json`. The numpad period is also labelled `.`, so
+49 keys yield 48 legends. A legend-keyed lookup can only return one of them. The
+engine keeps the main-area key (U+17D4 / U+17D5) and the numpad key's ASCII comma
+and period are unreachable *through the engine* — both remain reachable on the
+layout itself via `AltGr+,` and `AltGr+.`.
 
 ---
 

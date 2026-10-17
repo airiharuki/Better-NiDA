@@ -58,15 +58,33 @@ $SHIFTER_TRAYSAP     = 0x17CA
 # --- load stock NiDA ---------------------------------------------------------
 
 $stock = Get-Content $Spec -Raw -Encoding UTF8 | ConvertFrom-Json
+
+# usLegend is NOT unique: 49 keys yield only 48 distinct legends, because the
+# numeric-keypad period is also labelled '.'. Collapsing them loses a character -
+# the main keyboard period carries U+17D4/U+17D5, the numpad one carries an
+# ASCII comma and period.
+#
+# So store every candidate per legend and let Get-Stock take the first one that
+# actually has output for the requested state. First wins, and the main-area key
+# is listed first, which keeps the Khmer period and drops the numpad duplicate.
 $stockByKey = @{}
-foreach ($k in $stock.keys) { $stockByKey[$k.usLegend] = $k }
+foreach ($k in $stock.keys) {
+    $legend = $k.usLegend
+    if (-not $stockByKey.ContainsKey($legend)) { $stockByKey[$legend] = New-Object System.Collections.ArrayList }
+    [void]$stockByKey[$legend].Add($k)
+}
 
 function Get-Stock($key, $state) {
-    $k = $stockByKey[$key]
-    if (-not $k) { return $null }
-    $cell = $k.chars.$state
-    if (-not $cell -or -not $cell.text) { return $null }
-    return ,@($cell.text.ToCharArray() | ForEach-Object { [int]$_ })
+    # The spacebar's legend is 'Space', but a resolver works in characters and
+    # hands us ' '. Normalise here so every caller is covered.
+    $legend = if ($key -eq ' ') { 'Space' } else { $key }
+    if (-not $stockByKey.ContainsKey($legend)) { return $null }
+    foreach ($k in $stockByKey[$legend]) {
+        $cell = $k.chars.$state
+        if (-not $cell -or -not $cell.text) { continue }
+        return ,@($cell.text.ToCharArray() | ForEach-Object { [int]$_ })
+    }
+    return $null
 }
 
 # --- Midpoint static overrides ----------------------------------------------
