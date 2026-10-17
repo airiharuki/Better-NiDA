@@ -123,23 +123,15 @@ function Measure-Text($index, [string]$text, [hashtable]$charCost) {
     $unreachable = @{}
 
     for ($i = 0; $i -lt $n; $i++) {
-        # Record the dead end BEFORE the continue. Placing it after meant the
-        # very positions that were unreachable were the ones never reported,
-        # so a broken index produced a silent run of zeros and an empty
-        # diagnostic - which is exactly what happened.
-        if ($best[$i] -eq $INF) {
-            if ($i -gt 0) {
-                $cp = [int]$text[$i]
-                if (-not $unreachable.ContainsKey($cp)) { $unreachable[$cp] = 0 }
-                $unreachable[$cp]++
-            }
-            continue
-        }
+        if ($best[$i] -eq $INF) { continue }
+
         $take = [Math]::Min($maxLen, $n - $i)
+        $any = $false
         for ($len = 1; $len -le $take; $len++) {
             $piece = $text.Substring($i, $len)
             $cand = $index[$piece]
             if (-not $cand) { continue }
+            $any = $true
             $to = $i + $len
             $cost = $best[$i] + $cand.Cost
             if ($cost -lt $best[$to]) {
@@ -148,33 +140,63 @@ function Measure-Text($index, [string]$text, [hashtable]$charCost) {
                 $prevIdx[$to] = $len
             }
         }
+
+        # No candidate of any length starts here, so this character cannot be
+        # typed by this layout at all. Skip it at zero cost and record it.
+        #
+        # Treating it as a hard dead end instead was wrong for a real corpus:
+        # Khmer text legitimately mixes in Latin words, Thai, punctuation and
+        # emoji, and one of those would abort the whole measurement and report
+        # every later character as unreachable. That is how a 50k sample
+        # produced a row of zeros.
+        if (-not $any) {
+            $to = $i + 1
+            if ($best[$i] -lt $best[$to]) {
+                $best[$to] = $best[$i]
+                $prev[$to] = $i
+                $prevIdx[$to] = 0     # 0 marks a skip, not a keystroke
+            }
+            $cp = [int]$text[$i]
+            if (-not $unreachable.ContainsKey($cp)) { $unreachable[$cp] = 0 }
+            $unreachable[$cp]++
+        }
     }
 
     # Walk the path back and recount, so the breakdown matches the chosen route.
-    $keys = 0; $shift = 0; $alt = 0; $steps = 0
+    $keys = 0; $shift = 0; $alt = 0; $skipped = 0
     $pos = $n
     while ($pos -gt 0 -and $prev[$pos] -ge 0) {
         $len = $prevIdx[$pos]
-        $piece = $text.Substring($prev[$pos], $len)
-        $cand = $index[$piece]
-        if ($cand) {
-            $keys += $cand.Keys; $shift += $cand.Shift; $alt += $cand.Alt
-            if ($charCost) {
-                if ($charCost.ContainsKey($piece)) { $charCost[$piece] += 1 }
-                else { $charCost[$piece] = 1 }
+        if ($len -gt 0) {
+            $piece = $text.Substring($prev[$pos], $len)
+            $cand = $index[$piece]
+            if ($cand) {
+                $keys += $cand.Keys; $shift += $cand.Shift; $alt += $cand.Alt
+                if ($charCost) {
+                    if ($charCost.ContainsKey($piece)) { $charCost[$piece] += 1 }
+                    else { $charCost[$piece] = 1 }
+                }
             }
         }
-        $steps++
+        else {
+            $skipped++
+        }
         $pos = $prev[$pos]
     }
     $complete = ($best[$n] -ne $INF)
+    $typed = $n - $skipped
 
     return [PSCustomObject]@{
-        Complete = $complete
-        Chars = $n
-        Keys = $keys; Shift = $shift; Alt = $alt; Steps = $steps
-        Modifiers = $shift + $alt
-        KSPC = if ($n -gt 0) { ($keys + $shift + $alt) / $n } else { 0 }
+        Complete   = $complete
+        Chars      = $n
+        Typed      = $typed
+        Skipped    = $skipped
+        Keys       = $keys; Shift = $shift; Alt = $alt
+        Modifiers  = $shift + $alt
+        # KSPC is per typed character. Including skipped ones would dilute the
+        # ratio with characters no layout could ever produce.
+        KSPC       = if ($typed -gt 0) { ($keys + $shift + $alt) / $typed } else { 0 }
+        KeysPerChar= if ($typed -gt 0) { $keys / $typed } else { 0 }
         ShiftShare = if ($keys -gt 0) { 100 * $shift / $keys } else { 0 }
         Unreachable = $unreachable
     }
@@ -195,7 +217,15 @@ else {
 }
 
 $text = $text -replace "`r`n", "`n" -replace "`r", "`n"
-$text = $text.TrimEnd("`n")
+$lineBreaks = ([regex]::Matches($text, "`n")).Count
+# Line breaks are file formatting, not typed content, and a layout cannot
+# produce one. Leaving them in kills the shortest path at the first break and
+# then reports every later character as unreachable, which is what happened.
+$text = ($text -replace "`n", '')
+$text = $text.Trim()
+if ($lineBreaks -gt 0) {
+    Write-Output ("note: removed {0} line break(s) before scoring; a layout cannot type one" -f $lineBreaks)
+}
 
 # --- run both ---------------------------------------------------------------
 
@@ -208,13 +238,16 @@ $midM    = Measure-Text $midIndex   $text $null
 Write-Output "corpus : $Corpus"
 Write-Output "chars  : $($text.Length)"
 Write-Output ""
-Write-Output "Cost model: KSPC = (keypresses + modifier presses) / characters."
+Write-Output "Cost model: KSPC = (keypresses + modifier presses) / typeable characters."
 Write-Output "A Shift chord therefore costs 2. See ROADMAP.md section 2."
 Write-Output ""
 Write-Output "=== side by side ==="
 '{0,-22} {1,10} {2,10}' -f '', 'stock NiDA', 'Midpoint'
 Write-Output ('-' * 44)
+'{0,-22} {1,10} {2,10}' -f 'typeable chars',    $stockM.Typed,      $midM.Typed
+'{0,-22} {1,10} {2,10}' -f 'untypable (skipped)', $stockM.Skipped,  $midM.Skipped
 '{0,-22} {1,10} {2,10}' -f 'keypresses',       $stockM.Keys,       $midM.Keys
+'{0,-22} {1,10:N3} {2,10:N3}' -f 'keys per char', $stockM.KeysPerChar, $midM.KeysPerChar
 '{0,-22} {1,10} {2,10}' -f '  needing Shift',  $stockM.Shift,      $midM.Shift
 '{0,-22} {1,10} {2,10}' -f '  needing AltGr',  $stockM.Alt,        $midM.Alt
 '{0,-22} {1,10} {2,10}' -f 'total presses',    ($stockM.Keys + $stockM.Modifiers), ($midM.Keys + $midM.Modifiers)
