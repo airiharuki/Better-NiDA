@@ -1,197 +1,222 @@
 # Better-NiDA Roadmap
 
-How to go about fixing the Khmer NiDA layout: what can be fixed, what cannot,
-what order to do it in, and what each step needs.
+Two tracks now. **Midpoint** is the variant being shipped, and it is far enough
+along to plan concretely. Everything else Midpoint does not solve is listed
+honestly in section 5 rather than quietly dropped.
 
 ---
 
-## 1. First, the scoping: what a keyboard layout can and cannot fix
+## 1. Where we are
 
-This determines what the project is worth doing at all, so it comes first.
+Done and verified:
 
-A keyboard layout maps key + modifier to code points. That is *all* it does.
-It can control **which characters are reachable and how much effort each
-takes**. It cannot control anything downstream of the keypress.
-
-| Problem | Fixable by a layout? |
-| :-- | :-- |
-| A character cannot be typed at all | **Yes** — add a key or a level |
-| Typing a common character needs Shift + a reach across the keyboard | **Yes** — move it |
-| The layout produces two code points, the Linux XKB stack drops the second | **Yes** — different platform target |
-| Khmer text renders with wrong coeng stacking or broken shaping | **No** — needs shaping in the text engine |
-| An app mishandles `U+200B`, shows it as a box, or breaks on `U+17D2` | **No** — needs an input method or an app fix |
-| Word boundaries are wrong because nothing auto-inserts `U+200B` | **No** — needs an IME |
-
-The last four are real problems people attribute to "the keyboard layout". They
-are not layout problems, and no amount of remapping fixes them. If Better-NiDA
-is going to address them, the deliverable is an **input method**, not a layout —
-a much larger project, and a legitimate one, but a different one.
-
-**Decision to make early:** is Better-NiDA a better *layout*, or a better
-*typing engine*? Doing both doubles the work and the maintenance. The layout
-scope is achievable and verifiable now; the engine scope needs a rendering and
-IME architecture nobody has designed here yet.
-
----
-
-## 2. Where we are
-
-Done, and verified on Windows:
-
-- `kbdkni.dll` and `kbdkhmr.dll` decoded from their binary tables, and
-  cross-checked against the Windows `ToUnicodeEx` API (144/144 per layout, plus
-  4/4 on a Control probe).
-- An authoritative spec, `nida_layout.json`, from which macOS `.keylayout` and
-  Linux XKB files are generated.
-- A reproducible pipeline: `scripts/verify_all.ps1` regenerates and re-checks
-  everything, and the artifacts are byte-identical run to run.
+- `kbdkni.dll` and `kbdkhmr.dll` decoded from their binary tables, cross-checked
+  against the Windows `ToUnicodeEx` API. 144/144 per layout, plus 4/4 Control.
+- `nida_layout.json` as the authoritative spec, generating macOS and Linux files
+  reproducibly. Byte-identical run to run.
+- **`scripts/midpoint_engine.ps1`** — Midpoint defined as data, with a
+  longest-prefix resolver. `scripts/verify_midpoint.ps1` gates it: 11 checks,
+  all passing.
 
 Not done:
 
+- **No platform file has been generated for Midpoint.** The engine exists;
+  nothing consumes it yet.
 - **Nothing has been loaded on a real Mac or Linux machine.**
-- The reverse-engineering toolchain is Windows-only and not portable.
-- `linux/m17n/` has never been run through `m17n-db`.
+- No corpus, so **no ergonomic claim in this project is measured.**
+- Keyman is not installed, so the Windows target cannot be functionally tested
+  even though this host is Windows.
 
 ---
 
-## 3. Phase 1 — Make it verifiable (do this first, before changing anything)
+## 2. Honest accounting: what Midpoint buys and costs
 
-Nothing else is worth building on top of an unverified base.
+Written before generating anything, so the project does not oversell itself.
 
-- [ ] **Test on macOS.** Install `install-nida-macos.command`, run the checklist,
-      open a Testing Report issue.
-- [ ] **Test on Linux.** Same via `linux/install.sh` and `linux/verify.sh`.
-- [ ] **Validate the m17n input method** with `m17n-db`, which must print
-      nothing.
-- [ ] **Find two or three Khmer typists** who will test-drive candidates. Not
-      optional for Phase 3, and worth recruiting now.
+| Goal | Midpoint's effect | Measured? |
+| :-- | :-- | :-- |
+| Shift usage | Large reduction claimed (24.5% → 2.5%) | **No.** Hand-traced on 3 words only |
+| Raw keystroke count | **Goes up.** ~37% more keys on the traced words | Partly |
+| Character coverage | Unchanged. Still 118 characters | Yes |
+| Typist retraining | Near zero. 100% of unshifted A–Z preserved | Yes, gated |
+| Typing lag | 31 of 49 keys pending on Linux/Windows; 0 on macOS | Yes |
 
-Exit criterion: one confirmed-working install on each OS, and a name against
-each open bug.
+**Midpoint trades keystroke count for Shift.** It wins on KSPC and loses on raw
+keys. Whether that is the right trade is a question for typists, not for us,
+and it is testable — see 3.1.
 
----
+Two things Midpoint is genuinely good at, independent of the above:
 
-## 4. Phase 2 — Close the objective gaps
-
-These need no research and no debate: characters are simply missing. Anyone
-who hits them is typing around a real hole.
-
-### 2.1 The fifth modifier level
-
-NiDA's main table declares **4 modifier states**; legacy Khmer declares **5**.
-The missing level is `Shift+AltGr`, and it is where legacy Khmer keeps the
-entire `U+19E0..U+19FF` symbol block. **45 Khmer-block characters reachable in
-legacy Khmer are unreachable in NiDA**, including two real consonants:
-
-- `ឝ` SHA (U+179D) and `ឞ` SSO (U+179E) — **consonants NiDA cannot type**
-- `៝` ATTHACAN (U+17DD)
-- the 9 `LEK ATTAK` symbols (U+17F0..17F9)
-- the 32 symbols U+19E0..19FF (PATHAMASAT, KOET and ROC families, TUTEYASAT)
-
-The generator already emits 5-level layouts for the legacy variant, so this is
-a data change, not a code change.
-
-- [ ] Decide the exact key assignments for the new level
-- [ ] Add the level to the NiDA variant in the generator
-- [ ] Place `ឝ` and `ឞ` somewhere reachable — this needs a decision, since it
-      means displacing something
-- [ ] Re-run the chain, confirm the layout files grow the expected characters
-
-### 2.2 Unblock authoring (architecture gap)
-
-Right now the pipeline is one-directional:
-
-```
-kbdkni.dll  ->  nida_layout.json  ->  macos + Linux layouts
-```
-
-The spec is a *dump* of Microsoft's driver. Better-NiDA wants to *author* a
-layout and emit platforms from it, which means the middle needs to become an
-input rather than a by-product.
-
-- [ ] Define a small, readable layout source format (YAML or JSON) that a human
-      can edit
-- [ ] Have the generator accept either a driver dump or an authored file
-- [ ] Keep the existing pipeline able to reproduce the NiDA dump, so the
-      authored NiDA is provably identical to the driver's
-
-### 2.3 Linux ligature parity
-
-On Linux, XKB gives one character per key per level, so the five ligatures
-(`Shift+A`, `Shift+V`, `Shift+;`, `,`, `Shift+,`) emit only their first code
-point. macOS has no such limit.
-
-- [ ] Validate `linux/m17n/` properly
-- [ ] Consider QMK/ZMK as a Linux path that can do multi-character output
-- [ ] Document the limitation prominently — it is already in `linux/README.md`
+- `ំ` and `ះ` move to unshifted `]` and `\`. They are the most common
+  word-final marks in Khmer, so this removes a Shift press almost every word.
+- `Shift+J` can no longer produce a stray `ញ` mid-cluster, which was causing
+  rollover typos.
 
 ---
 
-## 5. Phase 3 — Ergonomics
+## 3. Critical path
 
-Everything here requires evidence. None of it should be done on intuition.
+### 3.1 Measure the claim first
 
-### 5.1 Get frequency data
+Cheapest item on the list, and it gates everything after it. If Midpoint does
+not actually reduce Shift, there is no reason to generate three platform files.
 
-There is no input to this phase without it. Candidate sources:
+- [ ] Add an inverse mode to the engine: given text, find the cheapest
+      keystrokes, and report the Shift rate. The engine already resolves
+      keystrokes → characters; this inverts it.
+- [ ] Implement it as a proper shortest-path search, not greedy. Greedy will
+      pick `Shift` when a sequence is cheaper and will understate our own gain.
+- [ ] Run it on the smoke corpus to sanity-check, then on a real corpus.
+- [ ] Re-measure after every rule change. Publish the numbers, including the
+      ones that make Midpoint look worse.
 
-- Khmer Wikipedia dumps (`km.wikipedia.org`) — large, free, real prose
-- SEAlang Project — Khmer word lists and dictionaries
-- Khmer subtitle corpora, if available
+This needs no corpus to *build* — only to trust. That is why it goes first.
 
-Then build the analyser:
+### 3.2 Linux — the reference target
 
-- [ ] A script that takes a corpus and produces a character frequency table
-- [ ] A script that scores a candidate layout: keystrokes per character, share
-      of keystrokes needing Shift, finger-travel distance, home-row coverage,
-      same-finger bigram rate
+Linux goes first because m17n resolves longest-prefix sequences natively, so it
+implements Midpoint's intended semantics exactly, with no approximation.
 
-### 5.2 Candidate changes to evaluate
+- [ ] Generate `linux/m17n/nida-midpoint.mim` from the engine's rule set. The
+      sequence rules become `(seq ...)` maps; the static overrides become the
+      base map.
+- [ ] Generate `linux/nida_midpoint` XKB symbols for the **static subset only**.
+      XKB cannot express sequences — one keysym per level — so this file is the
+      no-lag fallback, not a reduced version.
+- [ ] Validate the `.mim` structurally here, and with `m17n-db` on Linux. Must be
+      silent. This has never been done for any file in this project.
+- [ ] Verify both files against the engine: every keystroke the engine resolves
+      must appear in the generated file, and vice versa.
 
-Listed as hypotheses, not recommendations. Each is a trade-off, not a fix.
+### 3.3 Windows — Keyman
 
-| Hypothesis | Trade-off |
-| :-- | :-- |
-| Flatten the consonant pairs so `ក` and `គ` need no Shift | Abandons NiDA's two-layer model entirely |
-| Move the most frequent vowels to the home row | Displaces consonants or symbols |
-| Move the real space off `Shift+Space` | Cambridges an intentional choice; Khmer word separation relies on `U+200B` |
-| Make Caps Lock do something useful | It currently cannot — Caps maps to the base layer, since Shift is already load-bearing |
+Keyman rather than AutoHotkey: an actual keyboard rather than a script layered
+over stock NiDA, and no runtime for users to install.
 
-That last row is worth pausing on: because `Shift` carries the o-series
-consonants, **Caps Lock is structurally useless on NiDA**. That is not a bug in
-our implementation, it is a consequence of the design.
+- [ ] Generate `windows/better_nida_midpoint.kmn` from the engine.
+- [ ] Validate `.kmn` syntax. Keyman is not installed here, so this is careful
+      structural checking, not a functional test. Say so plainly in the docs.
+- [ ] Keep the guardrail that matters: existing NiDA users keep `kbdkni.dll`
+      untouched. Midpoint is opt-in.
 
-### 5.3 Evaluate properly
+### 3.4 macOS — static subset only
 
-- [ ] Generate 2-3 candidate layouts from the source format
-- [ ] Score each against the corpus metrics
-- [ ] Have the typists type a fixed passage on each, timed and error-counted
-- [ ] Publish the results, including the ones that lose
+Settled by measurement, not preference. **31 of 49 keys (63%) become pending**
+under the sequence rules, and `.keylayout` cannot replace an already-emitted
+character. Dead-key emulation would mean two-thirds of the keyboard invisible
+until the next keystroke. Not shippable.
+
+- [ ] Generate `macos/Khmer Better-NiDA.keylayout` with **5 `<keyMap>` tables**,
+      which the generator already supports for the legacy variant.
+- [ ] Shift+AltGr carries the 13 second-series consonants. Stock NiDA leaves
+      that level empty (0 of 49 keys), so **nothing is displaced**.
+- [ ] Static overrides: `]`→`ំ`, `\`→`ះ`, `Shift+J`→`្`.
+- [ ] No `<actions>` element. Zero display lag, and no dead-key behaviour to
+      misfire in text fields, terminals, or remote sessions.
+
+### 3.5 Hardware verification
+
+Blocked on other people, and it is the single highest-value thing left.
+
+- [ ] macOS: install, run the checklist, open a Testing Report issue.
+- [ ] Linux: `install.sh` + `verify.sh`, and the m17n checklist.
+- [ ] Windows: load the `.kmn` in Keyman and type the test matrix by hand.
+- [ ] **Get two or three Khmer typists** to type a fixed passage on stock NiDA
+      and Midpoint, timed and error-counted. Without this, section 2's trade-off
+      is unresolved opinion.
 
 ---
 
-## 6. Phase 4 — Beyond the keyboard
+## 4. Things that must be true of the generators
 
-Only if Phase 3 shows the layout is not the bottleneck.
-
-- [ ] Auto-insert `U+200B` at syllable boundaries — impossible in a layout,
-      needs an IME
-- [ ] Hangul-style syllable composition? Khmer is not composed that way, but a
-      syllable-cluster buffer would help
-- [ ] QMK/ZMK firmware with the layout baked in
-- [ ] Windows port, so a `.keylayout`-equivalent ships to NiDA users
+- [ ] Midpoint ships **alongside** stock NiDA, never as a replacement. Existing
+      users' behaviour is unchanged.
+- [ ] `verify_all.ps1` gains the Midpoint stage, so the whole chain stays green.
+- [ ] Generated `.sh`, `.mim`, and `.keylayout` files stay pinned to LF.
+- [ ] Every platform file is generated from the engine. Nothing hand-written, or
+      the platforms will drift.
 
 ---
 
-## 7. Open questions
+## 5. What Midpoint does not solve
 
-Things worth deciding before the work starts:
+Kept deliberately, so these are not lost. None of them is addressed by the
+current engine.
 
-1. **Layout or engine?** See section 1. This is the biggest fork.
-2. **Who are the typists?** Phase 3 is worthless without Cambodian users, and
-   that is a relationship, not a task.
-3. **Is compatibility sacred?** A Better-NiDA that reassigns NiDA keys will
-   annoy existing users. A separate layout name, shipped alongside NiDA,
-   avoids forcing a choice.
-4. **Who maintains it?** The reverse-engineering is done, but the generated
-   layouts need regenerating whenever Windows ships a new `kbdkni.dll`.
+### 5.1 Typing length — the coeng ligature case
+
+Midpoint makes typing *less effortful*, not *shorter*. The lever for length is
+ligatures, and NiDA ships only 5, contributing **0.9%** of keystrokes in the
+measured baseline.
+
+The opportunity is large and cheap, because **31 of 49 keys are pending
+anyway**. Coeng `្` is 8% of characters in the baseline, and `្` + subscript
+consonant is a **contiguous two-character substring** — `្រ` inside `ព្រ` — so it
+ligates directly with no reordering.
+
+Seven entries covered an entire smoke corpus. This is orthogonal to Midpoint and
+should be a separate change, measured separately.
+
+### 5.2 Character coverage
+
+**45 Khmer-script characters reachable in legacy Khmer are unreachable in
+NiDA**, including two consonants NiDA cannot type at all: `ឝ` SHA (U+179D) and
+`ឞ` SSO (U+179E). Plus `៝` ATTHACAN, the 9 `LEK ATTAK` symbols, and all 32 of
+`U+19E0..19FF`.
+
+That is 13 characters in the Khmer block `U+1780..17FF` plus 32 in the Khmer
+Symbols block `U+19E0..19FF`. 79 characters in total are legacy-only, the rest
+being Latin punctuation and currency signs.
+
+Adding characters does not shorten or lighten typing, so this sits behind
+Midpoint in priority.
+
+### 5.3 Automatic ZWSP
+
+**16.4% of all keystrokes** in the baseline produce a `U+200B` the reader never
+perceives as content. It is the single largest win available and **no layout can
+deliver it** — it requires an IME. See section 6, question 1.
+
+---
+
+## 6. Open questions
+
+1. **How much is Midpoint actually worth?** Section 2's trade-off is hand-traced
+   on three words. 3.1 answers this properly, and it should be answered before
+   shipping rather than after.
+2. **Caps Lock as Shift.** The research spec proposes mapping Caps Lock to Shift.
+   This now looks self-defeating: its purpose is to relieve Shift load, and
+   Midpoint's entire point is reducing that load. It also makes Caps Lock
+   unusable for anything else. **Recommend deferring it.** Decide before 3.2.
+3. **The `g//` rule.** The spec maps `g` `//` to `ង៉`, which contradicts the
+   spec's own orthography section stating `អ` only ever takes `៊`. Unresolved and
+   currently unimplemented. Either it is a typo or the rule needs restating.
+4. **Who are the typists?** 3.5 is worthless without Cambodian users. That is a
+   relationship to build, not a task to tick.
+5. **Who maintains it?** Reverse-engineering is done. Regeneration whenever
+   Windows ships a new `kbdkni.dll` is somebody's ongoing job.
+
+---
+
+## 7. Risks
+
+| Risk | Consequence | Mitigation |
+| :-- | :-- | :-- |
+| Midpoint does not reduce real-world Shift load | The variant is not worth shipping | 3.1 before any platform work |
+| m17n prefix semantics diverge from the engine | Silent corruption on Linux only | Generate from the engine; cross-check both directions |
+| Sequence rules feel slower than Shift | Typists revert to stock | 3.5 typist testing before promotion |
+| `Shift+AltGr` for second series is too awkward | macOS variant underperforms | Test it early; it is a one-line change if rejected |
+| Nothing is tested on real hardware | Unknown unknowns, as now | 3.5 |
+
+---
+
+## 8. Standing constraints
+
+- `nida_layout.json`, `tables_kbdkni.json`, `tables_kbdkhmr.json`, `kni_layout.csv`
+  and `khmr_layout.csv` are immutable dumps of Microsoft's drivers. Midpoint is a
+  new derived variant, never an edit to those.
+- Every `Shift`+key chord keeps its stock NiDA character, so typists can mix
+  chorded and sequence input freely. `Shift+J` is the one documented exception.
+- `.ps1` files stay ASCII-only. Non-ASCII literals mangle into parse errors
+  under PowerShell 5.1, and are actively confusing.
+- The reverse-engineering toolchain is Windows-only and is not portable.

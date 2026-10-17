@@ -194,15 +194,21 @@ Layout efficiency and modifier load are verified and measured using **`scripts/s
 
 ## Project Roadmap
 
-The complete development strategy is detailed in **[ROADMAP.md](ROADMAP.md)**, structured into five phased milestones:
+The complete development strategy is detailed in **[ROADMAP.md](ROADMAP.md)**. The path is now driven by shipping the **Midpoint** variant:
 
-| Phase | Focus | Core Deliverables |
+| Stage | Focus | Core Deliverables |
 | :-- | :-- | :-- |
-| **Phase 1: Verifiability** | Real-world hardware testing | Validate macOS `.pkg` and Linux XKB/m17n on physical machines with native Khmer typists. |
-| **Phase 2: Shortening Text** | High-frequency ligatures | Build an authoritative Khmer corpus, rank top coeng pairs (`្រ`, `្ម`, `្ន`, `្ព`) and composite vowels, and wire them into unused slots to save ~8% of keystrokes. |
-| **Phase 3: Coverage Parity** | The 5th modifier level | Expose `Shift+AltGr` in NiDA to reclaim missing characters (`ឝ` SHA, `ឞ` SSO, `៝` ATTHACAN, lunar symbols); create an editable layout source format. |
-| **Phase 4: Ergonomics** | Geometric optimization | Score finger travel, home-row distribution, and bigram alternation to evaluate candidate key reassignments against real evidence. |
-| **Phase 5: Beyond the Keyboard** | Typing engine & auto-ZWSP | Develop an input method (IME) capable of automatic `U+200B` insertion at syllable boundaries to reclaim the 16.4% ZWSP stroke tax; port to QMK/ZMK firmware. |
+| **1. Measure** | Validate the claim | Inverse mode on `midpoint_engine.ps1`: text → cheapest keystrokes, with the real `Shift` rate. Gates everything after it. |
+| **2. Linux** | Reference target | `nida-midpoint.mim` with full sequence rules (m17n resolves longest-prefix natively), plus an XKB static-subset fallback. Validate with `m17n-db`. |
+| **3. Windows** | Keyman target | `better_nida_midpoint.kmn`, generated from the engine. Opt-in; stock `kbdkni.dll` untouched. |
+| **4. macOS** | Static subset only | A 5-`<keyMap>` `.keylayout`. Second-series consonants move to the unused `Shift+AltGr` level. No `<actions>`, so zero display lag. |
+| **5. Verify** | Real hardware | macOS, Linux and Keyman installs, then the same passage typed by Khmer typists on stock NiDA vs Midpoint. |
+
+Midpoint makes typing **less effortful, not shorter** — it trades raw keystroke count for fewer `Shift` presses. What it does *not* solve, and what comes after it:
+
+- **Coeng ligatures** — `្` + subscript is a contiguous 2-character substring, so it ligates directly. NiDA ships only 5 ligatures, worth 0.9% of keystrokes.
+- **Coverage parity** — 45 Khmer-script characters reachable in legacy Khmer are not in NiDA, including the consonants `ឝ` and `ឞ`.
+- **Auto-ZWSP** — 16.4% of keystrokes produce a `U+200B` the reader never sees. No layout can do this; it needs an IME.
 
 For deep dives into layout limits, modifier capacity, and design trade-offs, consult **[ROADMAP.md](ROADMAP.md)**.
 
