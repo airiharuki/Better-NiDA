@@ -14,6 +14,16 @@ Better-NiDA starts by fully reverse-engineering that driver down to its raw
 tables - virtual keys, modifier numbering, character maps and multi-character
 ligatures - as the reference specification any redesign must build on.
 
+### Design Philosophy: Where Three Lineages Meet
+
+**Better-NiDA** aims to unite the strengths of Cambodia's key typing innovations:
+
+- **The Standardization of Khmer NiDA**: Rooted in the national standard taught across Cambodia and embedded in everyday operating systems. Better-NiDA respects existing muscle memory—stock keys and familiar Shift chords remain fully functional and additive.
+- **The Typing Ease of Khmerism (ក្ដារចុចខ្មែរនិយម)**: Inspired by Khmerism’s ergonomic breakthroughs in fluid, fatigue-free typing—slashing heavy Shift-key strain, introducing intuitive series-shifting (via `/`), and enabling natural double-tap vowel upgrades so you can type longer without exhaustion.
+- **The Smart Sequencing of Khmer Angkor**: Drawing from the intelligent rule-based sequencing and contextual handling pioneered by the Khmer Angkor layout (Keyman / SIL) to resolve clusters cleanly into canonical Unicode.
+
+> **The Better-NiDA Aim:** The nationwide muscle-memory of **NiDA**, the ergonomic typing ease of **Khmerism**, and the intelligent sequencing of **Khmer Angkor**.
+
 ---
 
 ## Platform Requirements
@@ -156,11 +166,53 @@ likely have shipped.
 
 ---
 
+## Current Work: The "Midpoint" Hybrid Engine
+
+With stock NiDA faithfully decoded and ported to macOS and Linux, active development is focused on **improving the typing experience without breaking typists' muscle memory**. 
+
+Our analysis revealed two critical structural facts:
+1. **16.4% of all typed characters in Khmer are invisible Zero-Width Spaces (`U+200B`)**, representing a massive keystroke overhead that no pure layout can remove.
+2. **Stock NiDA has 98 completely empty modifier slots** across Control (49/49 free) and Shift+AltGr (49/49 free), meaning extensions do not need to displace existing characters.
+
+To address these inefficiencies, we are prototyping **Better-NiDA "Midpoint"** (`scripts/midpoint_engine.ps1`), a hybrid architecture split into two tiers:
+
+- **Static Layer (Zero-Lag, Universal)**:
+  - Moves high-frequency word-final marks (Nikahit `ំ` and Reahmuk `ះ`) off Shift onto unshifted `]` and `\`, moving rare independent vowels down to AltGr.
+  - Places second-series consonants on the vacant `Shift+AltGr` layer (displacing nothing).
+  - Makes `Shift+J` emit Coeng `្` as a rollover-safe modifier, eliminating accidental `ញ` during rapid subscript typing.
+  - Runs natively on all platforms including macOS `.keylayout` with zero display latency.
+
+- **Sequence Layer (Input Method / IME-Buffered)**:
+  - **Universal Series Flip (`/`)**: Typing a consonant followed by `/` switches series or adds register shifters without holding Shift.
+  - **Additive Double-Tap Upgrades**: Typing a vowel twice upgrades it to its long or composite counterpart (e.g., `ii` $\rightarrow$ `ី`, `uu` $\rightarrow$ `ូ`, `aa` $\rightarrow$ `ាំ`).
+  - Preserves 100% of stock Shift chords for total backwards compatibility.
+
+Layout efficiency and modifier load are verified and measured using **`scripts/score_layout.ps1`** and **`scripts/verify_midpoint.ps1`**.
+
+---
+
+## Project Roadmap
+
+The complete development strategy is detailed in **[ROADMAP.md](ROADMAP.md)**, structured into five phased milestones:
+
+| Phase | Focus | Core Deliverables |
+| :-- | :-- | :-- |
+| **Phase 1: Verifiability** | Real-world hardware testing | Validate macOS `.pkg` and Linux XKB/m17n on physical machines with native Khmer typists. |
+| **Phase 2: Shortening Text** | High-frequency ligatures | Build an authoritative Khmer corpus, rank top coeng pairs (`្រ`, `្ម`, `្ន`, `្ព`) and composite vowels, and wire them into unused slots to save ~8% of keystrokes. |
+| **Phase 3: Coverage Parity** | The 5th modifier level | Expose `Shift+AltGr` in NiDA to reclaim missing characters (`ឝ` SHA, `ឞ` SSO, `៝` ATTHACAN, lunar symbols); create an editable layout source format. |
+| **Phase 4: Ergonomics** | Geometric optimization | Score finger travel, home-row distribution, and bigram alternation to evaluate candidate key reassignments against real evidence. |
+| **Phase 5: Beyond the Keyboard** | Typing engine & auto-ZWSP | Develop an input method (IME) capable of automatic `U+200B` insertion at syllable boundaries to reclaim the 16.4% ZWSP stroke tax; port to QMK/ZMK firmware. |
+
+For deep dives into layout limits, modifier capacity, and design trade-offs, consult **[ROADMAP.md](ROADMAP.md)**.
+
+---
+
 ## Artifacts
 
 | File | Contents |
 | :-- | :-- |
 | [REVERSE_ENGINEERING_NIDA.md](REVERSE_ENGINEERING_NIDA.md) | Full technical specification and findings |
+| [ROADMAP.md](ROADMAP.md) | In-depth development plan, empirical baseline, and architecture trade-offs |
 | [nida_layout.json](nida_layout.json) | Machine-readable NiDA spec: 49 keys, all states, ligatures, official Unicode names |
 | [tables_kbdkni.json](tables_kbdkni.json) / [.csv](tables_kbdkni.csv) | Every table decoded directly from `kbdkni.dll` |
 | [tables_kbdkhmr.json](tables_kbdkhmr.json) / [.csv](tables_kbdkhmr.csv) | Same for the legacy Khmer layout |
@@ -200,6 +252,9 @@ Better-NiDA/
 │   ├── build_unicode_names.ps1   # Refresh official Unicode character names
 │   ├── export_nida_spec.ps1      # Build nida_layout.json
 │   ├── render_docs.ps1           # Render markdown tables from the spec
+│   ├── score_layout.ps1          # Measure stroke count and modifier load against corpus
+│   ├── midpoint_engine.ps1       # Single source of truth for the Midpoint hybrid engine
+│   ├── verify_midpoint.ps1       # Test suite for Midpoint static & sequence rules
 │   └── data/unicode_names.json   # Curated UCD names for the layouts' characters
 ├── .gitignore
 └── README.md
