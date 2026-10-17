@@ -157,6 +157,33 @@ ligates directly with no reordering.
 Seven entries covered an entire smoke corpus. This is orthogonal to Midpoint and
 should be a separate change, measured separately.
 
+#### Modifier capacity: the cost of adding ligatures is lower than expected
+
+The driver declares more modifier states than it uses. Measured occupancy:
+
+| Level | Keys carrying output |
+| :-- | :-- |
+| Normal | 49 / 49 |
+| Shift | 49 / 49 |
+| AltGr | 27 / 49 |
+| **Control** | **0 / 49** |
+| **ShiftAltGr** | **0 / 49** |
+
+That is **98 unused slots**. Ligatures do not have to displace existing
+characters — the free levels already hold them. This inverts the usual
+assumption that extending a keyboard layout means taking keys away from someone,
+and it is the reason this is cheap enough to do.
+
+There is one genuine conflict. `Shift+AltGr` is the level legacy Khmer uses for
+the whole `U+19E0..19FF` symbol block, and Midpoint's static subset already uses
+it for the 13 second-series consonants. Ligatures and those symbols compete for
+the same 49 slots; `Control` is the fallback, but reaching it costs a `Ctrl+Alt`
+chord, which is worse ergonomics than either deserves.
+
+Unverified: **the driver has only ever been observed emitting 2-character
+ligatures.** A 3-character entry may or may not be accepted, and that needs a
+Windows probe. macOS `.keylayout` has no such limit.
+
 ### 5.2 Character coverage
 
 **45 Khmer-script characters reachable in legacy Khmer are unreachable in

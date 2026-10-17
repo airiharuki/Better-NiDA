@@ -150,7 +150,9 @@ method for anyone who needs those.
 > on Windows (the analysis host). They have **not** been loaded on macOS or
 > Linux. Each platform ships a test script - `linux/verify.sh` and the
 > checklist in `macos/README.md` - and the honest position is that these are
-> untested on real hardware. Please open an issue if something misbehaves.
+> untested on real hardware. Please open an issue if something misbehaves —
+> and check **[CHANGELOG.md](CHANGELOG.md)** first, since the most likely
+> problems are already documented limitations rather than defects.
 
 ### Help us test them
 
@@ -347,13 +349,39 @@ Contributions are warmly welcomed! Please read:
 - **[CONTRIBUTING.md](CONTRIBUTING.md)**: Development workflow, Conventional Commits specification, and PR guidelines.
 - **[CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)**: Community standards and Contributor Covenant pledge.
 
+### Start with the CHANGELOG
+
+**[CHANGELOG.md](CHANGELOG.md) is the fastest way to see what has already been
+tried, shipped, or rejected** — and it is the first place to look before opening
+an issue or adding something. Two minutes reading it usually saves duplicating
+work that was already considered.
+
+It records the reasoning behind decisions, not just the diffs, which matters
+here because most proposals to this layout have a trap attached. Several rules in
+the Midpoint variant were dropped because they broke something subtle, and the
+CHANGELOG says which and why. It is also the place where "nothing yet" under
+*Unreleased* means an idea genuinely has not been tried.
+
+| If you want to... | Do this |
+| :-- | :-- |
+| Report something broken | Search the CHANGELOG first — it may be a known limitation. If it is not, use the issue templates below. |
+| Propose a new key or character | Read [ROADMAP.md](ROADMAP.md) §5.1 on modifier capacity first — there are 98 unused slots already identified, so your idea may fit without displacing anyone. |
+| Contribute a fix or feature | Check the CHANGELOG for prior art, then follow [CONTRIBUTING.md](CONTRIBUTING.md). |
+| Report test results | The **Testing Report** template — "it works" is worth recording. |
+
+**Issue templates:** [Bug report](.github/ISSUE_TEMPLATE/bug_report.md) ·
+[Feature request](.github/ISSUE_TEMPLATE/feature_request.md) ·
+[Testing report](.github/ISSUE_TEMPLATE/testing_report.md) ·
+[Layout proposal](.github/ISSUE_TEMPLATE/layout_proposal.md)
+
 ---
 
 ## Versioning
 
 This project follows [Semantic Versioning 2.0.0](https://semver.org/) and
-[Conventional Commits](https://www.conventionalcommits.org/). Release history
-is in **[CHANGELOG.md](CHANGELOG.md)**, formatted per
+[Conventional Commits](https://www.conventionalcommits.org/). Full release
+history — including what was considered and rejected — is in
+**[CHANGELOG.md](CHANGELOG.md)**, formatted per
 [Keep a Changelog](https://keepachangelog.com/).
 
 ---
