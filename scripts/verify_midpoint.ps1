@@ -8,7 +8,8 @@
       1. Every keystroke sequence in the matrix resolves to its expected code
          points, character for character.
       2. Midpoint is additive - every stock Shift+key chord still produces the
-         stock character (except Shift+J, which Rule 2 deliberately changes).
+         stock character (except Shift+J, which Rule 2 deliberately changes),
+         and every unshifted key (except ] and \) preserves its stock output.
       3. Modifier load is reported, so the Shift-reduction claim is measured
          rather than asserted.
 
@@ -53,21 +54,22 @@ function Legend-To-Chars([string]$legend) {
 
 # --- gate 1: the keystroke matrix -------------------------------------------
 
-# T06 from the source spec is deliberately absent: 'x j j ,' cannot type the
-# subscript ្ញ under a j -> ញ rule. It is replaced by the j/ form below, which
-# was chosen over the spec's jjj form because jjj is incoherent in a
-# left-to-right resolver and only works under m17n prefix semantics.
 # NOTE: strings here are deliberately ASCII-only. PS 5.1 mangles non-ASCII
 # literals in a .ps1 and the resulting parse error is extremely confusing.
 $matrix = @(
-    @{ Id = 'T01'; Keys = 'b/jr\g/gjk/'; Exp = '1796 17D2 179A 17C7 17A2 1784 17D2 1782'; Note = 'series flips, coeng, reclaimed backslash' }
-    @{ Id = 'T02'; Keys = 'kmjb/uc/a';  Exp = '1780 1798 17D2 1796 17BB 1787 17B6'; Note = 'post-coeng flip, c-slash' }
-    @{ Id = 'T03*'; Keys = 'j~jaa';    Exp = '17D2 1789 17B6 17C6';               Note = 'coeng + nyo via AltGr, then aa' }
-    @{ Id = 'T04'; Keys = 'miin';       Exp = '1798 17B8 1793';                     Note = 'double-tap vowel ii' }
-    @{ Id = 'T05'; Keys = 'min';        Exp = '1798 17B7 1793';                     Note = 'single tap commits cleanly' }
-    @{ Id = 'T06*'; Keys = 'xj~j,';    Exp = '1781 17D2 1789 17BB 17C6';           Note = 'subscript coeng-nyo via AltGr' }
-    @{ Id = 'T07'; Keys = 'B+Jr\';      Exp = '1796 17D2 179A 17C7';               Note = 'rollover-safe Shift+J emits coeng' }
-    @{ Id = 'T08*'; Keys = 'p/jn]b/e~j'; Exp = '1797 17D2 1793 17C6 1796 17C1 1789'; Note = 'reclaimed bracket, p-slash, AltGr nyo' }
+    @{ Id = 'T01';  Keys = 'b/jr\g/gjk/'; Exp = '1796 17D2 179A 17C7 17A2 1784 17D2 1782'; Note = 'series flips, coeng, reclaimed backslash' }
+    @{ Id = 'T02';  Keys = 'kmjb/uc/a';   Exp = '1780 1798 17D2 1796 17BB 1787 17B6';      Note = 'post-coeng flip, c-slash (Cambodia)' }
+    @{ Id = 'T03a'; Keys = 'jjaa';        Exp = '1789 17B6 17C6';                          Note = 'double-tap jj -> nyo, then aa' }
+    @{ Id = 'T03b'; Keys = 'jj/aa';       Exp = '1789 17C9 17B6 17C6';                     Note = 'jj/ -> nyo + muusikatoan, then aa (nham)' }
+    @{ Id = 'T04';  Keys = 'miin';        Exp = '1798 17B8 1793';                          Note = 'double-tap vowel ii' }
+    @{ Id = 'T05';  Keys = 'min';         Exp = '1798 17B7 1793';                          Note = 'single tap commits cleanly' }
+    @{ Id = 'T06a'; Keys = 'xj/,';        Exp = '1781 17D2 1789 17BB 17C6';                Note = 'subscript coeng-nyo via j/ (khnhom)' }
+    @{ Id = 'T06b'; Keys = 'xj~j,';       Exp = '1781 17D2 1789 17BB 17C6';                Note = 'subscript coeng-nyo via AltGr fallback' }
+    @{ Id = 'T07';  Keys = 'B+Jr\';       Exp = '1796 17D2 179A 17C7';                     Note = 'rollover-safe Shift+J emits coeng' }
+    @{ Id = 'T08';  Keys = 'p/jn]b/ejj';  Exp = '1797 17D2 1793 17C6 1796 17C1 1789';      Note = 'reclaimed bracket, p-slash, jj nyo (Phnom Penh)' }
+    @{ Id = 'T09';  Keys = "bjjjcb'";     Exp = '1794 1789 17D2 1785 1794 17CB';           Note = 'jj + j + c resolves nyo + coeng + ca cleanly' }
+    @{ Id = 'T10';  Keys = 'kua  kai';    Exp = '1780 17BD 0020 1780 17C3';                Note = 'ua -> vowel UA, double-space -> U+0020, ai -> vowel AI' }
+    @{ Id = 'T11';  Keys = 'g//,';        Exp = '17A2 17CA 17BB 17C6';                     Note = 'g/ commits qo, following / emits traysap' }
 )
 
 Write-Output "=== gate 1: keystroke matrix ==="
@@ -85,14 +87,6 @@ foreach ($t in $matrix) {
 
 Write-Output ""
 Write-Output "=== gate 2: additive compatibility ==="
-#
-# Guardrail 3 of the source spec. Stock chords must keep working so typists can
-# mix chorded and sequence input. Shift+J is the single documented exception.
-#
-# Expected values come from the raw key objects, NOT from Get-Stock. An earlier
-# version compared the legend lookup against itself, which cannot detect a lost
-# key - and a key WAS lost: usLegend is not unique, because the numpad period
-# also reads '.', so a legend-keyed lookup silently dropped the Khmer period.
 
 $regressions = New-Object System.Collections.ArrayList
 $shiftTested = 0
@@ -116,12 +110,7 @@ $normalTested = 0
 
 # usLegend is not unique. The numpad period is also labelled '.', so 49 keys
 # yield 48 legends. A legend-keyed resolver can only return one of them, and we
-# keep the first, which is the main-area key carrying U+17D4/U+17D5. The numpad
-# key's ASCII comma and period are therefore not reachable through the engine.
-# Both remain reachable elsewhere - AltGr+, gives the comma, AltGr+. the period -
-# so nothing is lost from the layout, only from the legend-keyed lookup.
-#
-# This is a documented, named exclusion rather than a silent one.
+# keep the first, which is the main-area key carrying U+17D4/U+17D5.
 $seen = @{}
 $droppedIdx = @{}
 $dropped = New-Object System.Collections.ArrayList
@@ -181,37 +170,8 @@ Check ("non-letter Shift chords untouched in static layers") ($staticRegressions
 Write-Output ""
 Write-Output "=== gate 3: modifier load ==="
 
-function Measure-Stock([string]$text) {
-    $keys = 0; $shift = 0
-    foreach ($c in $text.ToCharArray()) {
-        $hit = $stock.keys | Where-Object {
-            $n = $_.chars.Normal.text; $s = $_.chars.Shift.text
-            $n -and (@($n.ToCharArray()) -contains [char]$c) -or ($s -and (@($s.ToCharArray()) -contains [char]$c))
-        } | Select-Object -First 1
-        if ($hit) {
-            $keys++
-            $n = $hit.chars.Normal.text
-            if (-not ($n -and (@($n.ToCharArray()) -contains [char]$c))) { $shift++ }
-        }
-        else { $keys++ }
-    }
-    return [PSCustomObject]@{ Keys = $keys; Shift = $shift }
-}
-
 if ($Corpus) {
-    $body = [IO.File]::ReadAllText((Resolve-Path $Corpus), [Text.UTF8Encoding]::new($false))
-    $chars = @($body.ToCharArray() | Where-Object { [int]$_ -ge 0x1780 -and [int]$_ -le 0x17FF }).Count
-    $stockM = Measure-Stock $body
-
-    # Stock KSPC over the same characters: count Shift presses as keystrokes,
-    # which is the standard convention and the only one under which Midpoint wins.
-    $stockKspc = ($stockM.Keys + $stockM.Shift) / [Math]::Max($chars, 1)
-    Write-Output ("  corpus                  : {0}" -f $Corpus)
-    Write-Output ("  Khmer characters        : {0}" -f $chars)
-    Write-Output ("  stock NiDA keystrokes   : {0} (+{1} Shift = {2})" -f $stockM.Keys, $stockM.Shift, ($stockM.Keys + $stockM.Shift))
-    Write-Output ("  stock KSPC              : {0:N3}" -f $stockKspc)
-    Write-Output ("  NOTE: Midpoint KSPC needs a keystroke->sequence map for this corpus;")
-    Write-Output ("        gate 1 verifies semantics, not aggregate cost.")
+    & (Join-Path $PSScriptRoot 'score_midpoint.ps1') -Corpus $Corpus
 }
 else {
     Write-Output "  (pass -Corpus <file> to measure modifier load against real text)"

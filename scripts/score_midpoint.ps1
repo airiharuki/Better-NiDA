@@ -13,9 +13,7 @@
     broken towards fewer modifier presses.
 
     Cost model is the standard KSPC convention: every keypress counts once and
-    every modifier press counts once more, so a Shift chord costs 2. This is the
-    only model under which Midpoint wins, and it is reported explicitly so the
-    reader can see the assumption rather than infer it.
+    every modifier press counts once more, so a Shift chord costs 2.
 
     Multi-character output is searched too. A single key that emits a two
     character ligature can cover more text per press, so it must be in the
@@ -52,7 +50,10 @@ function New-Candidate([int[]]$out, [int]$keys, [int]$shift, [int]$alt, [string]
 }
 
 # Returns, for every producible output string, the cheapest way to type it.
-function Build-Index($includeSequences) {
+# When $isMidpoint is $false, builds pure stock NiDA (without Midpoint's static
+# overrides). When $isMidpoint is $true, includes both Midpoint's static
+# overrides and its sequence rules.
+function Build-Index($isMidpoint) {
     $index = @{}
 
     function Consider($cand) {
@@ -76,22 +77,22 @@ function Build-Index($includeSequences) {
         $ov = if ($legend -eq 'Space') { ' ' } else { $legend.ToLower() }
 
         $normal = $null
-        if ($STATIC_NORMAL.ContainsKey($ov)) { $normal = $STATIC_NORMAL[$ov] }
+        if ($isMidpoint -and $STATIC_NORMAL.ContainsKey($ov)) { $normal = $STATIC_NORMAL[$ov] }
         else { $normal = Get-Stock $legend 'Normal' }
         if ($normal) { Consider (New-Candidate $normal 1 0 0 "1") }
 
         $shift = $null
-        if ($STATIC_SHIFT.ContainsKey($ov)) { $shift = $STATIC_SHIFT[$ov] }
+        if ($isMidpoint -and $STATIC_SHIFT.ContainsKey($ov)) { $shift = $STATIC_SHIFT[$ov] }
         else { $shift = Get-Stock $legend 'Shift' }
         if ($shift) { Consider (New-Candidate $shift 1 1 0 "S") }
 
         $alt = $null
-        if ($STATIC_ALTGR.ContainsKey($ov)) { $alt = $STATIC_ALTGR[$ov] }
+        if ($isMidpoint -and $STATIC_ALTGR.ContainsKey($ov)) { $alt = $STATIC_ALTGR[$ov] }
         else { $alt = Get-Stock $legend 'AltGr' }
         if ($alt) { Consider (New-Candidate $alt 1 0 1 "A") }
     }
 
-    if ($includeSequences) {
+    if ($isMidpoint) {
         foreach ($r in $rules) {
             $shift = 0; $alt = 0
             foreach ($c in $r.Seq.ToCharArray()) {
@@ -112,10 +113,17 @@ function Measure-Text($index, [string]$text, [hashtable]$charCost) {
     $n = $text.Length
     $INF = [int]::MaxValue
     $best = New-Object 'int[]' ($n + 1)
+    $bestMod = New-Object 'int[]' ($n + 1)
     $prev = New-Object 'int[]' ($n + 1)
     $prevIdx = New-Object 'int[]' ($n + 1)
-    for ($i = 0; $i -le $n; $i++) { $best[$i] = $INF; $prev[$i] = -1; $prevIdx[$i] = -1 }
+    for ($i = 0; $i -le $n; $i++) {
+        $best[$i] = $INF
+        $bestMod[$i] = $INF
+        $prev[$i] = -1
+        $prevIdx[$i] = -1
+    }
     $best[0] = 0
+    $bestMod[0] = 0
 
     $maxLen = 1
     foreach ($k in $index.Keys) { if ($k.Length -gt $maxLen) { $maxLen = $k.Length } }
@@ -134,8 +142,10 @@ function Measure-Text($index, [string]$text, [hashtable]$charCost) {
             $any = $true
             $to = $i + $len
             $cost = $best[$i] + $cand.Cost
-            if ($cost -lt $best[$to]) {
+            $mod  = $bestMod[$i] + $cand.Shift + $cand.Alt
+            if ($cost -lt $best[$to] -or ($cost -eq $best[$to] -and $mod -lt $bestMod[$to])) {
                 $best[$to] = $cost
+                $bestMod[$to] = $mod
                 $prev[$to] = $i
                 $prevIdx[$to] = $len
             }
@@ -143,16 +153,11 @@ function Measure-Text($index, [string]$text, [hashtable]$charCost) {
 
         # No candidate of any length starts here, so this character cannot be
         # typed by this layout at all. Skip it at zero cost and record it.
-        #
-        # Treating it as a hard dead end instead was wrong for a real corpus:
-        # Khmer text legitimately mixes in Latin words, Thai, punctuation and
-        # emoji, and one of those would abort the whole measurement and report
-        # every later character as unreachable. That is how a 50k sample
-        # produced a row of zeros.
         if (-not $any) {
             $to = $i + 1
-            if ($best[$i] -lt $best[$to]) {
+            if ($best[$i] -lt $best[$to] -or ($best[$i] -eq $best[$to] -and $bestMod[$i] -lt $bestMod[$to])) {
                 $best[$to] = $best[$i]
+                $bestMod[$to] = $bestMod[$i]
                 $prev[$to] = $i
                 $prevIdx[$to] = 0     # 0 marks a skip, not a keystroke
             }
@@ -187,17 +192,17 @@ function Measure-Text($index, [string]$text, [hashtable]$charCost) {
     $typed = $n - $skipped
 
     return [PSCustomObject]@{
-        Complete   = $complete
-        Chars      = $n
-        Typed      = $typed
-        Skipped    = $skipped
-        Keys       = $keys; Shift = $shift; Alt = $alt
-        Modifiers  = $shift + $alt
+        Complete    = $complete
+        Chars       = $n
+        Typed       = $typed
+        Skipped     = $skipped
+        Keys        = $keys; Shift = $shift; Alt = $alt
+        Modifiers   = $shift + $alt
         # KSPC is per typed character. Including skipped ones would dilute the
         # ratio with characters no layout could ever produce.
-        KSPC       = if ($typed -gt 0) { ($keys + $shift + $alt) / $typed } else { 0 }
-        KeysPerChar= if ($typed -gt 0) { $keys / $typed } else { 0 }
-        ShiftShare = if ($keys -gt 0) { 100 * $shift / $keys } else { 0 }
+        KSPC        = if ($typed -gt 0) { ($keys + $shift + $alt) / $typed } else { 0 }
+        KeysPerChar = if ($typed -gt 0) { $keys / $typed } else { 0 }
+        ShiftShare  = if ($keys -gt 0) { 100 * $shift / $keys } else { 0 }
         Unreachable = $unreachable
     }
 }
@@ -218,9 +223,6 @@ else {
 
 $text = $text -replace "`r`n", "`n" -replace "`r", "`n"
 $lineBreaks = ([regex]::Matches($text, "`n")).Count
-# Line breaks are file formatting, not typed content, and a layout cannot
-# produce one. Leaving them in kills the shortest path at the first break and
-# then reports every later character as unreachable, which is what happened.
 $text = ($text -replace "`n", '')
 $text = $text.Trim()
 if ($lineBreaks -gt 0) {
@@ -244,15 +246,15 @@ Write-Output ""
 Write-Output "=== side by side ==="
 '{0,-22} {1,10} {2,10}' -f '', 'stock NiDA', 'Midpoint'
 Write-Output ('-' * 44)
-'{0,-22} {1,10} {2,10}' -f 'typeable chars',    $stockM.Typed,      $midM.Typed
-'{0,-22} {1,10} {2,10}' -f 'untypable (skipped)', $stockM.Skipped,  $midM.Skipped
-'{0,-22} {1,10} {2,10}' -f 'keypresses',       $stockM.Keys,       $midM.Keys
+'{0,-22} {1,10} {2,10}' -f 'typeable chars',      $stockM.Typed,      $midM.Typed
+'{0,-22} {1,10} {2,10}' -f 'untypable (skipped)', $stockM.Skipped,    $midM.Skipped
+'{0,-22} {1,10} {2,10}' -f 'keypresses',          $stockM.Keys,       $midM.Keys
 '{0,-22} {1,10:N3} {2,10:N3}' -f 'keys per char', $stockM.KeysPerChar, $midM.KeysPerChar
-'{0,-22} {1,10} {2,10}' -f '  needing Shift',  $stockM.Shift,      $midM.Shift
-'{0,-22} {1,10} {2,10}' -f '  needing AltGr',  $stockM.Alt,        $midM.Alt
-'{0,-22} {1,10} {2,10}' -f 'total presses',    ($stockM.Keys + $stockM.Modifiers), ($midM.Keys + $midM.Modifiers)
-'{0,-22} {1,10:N3} {2,10:N3}' -f 'KSPC', $stockM.KSPC, $midM.KSPC
-'{0,-22} {1,9:N1}% {2,10:N1}%' -f 'Shift share of keys', $stockM.ShiftShare, $midM.ShiftShare
+'{0,-22} {1,10} {2,10}' -f '  needing Shift',     $stockM.Shift,      $midM.Shift
+'{0,-22} {1,10} {2,10}' -f '  needing AltGr',     $stockM.Alt,        $midM.Alt
+'{0,-22} {1,10} {2,10}' -f 'total presses',       ($stockM.Keys + $stockM.Modifiers), ($midM.Keys + $midM.Modifiers)
+'{0,-22} {1,10:N3} {2,10:N3}' -f 'KSPC',          $stockM.KSPC,       $midM.KSPC
+'{0,-22} {1,9:N1}% {2,9:N1}%' -f 'Shift share of keys', $stockM.ShiftShare, $midM.ShiftShare
 Write-Output ""
 
 function Show-Delta($label, $a, $b, $lowerIsBetter) {
@@ -264,9 +266,10 @@ function Show-Delta($label, $a, $b, $lowerIsBetter) {
 }
 
 Write-Output "=== Midpoint vs stock ==="
-Show-Delta 'keypresses'   $stockM.Keys $midM.Keys $true
+Show-Delta 'keypresses'    $stockM.Keys  $midM.Keys  $true
 Show-Delta 'Shift presses' $stockM.Shift $midM.Shift $true
-Show-Delta 'KSPC'         $stockM.KSPC $midM.KSPC $true
+Show-Delta 'AltGr presses' $stockM.Alt   $midM.Alt   $true
+Show-Delta 'KSPC'          $stockM.KSPC  $midM.KSPC  $true
 Write-Output ""
 
 if ($stockM.Unreachable.Count -gt 0 -or $midM.Unreachable.Count -gt 0) {

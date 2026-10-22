@@ -17,11 +17,42 @@ by the size of the diff.
 
 ### Added
 
-- Nothing yet.
+- **Better-NiDA Midpoint engine, specification, and cross-platform targets:**
+  - `scripts/midpoint_engine.ps1`: Single source of truth for the Better-NiDA
+    Midpoint layout, combining static layer remapping (Rules 2, 4, 5) and
+    prefix-buffered / contextual sequence rules (Rules 1, 2, 3).
+  - `scripts/export_midpoint_spec.ps1` and `midpoint_layout.json`: Machine-readable
+    Midpoint specification with 49 keys across 5 modifier levels and 51 sequence
+    rules.
+  - `windows/better_nida_midpoint.kmn`: Keyman keyboard source using zero-lag
+    inline contextual replacement (`U+1780 + [K_SLASH] > U+1782`).
+  - `linux/m17n/nida-midpoint.mim`: Linux m17n input method implementing the full
+    sequence and static rule set.
+  - `linux/nida_midpoint` and `macos/Khmer Better-NiDA.keylayout`: Static-subset
+    XKB (`EIGHT_LEVEL`) and macOS (5-`<keyMap>`) layouts with `Shift+AltGr`
+    (`Shift+Option`) carrying the 13 second-series consonants.
+  - `scripts/analyze_corpus.py`, `scripts/score_midpoint.ps1`, and
+    `scripts/data/coeng_pairs.json`: 565.4M-character Khmer corpus analysis and
+    shortest-path KSPC / modifier load scorer.
+  - `scripts/verify_midpoint.ps1`: 16-check verification suite covering the
+    keystroke matrix (`T01`–`T11`) and 100% additive backward-compatibility
+    guardrails.
 
 ### Fixed
 
-- Nothing yet.
+- `scripts/midpoint_engine.ps1`: Fixed `Resolve-Sequence` to check
+  `Test-PendingPrefix` before `Get-ExactRule` and updated `Add-Commit` to resolve
+  longest exact rules left-to-right before falling back to single keys. This
+  restores `jj`→`ញ` (`U+1789`), `jj/`→`ញ៉` (`U+1789 U+17C9`), and 2-key `j/`→`្ញ`
+  (`U+17D2 U+1789`) without `AltGr+J` clunkiness or cluster collisions.
+- `scripts/midpoint_engine.ps1`: Rescued `ឳ` (`U+17B3`, displaced from `AltGr+]`)
+  onto `AltGr+U` (unmapped in stock NiDA) for 100% character repertoire parity,
+  and added unshifted sequences for `Space` (`  ` / ` /` → `U+0020`), `ួ`
+  (`ua` / `u/`), `ៃ` (`ai` / `i/`), and number-row diacritics, cutting `Shift`
+  share from 24.3% to 0.5% (−97.5%) and lowering KSPC from 1.236 to 1.222.
+- `scripts/score_midpoint.ps1`: Fixed `Build-Index` so stock NiDA is scored
+  without Midpoint's static overrides, and added modifier tie-breaking to
+  `Measure-Text`.
 
 ---
 

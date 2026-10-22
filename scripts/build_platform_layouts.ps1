@@ -1,31 +1,30 @@
 <#
 .SYNOPSIS
-    Generates the macOS and Linux keyboard layouts from the verified spec.
+    Generates the macOS, Linux, and Windows (Keyman) keyboard layouts from the
+    verified specifications.
 
 .DESCRIPTION
-    Emits, from nida_layout.json and tables_kbdkhmr.json:
+    Emits, from nida_layout.json, tables_kbdkhmr.json, and midpoint_layout.json:
 
-      macos/<name>.keylayout      Apple XML keylayout bundles (both variants)
-      linux/nida, linux/nida_legacy   XKB symbols files (both variants)
+      macos/Khmer NiDA.keylayout             Apple XML keylayout (stock NiDA)
+      macos/Khmer NiDA Legacy.keylayout      Apple XML keylayout (legacy Khmer)
+      macos/Khmer Better-NiDA.keylayout      Apple XML keylayout (Midpoint static)
+      linux/nida                             XKB symbols (stock NiDA)
+      linux/nida_legacy                      XKB symbols (legacy Khmer)
+      linux/nida_midpoint                    XKB symbols (Midpoint static)
+      linux/m17n/nida-midpoint.mim           m17n input method (Midpoint full)
+      windows/better_nida_midpoint.kmn       Keyman keyboard source (Midpoint full)
 
-    Both variants are produced from the same generator, so the two can never
-    drift apart.
+    All variants are produced from the same generator pipeline, so the
+    platforms can never drift apart.
 
     Modifier level mapping (XKB and macOS keyMap index):
       0 Normal   1 Shift   2 Control   3 AltGr   4 Shift+AltGr
-    Control is empty in both source layouts, so level 2 is only emitted when
-    the data actually defines it (legacy Khmer's Shift+AltGr block).
-
-    LIGATURE CAVEAT - the single most important limitation here:
-      XKB maps one key to exactly one keysym per level and cannot emit two
-      code points for one keystroke. The five NiDA ligatures therefore fall
-      back to their first code point, and each is marked with a comment.
-      macOS keylayouts CAN emit several characters in one output, so the
-      ligatures are reproduced faithfully there.
-      For full ligature support on Linux see linux/m17n/.
+    Control is empty in the source layouts, so level 2 is only emitted when
+    the data actually defines level 4 (legacy Khmer and Better-NiDA Midpoint).
 
 .PARAMETER Variant
-    Limit generation to one variant (default: both).
+    Limit generation to one variant (default: all).
 
 .EXAMPLE
     .\scripts\build_platform_layouts.ps1
@@ -33,8 +32,8 @@
 [CmdletBinding()]
 param(
     [Parameter(Mandatory = $false)]
-    [ValidateSet('both', 'nida', 'legacy')]
-    [string]$Variant = 'both',
+    [ValidateSet('both', 'all', 'nida', 'legacy', 'midpoint')]
+    [string]$Variant = 'all',
 
     [Parameter(Mandatory = $false)]
     [string]$OutRoot = $null
@@ -44,8 +43,7 @@ $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
 
 # ASCII-only source: PowerShell 5.1 reads BOM-less .ps1 as ANSI and mangles
-# non-ASCII literals. All Khmer text is written by a separate UTF-8 writer
-# using NewUtf8File() below.
+# non-ASCII literals. All Khmer text is written by New-Utf8File() below.
 
 $root = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 if (-not $OutRoot) { $OutRoot = $root }
@@ -53,9 +51,7 @@ if (-not $OutRoot) { $OutRoot = $root }
 function New-Utf8File([string]$Path, [string]$Content) {
     $dir = Split-Path -Parent $Path
     if (-not (Test-Path $dir)) { New-Item -ItemType Directory -Path $dir -Force | Out-Null }
-    # Force LF. StringBuilder.AppendLine() uses Environment.NewLine, which is
-    # CRLF on Windows, so without this the XKB files would ship with CRLF and a
-    # CRLF-tainted tab-separated key line is not something to hand to xkbcomp.
+    # Force LF across all generated files (.keylayout, XKB, .mim, .kmn).
     $Content = $Content.Replace("`r`n", "`n")
     [System.IO.File]::WriteAllText($Path, $Content, (New-Object System.Text.UTF8Encoding $false))
 }
@@ -90,6 +86,22 @@ $MacByScan = @{
     0x33=43; 0x34=47; 0x35=44; 0x37=67; 0x39=49; 0x4A=78; 0x4E=81; 0x53=65
 }
 
+# Keyman virtual key identifiers keyed by US legend.
+$KeymanByLegend = @{
+    '1'='K_1'; '2'='K_2'; '3'='K_3'; '4'='K_4'; '5'='K_5'
+    '6'='K_6'; '7'='K_7'; '8'='K_8'; '9'='K_9'; '0'='K_0'
+    '-'='K_HYPHEN'; '='='K_EQUAL'
+    'Q'='K_Q'; 'W'='K_W'; 'E'='K_E'; 'R'='K_R'; 'T'='K_T'
+    'Y'='K_Y'; 'U'='K_U'; 'I'='K_I'; 'O'='K_O'; 'P'='K_P'
+    '['='K_LBRKT'; ']'='K_RBRKT'
+    'A'='K_A'; 'S'='K_S'; 'D'='K_D'; 'F'='K_F'; 'G'='K_G'
+    'H'='K_H'; 'J'='K_J'; 'K'='K_K'; 'L'='K_L'
+    ';'='K_COLON'; "'"='K_QUOTE'; '\'='K_BKSLASH'
+    'Z'='K_Z'; 'X'='K_X'; 'C'='K_C'; 'V'='K_V'; 'B'='K_B'
+    'N'='K_N'; 'M'='K_M'; ','='K_COMMA'; '.'='K_PERIOD'; '/'='K_SLASH'
+    '`'='K_BKQUOTE'; 'Space'='K_SPACE'; ' '='K_SPACE'
+}
+
 function Get-XkbName([int]$scan) { if ($XkbByScan.ContainsKey($scan)) { $XkbByScan[$scan] } else { $null } }
 function Get-MacCode([int]$scan) { if ($MacByScan.ContainsKey($scan)) { $MacByScan[$scan] } else { $null } }
 
@@ -100,8 +112,7 @@ function Get-CpArray($ch) {
 function Get-Text($ch) { if ($null -eq $ch) { return $null } return [string]$ch.text }
 
 # ---------------------------------------------------------------------------
-# load the two variants into a common shape:
-#   @{ Name; Slug; ScanKeys = @(@{Scan;Levels=@(@{Text;Cps;IsLig})}...) }
+# load the variants into a common shape
 # ---------------------------------------------------------------------------
 $stateOrder = @('Normal', 'Shift', 'Control', 'AltGr', 'ShiftAltGr')
 
@@ -119,10 +130,6 @@ public static class ScanMap2 {
     [DllImport("user32.dll")]
     static extern uint MapVirtualKeyEx(uint code, uint mapType, IntPtr hkl);
     public static Dictionary<int, int> Build(string klid) {
-        // flags 0, NOT KLF_ACTIVATE(1): loading must not change the machine's
-        // active layout, and the HKL is unloaded again below. Repeated
-        // KLF_ACTIVATE calls across many script runs accumulate duplicate
-        // entries in the user's input method list.
         IntPtr hkl = LoadKeyboardLayout(klid, 0);
         try {
             var map = new Dictionary<int, int>();
@@ -155,7 +162,6 @@ function New-VariantFromSpec($spec, $name, $slug, $ligatures) {
             $ch = $null
             if ($k.chars.PSObject.Properties.Name -contains $s) { $ch = $k.chars.$s }
             $txt = Get-Text $ch
-            # note/isLigature are optional in the spec, so probe before reading
             $isLig = $false
             if ($ch) {
                 if ($ch.PSObject.Properties.Name -contains 'isLigature') { $isLig = [bool]$ch.isLigature }
@@ -204,12 +210,10 @@ function New-VariantFromTables($tables, $name, $slug, $scanMap) {
 }
 
 # ---------------------------------------------------------------------------
-# emitters
+# emitters: XKB and macOS .keylayout
 # ---------------------------------------------------------------------------
 function ConvertTo-XmlAttr([string]$s) {
     if ($null -eq $s) { return '' }
-    # The data contains " and & (e.g. Shift+3 is U+0022); unescaped they would
-    # terminate the XML attribute and make the whole keylayout unparseable.
     $s.Replace('&', '&amp;').Replace('<', '&lt;').Replace('>', '&gt;').Replace('"', '&quot;').Replace("'", '&apos;')
 }
 
@@ -253,7 +257,6 @@ function New-XkbFile($v, $source) {
         for ($i = 0; $i -lt 4; $i++) {
             $lv = $k.Levels[$i]
             if ($lv.IsLigature) {
-                # XKB cannot express this; fall back to the first code point.
                 $syms += (Get-XkbKeysym @($lv.Cps[0]))
                 if (-not $ligNote) { $ligNote = ' // LIGATURE truncated to first code point' }
             } else {
@@ -267,8 +270,6 @@ function New-XkbFile($v, $source) {
         }
         while ($syms.Count -lt 2) { $syms += 'NoSymbol' }
         $symList = (($syms | ForEach-Object { if ($_) { $_ } else { 'NoSymbol' } }) -join ', ')
-        # A REAL tab, not the two characters ` + t: a literal backtick would be
-        # parsed as part of the key name and silently break the whole file.
         $line = '    key <' + $name + '>' + [char]9 + '{ ' + $symList + ' };' + $ligNote
         [void]$sb.AppendLine($line)
     }
@@ -276,9 +277,7 @@ function New-XkbFile($v, $source) {
     return $sb.ToString()
 }
 
-function New-MacKeylayout($v, $source) {
-    # Standard Apple modifier map: index 0 none, 1 shift, 2 caps,
-    # 3 option (AltGr), 4 shift+option, 5 caps+option, 6 caps+command, 7 other.
+function New-MacKeylayout($v, $source, [int]$kbId = 1337) {
     $hasLevel4 = @($v.Keys | Where-Object { $_.Levels.Count -gt 4 -and $_.Levels[4].Text }).Count -gt 0
 
     $sb = New-Object System.Text.StringBuilder
@@ -286,7 +285,7 @@ function New-MacKeylayout($v, $source) {
     [void]$sb.AppendLine('<!DOCTYPE keyboard PUBLIC "" "file://localhost/System/Library/DTDs/KeyboardLayout.dtd">')
     [void]$sb.AppendLine('<!-- ' + $v.Name + ' - generated by scripts/build_platform_layouts.ps1')
     [void]$sb.AppendLine('     Source: ' + $source + ' -->')
-    [void]$sb.AppendLine('<keyboard group="0" id="1337" name="' + $v.Name + '" maxout="3">')
+    [void]$sb.AppendLine('<keyboard group="0" id="' + $kbId + '" name="' + $v.Name + '" maxout="3">')
     [void]$sb.AppendLine('    <layouts>')
     [void]$sb.AppendLine('        <layout first="0" last="126" modifiers="mod" mapSet="ans"/>')
     [void]$sb.AppendLine('    </layouts>')
@@ -320,8 +319,6 @@ function New-MacKeylayout($v, $source) {
     [void]$sb.AppendLine('        </keyMapSelect>')
     [void]$sb.AppendLine('    </modifierMap>')
 
-    # keyMapSet: index 0 base, 1 shift, 2 caps (same as base), 3 option,
-    # and 4 shift+option when the source layout defines that state.
     $mapCount = if ($hasLevel4) { 5 } else { 4 }
     [void]$sb.AppendLine('    <keyMapSet id="ans">')
     for ($i = 0; $i -lt $mapCount; $i++) {
@@ -329,18 +326,12 @@ function New-MacKeylayout($v, $source) {
         foreach ($k in $v.Keys | Sort-Object Scan) {
             $code = Get-MacCode $k.Scan
             if ($null -eq $code) { continue }
-            # mapIndex 0 = base, 1 = shift, 2 = caps (repeats base), 3 = option
-            # (AltGr), 4 = shift+option (Shift+AltGr).
             $lvIndex = switch ($i) { 0 { 0 } 1 { 1 } 2 { 0 } 3 { 3 } default { 4 } }
             $lv = $k.Levels[$lvIndex]
             if ($lv.Text) {
-                # macOS keylayout CAN emit several characters in one output, so
-                # ligatures are reproduced faithfully here.
                 [void]$sb.AppendLine('            <key code="' + $code + '" output="' + (ConvertTo-XmlAttr $lv.Text) + '"/>')
             }
         }
-        # Return and Tab must stay reachable in every modifier state, otherwise
-        # the layout would make it impossible to submit a line.
         [void]$sb.AppendLine('            <key code="36" output="&#x000D;"/>')
         [void]$sb.AppendLine('            <key code="48" output="&#x0009;"/>')
         [void]$sb.AppendLine('        </keyMap>')
@@ -351,22 +342,243 @@ function New-MacKeylayout($v, $source) {
 }
 
 # ---------------------------------------------------------------------------
+# emitter: Linux m17n (linux/m17n/nida-midpoint.mim)
+# ---------------------------------------------------------------------------
+function ConvertTo-MimString([string]$s) {
+    $sb = New-Object System.Text.StringBuilder
+    foreach ($ch in $s.ToCharArray()) {
+        if ($ch -eq '\') { [void]$sb.Append('\\') }
+        elseif ($ch -eq '"') { [void]$sb.Append('\"') }
+        else { [void]$sb.Append($ch) }
+    }
+    return $sb.ToString()
+}
+
+function New-MidpointMimFile($midSpec) {
+    $sb = New-Object System.Text.StringBuilder
+    [void]$sb.AppendLine(';; m17n input method for Khmer Better-NiDA (Midpoint).')
+    [void]$sb.AppendLine(';; Generated by scripts/build_platform_layouts.ps1 from midpoint_layout.json.')
+    [void]$sb.AppendLine(';; DO NOT EDIT BY HAND - edit scripts/midpoint_engine.ps1 and regenerate.')
+    [void]$sb.AppendLine(';;')
+    [void]$sb.AppendLine(';; Implements both the static layer overrides (Rules 2, 4, 5) and the')
+    [void]$sb.AppendLine(';; prefix-buffered sequence rules (Rules 1, 2, 3):')
+    [void]$sb.AppendLine(';;   - Rule 1: universal "/" series switch (k/ -> U+1782, b/ -> U+1796, etc.)')
+    [void]$sb.AppendLine(';;   - Rule 2: rollover-safe Shift+J -> U+17D2, jj -> U+1789, j/ -> U+17D2 U+1789')
+    [void]$sb.AppendLine(';;   - Rule 3: double-tap and two-key vowel, sign, and space upgrades')
+    [void]$sb.AppendLine(';;   - Rule 4: unshifted ] -> U+17C6 (nikahit) and \ -> U+17C7 (reahmuk)')
+    [void]$sb.AppendLine('')
+    [void]$sb.AppendLine('(input-method km nida-midpoint)')
+    [void]$sb.AppendLine('')
+    [void]$sb.AppendLine('(description "Khmer Better-NiDA Midpoint (universal / series switch, low-Shift)")')
+    [void]$sb.AppendLine('')
+    [void]$sb.AppendLine(('(title "{0}/")' -f [char]0x1780))
+    [void]$sb.AppendLine('')
+    [void]$sb.AppendLine('(map')
+    [void]$sb.AppendLine('  (trans')
+
+    [void]$sb.AppendLine('    ;; --- sequence rules (Rules 1, 2, 3) ---')
+    foreach ($seq in $midSpec.sequences) {
+        $kStr = ConvertTo-MimString $seq.sequence
+        $vStr = ConvertTo-MimString $seq.text
+        $cps  = ($seq.codepoints -join ' ')
+        [void]$sb.AppendLine(('    ("{0}" "{1}") ; {2} ({3} - {4})' -f $kStr, $vStr, $cps, $seq.rule, $seq.note))
+    }
+
+    [void]$sb.AppendLine('')
+    [void]$sb.AppendLine('    ;; --- unshifted base layer (Normal) ---')
+    foreach ($k in $midSpec.keys) {
+        if (-not $k.scanCode) { continue }
+        $cell = $k.chars.Normal
+        if (-not $cell -or -not $cell.text) { continue }
+        $leg = if ($k.usLegend -eq 'Space') { ' ' } else { $k.usLegend.ToLower() }
+        $kStr = ConvertTo-MimString $leg
+        $vStr = ConvertTo-MimString $cell.text
+        $cps  = ($cell.codepoints -join ' ')
+        [void]$sb.AppendLine(('    ("{0}" "{1}") ; {2}' -f $kStr, $vStr, $cps))
+    }
+
+    [void]$sb.AppendLine('')
+    [void]$sb.AppendLine('    ;; --- shifted layer (Shift fallback + rollover-safe Shift+J) ---')
+    $shiftSymbolMap = @{
+        '1'='!'; '2'='@'; '3'='#'; '4'='$'; '5'='%'
+        '6'='^'; '7'='&'; '8'='*'; '9'='('; '0'=')'
+        '-'='_'; '='='+'; '['='{'; ']'='}'; '\'='|'
+        ';'=':'; "'"='"'; ','='<'; '.'='>'; '/'='?'
+        '`'='~'
+    }
+    foreach ($k in $midSpec.keys) {
+        if (-not $k.scanCode) { continue }
+        $cell = $k.chars.Shift
+        if (-not $cell -or -not $cell.text) { continue }
+        $leg = $k.usLegend
+        if ($leg -eq 'Space') {
+            $vStr = ConvertTo-MimString $cell.text
+            $cps  = ($cell.codepoints -join ' ')
+            [void]$sb.AppendLine(('    ((S-\ ) "{0}") ; {1}' -f $vStr, $cps))
+            continue
+        }
+        $shKey = if ($leg -cmatch '^[A-Z]$') { $leg } elseif ($shiftSymbolMap.ContainsKey($leg)) { $shiftSymbolMap[$leg] } else { $null }
+        if ($shKey) {
+            $kStr = ConvertTo-MimString $shKey
+            $vStr = ConvertTo-MimString $cell.text
+            $cps  = ($cell.codepoints -join ' ')
+            [void]$sb.AppendLine(('    ("{0}" "{1}") ; Shift+{2} -> {3}' -f $kStr, $vStr, $leg, $cps))
+        }
+    }
+
+    [void]$sb.AppendLine('')
+    [void]$sb.AppendLine('    ;; --- AltGr layer (G- modifier in m17n) ---')
+    foreach ($k in $midSpec.keys) {
+        if (-not $k.scanCode) { continue }
+        $cell = $k.chars.AltGr
+        if (-not $cell -or -not $cell.text) { continue }
+        $leg = if ($k.usLegend -eq 'Space') { '\ ' } else { $k.usLegend.ToLower() }
+        if ($leg -eq '\') { $leg = '\\' }
+        elseif ($leg -eq '"') { $leg = '\"' }
+        elseif ($leg -eq ';') { $leg = '\;' }
+        elseif ($leg -eq "'") { $leg = "\'" }
+        elseif ($leg -eq '`') { $leg = '\`' }
+        $vStr = ConvertTo-MimString $cell.text
+        $cps  = ($cell.codepoints -join ' ')
+        [void]$sb.AppendLine(('    ((G-{0}) "{1}") ; AltGr+{2} -> {3}' -f $leg, $vStr, $k.usLegend, $cps))
+    }
+
+    [void]$sb.AppendLine('  ))')
+    [void]$sb.AppendLine('')
+    [void]$sb.AppendLine('(state')
+    [void]$sb.AppendLine('  (init')
+    [void]$sb.AppendLine('    (trans)))')
+    return $sb.ToString()
+}
+
+# ---------------------------------------------------------------------------
+# emitter: Windows Keyman (windows/better_nida_midpoint.kmn)
+# ---------------------------------------------------------------------------
+function Format-KeymanCps($cps) {
+    return (($cps | ForEach-Object {
+        if ($_ -is [string]) { $_ } else { 'U+{0:X4}' -f [int]$_ }
+    }) -join ' ')
+}
+
+function New-MidpointKeymanFile($midSpec, $engineScript) {
+    $sb = New-Object System.Text.StringBuilder
+    [void]$sb.AppendLine('c Khmer Better-NiDA (Midpoint) - Keyman keyboard source')
+    [void]$sb.AppendLine('c Generated by scripts/build_platform_layouts.ps1 from midpoint_layout.json.')
+    [void]$sb.AppendLine('c DO NOT EDIT BY HAND - edit scripts/midpoint_engine.ps1 and regenerate.')
+    [void]$sb.AppendLine('c')
+    [void]$sb.AppendLine('c Zero display lag: every key emits its base character immediately, and')
+    [void]$sb.AppendLine('c multi-key sequences (k/, jj, j/, ii, ua, ai, double-space) replace the')
+    [void]$sb.AppendLine('c already-emitted context inline on the completing keystroke.')
+    [void]$sb.AppendLine('')
+    [void]$sb.AppendLine("store(&VERSION) '10.0'")
+    [void]$sb.AppendLine("store(&NAME) 'Khmer Better-NiDA (Midpoint)'")
+    [void]$sb.AppendLine("store(&COPYRIGHT) '(c) 2026 Better-NiDA Contributors'")
+    [void]$sb.AppendLine("store(&KEYBOARDVERSION) '1.0'")
+    [void]$sb.AppendLine("store(&TARGETS) 'windows macosx linux web'")
+    [void]$sb.AppendLine('')
+    [void]$sb.AppendLine('begin Unicode > use(main)')
+    [void]$sb.AppendLine('')
+    [void]$sb.AppendLine('group(main) using keys')
+    [void]$sb.AppendLine('')
+    [void]$sb.AppendLine('c --- contextual sequence rules (Rules 1, 2, 3) ---')
+
+    # Dot-source the engine in a child scope helper so we can resolve prefixes.
+    . $engineScript | Out-Null
+
+    foreach ($seq in $midSpec.sequences) {
+        $s = [string]$seq.sequence
+        $prefix = $s.Substring(0, $s.Length - 1)
+        $lastCh = [string]$s[$s.Length - 1]
+        $kKey = $KeymanByLegend[$lastCh.ToUpper()]
+        if (-not $kKey) { $kKey = $KeymanByLegend[$lastCh] }
+        if (-not $kKey) { throw "No Keyman key identifier for '$lastCh' in sequence '$s'" }
+
+        $prefixRes = Resolve-Sequence $prefix ($prefix.ToCharArray())
+        $ctxCps = Format-KeymanCps $prefixRes.Emitted
+        $outCps = ($seq.codepoints -join ' ')
+        [void]$sb.AppendLine(('{0} + [{1}] > {2}   c {3} ({4}: {5})' -f $ctxCps, $kKey, $outCps, $s, $seq.rule, $seq.note))
+    }
+
+    [void]$sb.AppendLine('')
+    [void]$sb.AppendLine('c --- unshifted base layer (Normal) ---')
+    foreach ($k in $midSpec.keys) {
+        if (-not $k.scanCode) { continue }
+        $cell = $k.chars.Normal
+        if (-not $cell -or -not $cell.text) { continue }
+        $kKey = $KeymanByLegend[$k.usLegend]
+        if (-not $kKey) { continue }
+        $outCps = ($cell.codepoints -join ' ')
+        [void]$sb.AppendLine(('+ [{0}] > {1}' -f $kKey, $outCps))
+    }
+
+    [void]$sb.AppendLine('')
+    [void]$sb.AppendLine('c --- shifted layer (Shift fallback + rollover-safe Shift+J) ---')
+    foreach ($k in $midSpec.keys) {
+        if (-not $k.scanCode) { continue }
+        $cell = $k.chars.Shift
+        if (-not $cell -or -not $cell.text) { continue }
+        $kKey = $KeymanByLegend[$k.usLegend]
+        if (-not $kKey) { continue }
+        $outCps = ($cell.codepoints -join ' ')
+        [void]$sb.AppendLine(('+ [SHIFT {0}] > {1}' -f $kKey, $outCps))
+    }
+
+    [void]$sb.AppendLine('')
+    [void]$sb.AppendLine('c --- AltGr layer (Right Alt) ---')
+    foreach ($k in $midSpec.keys) {
+        if (-not $k.scanCode) { continue }
+        $cell = $k.chars.AltGr
+        if (-not $cell -or -not $cell.text) { continue }
+        $kKey = $KeymanByLegend[$k.usLegend]
+        if (-not $kKey) { continue }
+        $outCps = ($cell.codepoints -join ' ')
+        [void]$sb.AppendLine(('+ [RALT {0}] > {1}' -f $kKey, $outCps))
+    }
+
+    [void]$sb.AppendLine('')
+    [void]$sb.AppendLine('c --- Shift+AltGr layer (Rule 5 static second-series consonants) ---')
+    foreach ($k in $midSpec.keys) {
+        if (-not $k.scanCode) { continue }
+        $cell = $k.chars.ShiftAltGr
+        if (-not $cell -or -not $cell.text) { continue }
+        $kKey = $KeymanByLegend[$k.usLegend]
+        if (-not $kKey) { continue }
+        $outCps = ($cell.codepoints -join ' ')
+        [void]$sb.AppendLine(('+ [SHIFT RALT {0}] > {1}' -f $kKey, $outCps))
+    }
+
+    return $sb.ToString()
+}
+
+# ---------------------------------------------------------------------------
 # build
 # ---------------------------------------------------------------------------
 $nidaSpec = Get-Content (Join-Path $root 'nida_layout.json') -Raw -Encoding UTF8 | ConvertFrom-Json
 $khmrTables = Get-Content (Join-Path $root 'tables_kbdkhmr.json') -Raw -Encoding UTF8 | ConvertFrom-Json
+$midSpecPath = Join-Path $root 'midpoint_layout.json'
+if (-not (Test-Path $midSpecPath)) {
+    & (Join-Path $PSScriptRoot 'export_midpoint_spec.ps1') | Out-Null
+}
+$midSpec = Get-Content $midSpecPath -Raw -Encoding UTF8 | ConvertFrom-Json
 $scanMap = Get-ScanMap
 
 $variants = @()
-if ($Variant -in @('both','nida')) {
+if ($Variant -in @('all','both','nida')) {
     $variants += New-VariantFromSpec $nidaSpec 'Khmer NiDA' 'nida' @()
 }
-if ($Variant -in @('both','legacy')) {
+if ($Variant -in @('all','both','legacy')) {
     $variants += New-VariantFromTables $khmrTables 'Khmer NiDA Legacy' 'nida_legacy' $scanMap
+}
+if ($Variant -in @('all','midpoint')) {
+    $variants += New-VariantFromSpec $midSpec 'Khmer Better-NiDA' 'nida_midpoint' @()
 }
 
 foreach ($v in $variants) {
-    $src = if ($v.Slug -eq 'nida') { 'nida_layout.json (kbdkni.dll, KLID 00010453)' } else { 'tables_kbdkhmr.json (kbdkhmr.dll, KLID 00000453)' }
+    $src = switch ($v.Slug) {
+        'nida'          { 'nida_layout.json (kbdkni.dll, KLID 00010453)' }
+        'nida_legacy'   { 'tables_kbdkhmr.json (kbdkhmr.dll, KLID 00000453)' }
+        'nida_midpoint' { 'midpoint_layout.json (scripts/midpoint_engine.ps1)' }
+    }
     $macPath = Join-Path $OutRoot ("macos\$($v.Name).keylayout")
     New-Utf8File $macPath (New-MacKeylayout $v $src)
     $xkbPath = Join-Path $OutRoot "linux\$($v.Slug)"
@@ -375,4 +587,13 @@ foreach ($v in $variants) {
     $ligCount = @($v.Keys | Where-Object { @($_.Levels | Where-Object { $_.IsLigature }).Count -gt 0 }).Count
     Write-Host ("{0,-22} macos/{1}.keylayout   linux/{2}   ({3} keys, {4} ligature keys)" -f `
         $v.Name, $v.Name, $v.Slug, $v.Keys.Count, $ligCount)
+}
+
+if ($Variant -in @('all','midpoint')) {
+    $mimPath = Join-Path $OutRoot 'linux\m17n\nida-midpoint.mim'
+    New-Utf8File $mimPath (New-MidpointMimFile $midSpec)
+    $kmnPath = Join-Path $OutRoot 'windows\better_nida_midpoint.kmn'
+    New-Utf8File $kmnPath (New-MidpointKeymanFile $midSpec (Join-Path $PSScriptRoot 'midpoint_engine.ps1'))
+    Write-Host ("{0,-22} linux/m17n/nida-midpoint.mim   windows/better_nida_midpoint.kmn   ({1} sequences)" -f `
+        'Khmer Better-NiDA IME', @($midSpec.sequences).Count)
 }

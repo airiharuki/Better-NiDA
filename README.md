@@ -171,40 +171,47 @@ likely have shipped.
 
 ## Current Work: The "Midpoint" Hybrid Engine
 
-With stock NiDA faithfully decoded and ported to macOS and Linux, active development is focused on **improving the typing experience without breaking typists' muscle memory**. 
+With stock NiDA faithfully decoded and ported to macOS and Linux, active development is focused on **improving typing speed, eliminating clunkiness, and reducing `Shift` utilization to near zero without breaking typists' muscle memory**.
 
-Our analysis revealed two critical structural facts:
-1. **16.4% of all typed characters in Khmer are invisible Zero-Width Spaces (`U+200B`)**, representing a massive keystroke overhead that no pure layout can remove.
-2. **Stock NiDA has 98 completely empty modifier slots** across Control (49/49 free) and Shift+AltGr (49/49 free), meaning extensions do not need to displace existing characters.
+Measured on a **565.4 million character Khmer corpus** (scored via shortest-path search in `scripts/score_midpoint.ps1` over a 374,918-character typeable sample):
 
-To address these inefficiencies, we are prototyping **Better-NiDA "Midpoint"** (`scripts/midpoint_engine.ps1`), a hybrid architecture split into two tiers:
+| Metric | Stock NiDA | Better-NiDA Midpoint | Improvement |
+| :-- | --: | --: | :-- |
+| **Typeable characters** | 374,918 | 374,918 | **100% repertoire parity** |
+| **Keystrokes needing `Shift`** | 89,999 | 2,217 | **−97.5%** |
+| **`Shift` share of keystrokes** | **24.3%** | **0.5%** | **−23.8 percentage points** |
+| **Keystrokes needing `AltGr`** | 2,984 | 414 | **−86.1%** |
+| **Total presses (`keys + modifiers`)** | 463,536 | 458,109 | **−5,427 presses** |
+| **KSPC (Keystrokes Per Character)** | **1.236** | **1.222** | **−1.2% (faster)** |
 
-- **Static Layer (Zero-Lag, Universal)**:
-  - Moves high-frequency word-final marks (Nikahit `ំ` and Reahmuk `ះ`) off Shift onto unshifted `]` and `\`, moving rare independent vowels down to AltGr.
-  - Places second-series consonants on the vacant `Shift+AltGr` layer (displacing nothing).
-  - Makes `Shift+J` emit Coeng `្` as a rollover-safe modifier, eliminating accidental `ញ` during rapid subscript typing.
-  - Runs natively on all platforms including macOS `.keylayout` with zero display latency.
+**Better-NiDA "Midpoint"** (`scripts/midpoint_engine.ps1` $\rightarrow$ `midpoint_layout.json`) uses a two-tier architecture generated from a single source of truth:
 
-- **Sequence Layer (Input Method / IME-Buffered)**:
-  - **Universal Series Flip (`/`)**: An original Better-NiDA innovation—typing a base consonant followed by trailing `/` switches its series or appends appropriate register shifters (e.g. muusikatoan/traysap) without holding Shift.
-  - **Additive Double-Tap Upgrades**: Typing a vowel twice upgrades it to its long or composite counterpart (e.g., `ii` $\rightarrow$ `ី`, `uu` $\rightarrow$ `ូ`, `aa` $\rightarrow$ `ាំ`).
-  - Preserves 100% of stock Shift chords for total backwards compatibility.
+- **Static Layer (Zero-Lag, Universal — macOS `.keylayout`, Linux XKB `linux/nida_midpoint`)**:
+  - Moves high-frequency word-final marks (Nikahit `ំ` `U+17C6` and Reahmuk `ះ` `U+17C7`) off `Shift` onto unshifted `]` and `\`, saving 1 full keystroke on nearly every word while relocating `ឪ` (`U+17AA`), `ឮ` (`U+17AE`), and `ឳ` (`U+17B3`) to `AltGr+]`, `AltGr+\`, and `AltGr+U`.
+  - Places the 13 second-series consonants on the vacant `Shift+AltGr` (`Shift+Option`) layer, displacing nothing.
+  - Makes `Shift+J` emit Coeng `្` (`U+17D2`) as a rollover-safe modifier, eliminating accidental `ញ` during rapid subscript typing.
 
-Layout efficiency and modifier load are verified and measured using **`scripts/score_layout.ps1`** and **`scripts/verify_midpoint.ps1`**.
+- **Sequence / Contextual Layer (Zero-Lag Inline — Windows Keyman `windows/better_nida_midpoint.kmn`, Linux `linux/m17n/nida-midpoint.mim`)**:
+  - **Universal Series Flip (`/`)**: An original Better-NiDA research invention—typing a base consonant followed by trailing `/` switches its series (`k/` $\rightarrow$ `គ`, `t/` $\rightarrow$ `ទ`, `b/` $\rightarrow$ `ព`, `c/` $\rightarrow$ `ជ`, `g/` $\rightarrow$ `អ`) or appends the appropriate series shifter (`m/` $\rightarrow$ `ម៉`, `s/` $\rightarrow$ `ស៊`) without holding `Shift`.
+  - **Rollover-Safe Coeng & `Shift`-Free `ញ` / `្ញ`**: `jj` emits standalone `ញ` (`U+1789`), `jj/` emits `ញ៉` (`U+1789 U+17C9`), and `j/` emits subscript `្ញ` (`U+17D2 U+1789`) in 2 unshifted keys instead of 3 presses.
+  - **Additive Double-Tap & Vowel/Space Upgrades**: Double-tapping or pairing vowels/signs upgrades them without `Shift` (`ii` $\rightarrow$ `ី`, `uu` $\rightarrow$ `ូ`, `ee` $\rightarrow$ `ែ`, `aa` $\rightarrow$ `ាំ`, `ea` $\rightarrow$ `ោ`, `ei` $\rightarrow$ `ើ`, `ua`/`u/` $\rightarrow$ `ួ`, `ai`/`i/` $\rightarrow$ `ៃ`, `  ` or ` /` $\rightarrow$ `U+0020` real space, `6/` $\rightarrow$ `៍`, `7/` $\rightarrow$ `័`, `\\` $\rightarrow$ `ៈ`, `;/` $\rightarrow$ `៖`).
+  - Preserves **100% of unshifted `A–Z`** and **100% of stock `Shift` chords** (except `Shift+J`) for total backwards compatibility.
+
+Layout correctness and modifier load are verified and measured using **`scripts/verify_midpoint.ps1`** and **`scripts/score_midpoint.ps1`**.
 
 ---
 
 ## Project Roadmap
 
-The complete development strategy is detailed in **[ROADMAP.md](ROADMAP.md)**. The path is now driven by shipping the **Midpoint** variant:
+The complete development strategy is detailed in **[ROADMAP.md](ROADMAP.md)**.
 
-| Stage | Focus | Core Deliverables |
-| :-- | :-- | :-- |
-| **1. Measure** | Validate the claim | Inverse mode on `midpoint_engine.ps1`: text → cheapest keystrokes, with the real `Shift` rate. Gates everything after it. |
-| **2. Linux** | Reference target | `nida-midpoint.mim` with full sequence rules (m17n resolves longest-prefix natively), plus an XKB static-subset fallback. Validate with `m17n-db`. |
-| **3. Windows** | Keyman target | `better_nida_midpoint.kmn`, generated from the engine. Opt-in; stock `kbdkni.dll` untouched. |
-| **4. macOS** | Static subset only | A 5-`<keyMap>` `.keylayout`. Second-series consonants move to the unused `Shift+AltGr` level. No `<actions>`, so zero display lag. |
-| **5. Verify** | Real hardware | macOS, Linux and Keyman installs, then the same passage typed by Khmer typists on stock NiDA vs Midpoint. |
+| Stage | Focus | Core Deliverables | Status |
+| :-- | :-- | :-- | :-- |
+| **1. Measure** | Validate on 565M corpus | `scripts/score_midpoint.ps1` + `scripts/analyze_corpus.py`: `Shift` share reduced from **24.3% to 0.5%** (−97.5%), KSPC improved from **1.236 to 1.222**. | **Done** |
+| **2. Linux** | Reference target | `linux/m17n/nida-midpoint.mim` (full sequence + static rules) and `linux/nida_midpoint` (XKB `EIGHT_LEVEL` static subset). | **Generated & Structurally Verified** |
+| **3. Windows** | Keyman target | `windows/better_nida_midpoint.kmn` using zero-lag inline contextual replacements (`U+1780 + [K_SLASH] > U+1782`). Stock `kbdkni.dll` untouched. | **Generated & Structurally Verified** |
+| **4. macOS** | Static subset | `macos/Khmer Better-NiDA.keylayout` (5-`<keyMap>` bundle with `Shift+Option` second-series consonants and zero dead-key lag). | **Generated & Structurally Verified** |
+| **5. Verify** | Real hardware | Hardware testing on macOS, Linux, and Keyman Desktop with Cambodian typists. | **In Progress** |
 
 Midpoint makes typing **less effortful, not shorter** — it trades raw keystroke count for fewer `Shift` presses. What it does *not* solve, and what comes after it:
 
@@ -223,6 +230,11 @@ For deep dives into layout limits, modifier capacity, and design trade-offs, con
 | [REVERSE_ENGINEERING_NIDA.md](REVERSE_ENGINEERING_NIDA.md) | Full technical specification and findings |
 | [ROADMAP.md](ROADMAP.md) | In-depth development plan, empirical baseline, and architecture trade-offs |
 | [nida_layout.json](nida_layout.json) | Machine-readable NiDA spec: 49 keys, all states, ligatures, official Unicode names |
+| [midpoint_layout.json](midpoint_layout.json) | Machine-readable Better-NiDA Midpoint spec: 49 keys, 5 modifier levels, 51 sequence rules |
+| [windows/better_nida_midpoint.kmn](windows/better_nida_midpoint.kmn) | Keyman keyboard source for Windows/cross-platform with zero-lag contextual rules |
+| [linux/m17n/nida-midpoint.mim](linux/m17n/nida-midpoint.mim) | Linux m17n input method implementing full Midpoint sequence and static layers |
+| [linux/nida_midpoint](linux/nida_midpoint) | Linux XKB `EIGHT_LEVEL` symbols for the Midpoint static subset |
+| [macos/Khmer Better-NiDA.keylayout](macos/Khmer%20Better-NiDA.keylayout) | macOS 5-level `.keylayout` bundle for the Midpoint static subset |
 | [tables_kbdkni.json](tables_kbdkni.json) / [.csv](tables_kbdkni.csv) | Every table decoded directly from `kbdkni.dll` |
 | [tables_kbdkhmr.json](tables_kbdkhmr.json) / [.csv](tables_kbdkhmr.csv) | Same for the legacy Khmer layout |
 | [tables_kbdus.json](tables_kbdus.json) / [.csv](tables_kbdus.csv) | Same for US, used as the structural control |
@@ -244,27 +256,31 @@ Better-NiDA/
 ├── ROADMAP.md                    # Plan for improving on NiDA
 ├── CHANGELOG.md                  # Release history
 ├── nida_layout.json              # Authoritative NiDA layout spec
+├── midpoint_layout.json          # Authoritative Better-NiDA Midpoint spec
 ├── tables_kbd*.json / .csv       # Tables decoded from the driver DLLs
 ├── kni_layout.csv                # Behavioural probe: NiDA
 ├── khmr_layout.csv               # Behavioural probe: legacy Khmer
+├── windows/                      # Keyman (.kmn) keyboard source for Better-NiDA Midpoint
 ├── macos/                        # macOS .keylayout layouts + installer
-├── linux/                        # XKB layouts + installer + optional m17n
+├── linux/                        # XKB layouts + installer + m17n input methods
 ├── scripts/
 │   ├── dump_kbd_tables.ps1       # Decode the DLL's KbdLayerDescriptor tables
 │   ├── dump_layout.ps1           # Probe layout behaviour via ToUnicodeEx
 │   ├── dump_layout_control.ps1   # Probe again with Control held
 │   ├── verify_tables.ps1         # Assert the two paths agree (CI-friendly)
 │   ├── verify_control.ps1        # Check secondary tables vs Control behaviour
-│   ├── build_platform_layouts.ps1 # Generate the macOS + Linux layouts
-│   ├── verify_platform_layouts.ps1 # Validate the generated platform files
+│   ├── build_platform_layouts.ps1 # Generate the macOS, Linux, m17n, and Keyman files
+│   ├── verify_platform_layouts.ps1 # Validate all generated platform files
 │   ├── verify_all.ps1            # Rebuild and verify everything, one command
 │   ├── build_unicode_names.ps1   # Refresh official Unicode character names
 │   ├── export_nida_spec.ps1      # Build nida_layout.json
+│   ├── export_midpoint_spec.ps1  # Build midpoint_layout.json
 │   ├── render_docs.ps1           # Render markdown tables from the spec
-│   ├── score_layout.ps1          # Measure stroke count and modifier load against corpus
+│   ├── analyze_corpus.py         # Stream 565M-char corpus into frequency & coeng tables
+│   ├── score_midpoint.ps1        # Shortest-path KSPC & modifier scorer against corpus
 │   ├── midpoint_engine.ps1       # Single source of truth for the Midpoint hybrid engine
 │   ├── verify_midpoint.ps1       # Test suite for Midpoint static & sequence rules
-│   └── data/unicode_names.json   # Curated UCD names for the layouts' characters
+│   └── data/                     # Curated UCD names & corpus coeng pair frequencies
 ├── .gitignore
 └── README.md
 ```

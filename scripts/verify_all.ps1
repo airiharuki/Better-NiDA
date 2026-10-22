@@ -1,17 +1,23 @@
 <#
 .SYNOPSIS
-    Reproduces and verifies the entire Khmer layout analysis in one command.
+    Reproduces and verifies the entire Khmer layout analysis and Better-NiDA
+    Midpoint build in one command.
 
 .DESCRIPTION
     Runs the full chain from scratch and fails if any stage disagrees:
 
-      1. dump_kbd_tables.ps1        structural decode of kbdkni, kbdkhmr, kbdus
-      2. dump_layout.ps1            behavioural probe of both Khmer layouts
-      3. dump_layout_control.ps1    behavioural probe with Control held
-      4. build_unicode_names.ps1    official Unicode names for the characters used
-      5. export_nida_spec.ps1       rebuild nida_layout.json
-      6. verify_tables.ps1         structural decode == behavioural probe
-      7. verify_control.ps1        secondary tables == Control behaviour
+      1. dump_kbd_tables.ps1         structural decode of kbdkni, kbdkhmr, kbdus
+      2. dump_layout.ps1             behavioural probe of both Khmer layouts
+      3. dump_layout_control.ps1     behavioural probe with Control held
+      4. build_unicode_names.ps1     official Unicode names for the characters used
+      5. export_nida_spec.ps1        rebuild nida_layout.json
+      6. export_midpoint_spec.ps1    rebuild midpoint_layout.json
+      7. build_platform_layouts.ps1  generate macOS, Linux, and Windows (Keyman) files
+      8. build_installers.ps1        build self-contained installers
+      9. verify_tables.ps1           structural decode == behavioural probe
+     10. verify_control.ps1          secondary tables == Control behaviour
+     11. verify_midpoint.ps1         Midpoint engine keystroke matrix & guardrails
+     12. verify_platform_layouts.ps1 validate macOS, Linux, m17n, and Keyman files
 
     Every stage runs even if an earlier one fails, so one run reports every
     problem rather than only the first. Exits 0 only if all checks pass.
@@ -52,10 +58,6 @@ function Invoke-Stage {
     $path = Join-Path $PSScriptRoot $Script
     $code = 0
     try {
-        # Invoke through the PowerShell host rather than with & so the child
-        # runs under Bypass: a machine with scripts disabled would otherwise
-        # block every stage, and the failure is reported as a mangled argument
-        # list rather than as a policy problem.
         $invoke = @{
             FilePath     = 'powershell'
             ArgumentList = @('-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', $path) + $Arguments
@@ -69,8 +71,6 @@ function Invoke-Stage {
         $code = 1
     }
 
-    # A stage that never set an exit code (plain script, not -File) counts as OK
-    # unless it is a check, where a missing code is treated as failure.
     if ($IsCheck) { $ok = ($code -eq 0) } else { $ok = ($code -eq 0 -or $null -eq $code) }
 
     $script:results += [PSCustomObject]@{
@@ -85,20 +85,18 @@ Write-Host "Khmer layout verification chain" -ForegroundColor White
 Write-Host "repository: $root"
 
 if (-not $SkipRegenerate) {
-    Invoke-Stage -Name '1/10 Decode driver tables (kbdkni)'   -Script 'dump_kbd_tables.ps1'     -Arguments @('-Dll', 'kbdkni.dll')
-    Invoke-Stage -Name '2/10 Decode driver tables (kbdkhmr)'  -Script 'dump_kbd_tables.ps1'     -Arguments @('-Dll', 'kbdkhmr.dll')
-    Invoke-Stage -Name '3/10 Decode driver tables (kbdus)'    -Script 'dump_kbd_tables.ps1'     -Arguments @('-Dll', 'kbdus.dll')
-    Invoke-Stage -Name '4/10 Probe layout behaviour'          -Script 'dump_layout.ps1'
-    Invoke-Stage -Name '5/10 Probe Control behaviour (NiDA)'  -Script 'dump_layout_control.ps1'
-    # US control probe: the layout whose table 2 holds 47 entries, used to
-    # establish that tables 2/3 are base-character fallbacks rather than a
-    # control-character map. See REVERSE_ENGINEERING_NIDA.md section 7.
-    Invoke-Stage -Name '6/10 Probe Control behaviour (US)'    -Script 'dump_layout_control.ps1' `
+    Invoke-Stage -Name '1/11 Decode driver tables (kbdkni)'   -Script 'dump_kbd_tables.ps1'      -Arguments @('-Dll', 'kbdkni.dll')
+    Invoke-Stage -Name '2/11 Decode driver tables (kbdkhmr)'  -Script 'dump_kbd_tables.ps1'      -Arguments @('-Dll', 'kbdkhmr.dll')
+    Invoke-Stage -Name '3/11 Decode driver tables (kbdus)'    -Script 'dump_kbd_tables.ps1'      -Arguments @('-Dll', 'kbdus.dll')
+    Invoke-Stage -Name '4/11 Probe layout behaviour'          -Script 'dump_layout.ps1'
+    Invoke-Stage -Name '5/11 Probe Control behaviour (NiDA)'  -Script 'dump_layout_control.ps1'
+    Invoke-Stage -Name '6/11 Probe Control behaviour (US)'    -Script 'dump_layout_control.ps1' `
         -Arguments @('-TablesCsv', 'tables_kbdus.csv', '-Klid', '00000409', '-OutCsv', 'us_control.csv')
-    Invoke-Stage -Name '7/10 Build Unicode name table'        -Script 'build_unicode_names.ps1'
-    Invoke-Stage -Name '8/10 Rebuild nida_layout.json'        -Script 'export_nida_spec.ps1'
-    Invoke-Stage -Name '9/10 Generate macOS + Linux layouts'  -Script 'build_platform_layouts.ps1'
-    Invoke-Stage -Name '10/10 Build self-contained installers' -Script 'build_installers.ps1'
+    Invoke-Stage -Name '7/11 Build Unicode name table'        -Script 'build_unicode_names.ps1'
+    Invoke-Stage -Name '8/11 Rebuild nida_layout.json'        -Script 'export_nida_spec.ps1'
+    Invoke-Stage -Name '9/11 Rebuild midpoint_layout.json'    -Script 'export_midpoint_spec.ps1'
+    Invoke-Stage -Name '10/11 Generate platform layouts'      -Script 'build_platform_layouts.ps1'
+    Invoke-Stage -Name '11/11 Build self-contained installers' -Script 'build_installers.ps1'
 } else {
     Write-Host "`n-SkipRegenerate: verifying the committed artifacts as-is." -ForegroundColor Yellow
 }
@@ -106,7 +104,8 @@ if (-not $SkipRegenerate) {
 Invoke-Stage -Name 'CHECK  NiDA tables vs ToUnicodeEx'          -Script 'verify_tables.ps1'   -Arguments @('-TablesCsv', 'tables_kbdkni.csv',   '-ProbeCsv', 'kni_layout.csv') -IsCheck
 Invoke-Stage -Name 'CHECK  legacy Khmer tables vs ToUnicodeEx'  -Script 'verify_tables.ps1'   -Arguments @('-TablesCsv', 'tables_kbdkhmr.csv', '-ProbeCsv', 'khmr_layout.csv') -IsCheck
 Invoke-Stage -Name 'CHECK  secondary tables vs Control'         -Script 'verify_control.ps1'  -IsCheck
-Invoke-Stage -Name 'CHECK  macOS + Linux layout files'          -Script 'verify_platform_layouts.ps1' -IsCheck
+Invoke-Stage -Name 'CHECK  Better-NiDA Midpoint engine'         -Script 'verify_midpoint.ps1' -IsCheck
+Invoke-Stage -Name 'CHECK  Platform layout files'               -Script 'verify_platform_layouts.ps1' -IsCheck
 
 Write-Host ""
 Write-Host ("=" * 72) -ForegroundColor DarkGray

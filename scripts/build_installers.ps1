@@ -61,10 +61,12 @@ function Get-BashPath {
 $DELIM = 'NIDA_EMBEDDED_LAYOUT_EOF'
 
 $payloads = @(
-    @{ Name = 'nida';         Path = (Join-Path $root 'linux\nida');                 Delim = 'NIDA_XKB_NIDA_EOF' }
-    @{ Name = 'nida_legacy';  Path = (Join-Path $root 'linux\nida_legacy');          Delim = 'NIDA_XKB_LEGACY_EOF' }
-    @{ Name = 'Khmer NiDA';   Path = (Join-Path $root 'macos\Khmer NiDA.keylayout'); Delim = 'NIDA_MAC_NIDA_EOF' }
+    @{ Name = 'nida';              Path = (Join-Path $root 'linux\nida');                        Delim = 'NIDA_XKB_NIDA_EOF' }
+    @{ Name = 'nida_legacy';       Path = (Join-Path $root 'linux\nida_legacy');                 Delim = 'NIDA_XKB_LEGACY_EOF' }
+    @{ Name = 'nida_midpoint';     Path = (Join-Path $root 'linux\nida_midpoint');               Delim = 'NIDA_XKB_MIDPOINT_EOF' }
+    @{ Name = 'Khmer NiDA';        Path = (Join-Path $root 'macos\Khmer NiDA.keylayout');        Delim = 'NIDA_MAC_NIDA_EOF' }
     @{ Name = 'Khmer NiDA Legacy'; Path = (Join-Path $root 'macos\Khmer NiDA Legacy.keylayout'); Delim = 'NIDA_MAC_LEGACY_EOF' }
+    @{ Name = 'Khmer Better-NiDA'; Path = (Join-Path $root 'macos\Khmer Better-NiDA.keylayout'); Delim = 'NIDA_MAC_MIDPOINT_EOF' }
 )
 
 foreach ($p in $payloads) {
@@ -112,10 +114,15 @@ $linux = New-Object System.Text.StringBuilder
 [void]$linux.AppendLine('')
 [void]$linux.AppendLine('NIDA_XKB_LEGACY_EOF')
 [void]$linux.AppendLine('')
+[void]$linux.AppendLine('<<NIDA_XKB_MIDPOINT_EOF')
+[void]$linux.Append(([System.IO.File]::ReadAllText((Join-Path $root 'linux\nida_midpoint'))).TrimEnd("`n"))
+[void]$linux.AppendLine('')
+[void]$linux.AppendLine('NIDA_XKB_MIDPOINT_EOF')
+[void]$linux.AppendLine('')
 [void]$linux.AppendLine('# ------------------------------------------------------------------- installer')
 [void]$linux.AppendLine(@'
 if [ "${1-}" = "--remove" ]; then
-    rm -f "$XKB/symbols/nida" "$XKB/symbols/nida_legacy"
+    rm -f "$XKB/symbols/nida" "$XKB/symbols/nida_legacy" "$XKB/symbols/nida_midpoint"
     if [ -f "$XKB/rules/evdev.lst" ]; then
         sed -i '/# >>> Better-NiDA/,/# <<< Better-NiDA/d' "$XKB/rules/evdev.lst" 2>/dev/null || true
     fi
@@ -132,9 +139,10 @@ extract() {
     # suffix and strip both marker lines, or the payload comes out empty.
     sed -n "/^<<$1\$/,/^$1\$/ { /^<<$1\$/d; /^$1\$/d; p; }" "$0" > "$2"
 }
-extract NIDA_XKB_NIDA_EOF    "$XKB/symbols/nida"
-extract NIDA_XKB_LEGACY_EOF "$XKB/symbols/nida_legacy"
-say "installed ~/.xkb/symbols/nida and nida_legacy"
+extract NIDA_XKB_NIDA_EOF     "$XKB/symbols/nida"
+extract NIDA_XKB_LEGACY_EOF   "$XKB/symbols/nida_legacy"
+extract NIDA_XKB_MIDPOINT_EOF "$XKB/symbols/nida_midpoint"
+say "installed ~/.xkb/symbols/nida, nida_legacy, and nida_midpoint"
 
 # register in the rules file (classic format, still read by libxkbcomp, no root)
 touch "$XKB/rules/evdev.lst"
@@ -145,9 +153,10 @@ if ! grep -q '# >>> Better-NiDA' "$XKB/rules/evdev.lst" 2>/dev/null; then
 ! model          layout     variant
   *             nida
   *             nida_legacy
+  *             nida_midpoint
 # <<< Better-NiDA
 RULES
-    say "registered both layouts in ~/.xkb/rules/evdev.lst"
+    say "registered layouts in ~/.xkb/rules/evdev.lst"
 fi
 
 if command -v xkbcomp >/dev/null 2>&1; then
@@ -163,8 +172,8 @@ fi
 
 TARGET="${1:-nida}"
 case "$TARGET" in
-    nida|nida_legacy) ;;
-    *) die "unknown layout '$TARGET' (use nida or nida_legacy)" ;;
+    nida|nida_legacy|nida_midpoint) ;;
+    *) die "unknown layout '$TARGET' (use nida, nida_legacy, or nida_midpoint)" ;;
 esac
 
 setxkbmap -layout "$TARGET" || die "setxkbmap failed"
@@ -225,6 +234,11 @@ $mac = New-Object System.Text.StringBuilder
 [void]$mac.AppendLine('')
 [void]$mac.AppendLine('NIDA_MAC_LEGACY_EOF')
 [void]$mac.AppendLine('')
+[void]$mac.AppendLine('<<NIDA_MAC_MIDPOINT_EOF')
+[void]$mac.Append(([System.IO.File]::ReadAllText((Join-Path $root 'macos\Khmer Better-NiDA.keylayout'))).TrimEnd("`n"))
+[void]$mac.AppendLine('')
+[void]$mac.AppendLine('NIDA_MAC_MIDPOINT_EOF')
+[void]$mac.AppendLine('')
 [void]$mac.AppendLine('# ------------------------------------------------------------------- installer')
 [void]$mac.AppendLine(@'
 [ "$(uname -s)" = "Darwin" ] || die "this installer is macOS only"
@@ -234,9 +248,10 @@ extract() {
     # opener is "<<DELIM", closer is "DELIM" alone; strip both marker lines
     sed -n "/^<<$1\$/,/^$1\$/ { /^<<$1\$/d; /^$1\$/d; p; }" "$0" > "$2"
 }
-extract NIDA_MAC_NIDA_EOF    "$DEST/Khmer NiDA.keylayout"
-extract NIDA_MAC_LEGACY_EOF "$DEST/Khmer NiDA Legacy.keylayout"
-say "copied both layouts to ~/Library/Keyboard Layouts"
+extract NIDA_MAC_NIDA_EOF     "$DEST/Khmer NiDA.keylayout"
+extract NIDA_MAC_LEGACY_EOF   "$DEST/Khmer NiDA Legacy.keylayout"
+extract NIDA_MAC_MIDPOINT_EOF "$DEST/Khmer Better-NiDA.keylayout"
+say "copied layouts to ~/Library/Keyboard Layouts"
 
 killall -HUP SystemUIServer 2>/dev/null || true
 
@@ -323,10 +338,12 @@ sed -n "/^<<$delim\$/,/^$delim\$/ { /^<<$delim\$/d; /^$delim\$/d; p; }" "$src" >
     New-Utf8File $extractScript $extract
 
     $checks = @(
-        @{ File = $linuxPath; Delim = 'NIDA_XKB_NIDA_EOF';    Want = (Join-Path $root 'linux\nida') }
+        @{ File = $linuxPath; Delim = 'NIDA_XKB_NIDA_EOF';     Want = (Join-Path $root 'linux\nida') }
         @{ File = $linuxPath; Delim = 'NIDA_XKB_LEGACY_EOF';   Want = (Join-Path $root 'linux\nida_legacy') }
+        @{ File = $linuxPath; Delim = 'NIDA_XKB_MIDPOINT_EOF'; Want = (Join-Path $root 'linux\nida_midpoint') }
         @{ File = $macPath;   Delim = 'NIDA_MAC_NIDA_EOF';     Want = (Join-Path $root 'macos\Khmer NiDA.keylayout') }
-        @{ File = $macPath;   Delim = 'NIDA_MAC_LEGACY_EOF';  Want = (Join-Path $root 'macos\Khmer NiDA Legacy.keylayout') }
+        @{ File = $macPath;   Delim = 'NIDA_MAC_LEGACY_EOF';   Want = (Join-Path $root 'macos\Khmer NiDA Legacy.keylayout') }
+        @{ File = $macPath;   Delim = 'NIDA_MAC_MIDPOINT_EOF'; Want = (Join-Path $root 'macos\Khmer Better-NiDA.keylayout') }
     )
     foreach ($c in $checks) {
         $got = Join-Path $tmp (([System.IO.Path]::GetFileNameWithoutExtension($c.File)) + '-' + $c.Delim + '.out')

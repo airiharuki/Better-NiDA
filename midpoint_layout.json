@@ -1,0 +1,3073 @@
+{
+    "layout":  {
+                   "name":  "Khmer (Better-NiDA Midpoint)",
+                   "slug":  "nida_midpoint",
+                   "baseLayout":  "Khmer (NiDA) - kbdkni.dll (KLID 00010453)",
+                   "locale":  "km-KH",
+                   "script":  "Khmer (U+1780..U+17FF)",
+                   "encoding":  "Unicode",
+                   "design":  "100% unshifted A-Z NiDA preservation + universal / series switch + double-tap vowels + reclaimed ] and \\"
+               },
+    "provenance":  {
+                       "sourceSpec":  "nida_layout.json",
+                       "engine":  "scripts/midpoint_engine.ps1",
+                       "verifiedBy":  "scripts/verify_midpoint.ps1",
+                       "characterNames":  "official Unicode Character Database (scripts/build_unicode_names.ps1)"
+                   },
+    "staticOverrides":  {
+                            "Normal":  [
+                                           "]",
+                                           "\\"
+                                       ],
+                            "Shift":  [
+                                          "J"
+                                      ],
+                            "AltGr":  [
+                                          "]",
+                                          "\\",
+                                          "J",
+                                          "U"
+                                      ],
+                            "ShiftAltGr":  [
+                                               "k",
+                                               "x",
+                                               "c",
+                                               "q",
+                                               "d",
+                                               "z",
+                                               "t",
+                                               "f",
+                                               "b",
+                                               "p",
+                                               "n",
+                                               "l",
+                                               "g"
+                                           ]
+                        },
+    "keys":  [
+                 {
+                     "scanCode":  "0x02",
+                     "vk":  49,
+                     "vkHex":  "0x31",
+                     "vkName":  "1",
+                     "usLegend":  "1",
+                     "chars":  {
+                                   "Normal":  {
+                                                  "text":  "១",
+                                                  "codepoints":  [
+                                                                     "U+17E1"
+                                                                 ],
+                                                  "names":  [
+                                                                "KHMER DIGIT ONE"
+                                                            ]
+                                              },
+                                   "Shift":  {
+                                                 "text":  "!",
+                                                 "codepoints":  [
+                                                                    "U+0021"
+                                                                ],
+                                                 "names":  [
+                                                               "EXCLAMATION MARK"
+                                                           ]
+                                             },
+                                   "Control":  null,
+                                   "AltGr":  {
+                                                 "text":  "‌",
+                                                 "codepoints":  [
+                                                                    "U+200C"
+                                                                ],
+                                                 "names":  [
+                                                               "ZERO WIDTH NON-JOINER"
+                                                           ]
+                                             },
+                                   "ShiftAltGr":  null
+                               }
+                 },
+                 {
+                     "scanCode":  "0x03",
+                     "vk":  50,
+                     "vkHex":  "0x32",
+                     "vkName":  "2",
+                     "usLegend":  "2",
+                     "chars":  {
+                                   "Normal":  {
+                                                  "text":  "២",
+                                                  "codepoints":  [
+                                                                     "U+17E2"
+                                                                 ],
+                                                  "names":  [
+                                                                "KHMER DIGIT TWO"
+                                                            ]
+                                              },
+                                   "Shift":  {
+                                                 "text":  "ៗ",
+                                                 "codepoints":  [
+                                                                    "U+17D7"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER SIGN LEK TOO"
+                                                           ]
+                                             },
+                                   "Control":  null,
+                                   "AltGr":  {
+                                                 "text":  "@",
+                                                 "codepoints":  [
+                                                                    "U+0040"
+                                                                ],
+                                                 "names":  [
+                                                               "COMMERCIAL AT"
+                                                           ]
+                                             },
+                                   "ShiftAltGr":  null
+                               }
+                 },
+                 {
+                     "scanCode":  "0x04",
+                     "vk":  51,
+                     "vkHex":  "0x33",
+                     "vkName":  "3",
+                     "usLegend":  "3",
+                     "chars":  {
+                                   "Normal":  {
+                                                  "text":  "៣",
+                                                  "codepoints":  [
+                                                                     "U+17E3"
+                                                                 ],
+                                                  "names":  [
+                                                                "KHMER DIGIT THREE"
+                                                            ]
+                                              },
+                                   "Shift":  {
+                                                 "text":  "\"",
+                                                 "codepoints":  [
+                                                                    "U+0022"
+                                                                ],
+                                                 "names":  [
+                                                               "QUOTATION MARK"
+                                                           ]
+                                             },
+                                   "Control":  null,
+                                   "AltGr":  {
+                                                 "text":  "៑",
+                                                 "codepoints":  [
+                                                                    "U+17D1"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER SIGN VIRIAM"
+                                                           ]
+                                             },
+                                   "ShiftAltGr":  null
+                               }
+                 },
+                 {
+                     "scanCode":  "0x05",
+                     "vk":  52,
+                     "vkHex":  "0x34",
+                     "vkName":  "4",
+                     "usLegend":  "4",
+                     "chars":  {
+                                   "Normal":  {
+                                                  "text":  "៤",
+                                                  "codepoints":  [
+                                                                     "U+17E4"
+                                                                 ],
+                                                  "names":  [
+                                                                "KHMER DIGIT FOUR"
+                                                            ]
+                                              },
+                                   "Shift":  {
+                                                 "text":  "៛",
+                                                 "codepoints":  [
+                                                                    "U+17DB"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER CURRENCY SYMBOL RIEL"
+                                                           ]
+                                             },
+                                   "Control":  null,
+                                   "AltGr":  {
+                                                 "text":  "$",
+                                                 "codepoints":  [
+                                                                    "U+0024"
+                                                                ],
+                                                 "names":  [
+                                                               "DOLLAR SIGN"
+                                                           ]
+                                             },
+                                   "ShiftAltGr":  null
+                               }
+                 },
+                 {
+                     "scanCode":  "0x06",
+                     "vk":  53,
+                     "vkHex":  "0x35",
+                     "vkName":  "5",
+                     "usLegend":  "5",
+                     "chars":  {
+                                   "Normal":  {
+                                                  "text":  "៥",
+                                                  "codepoints":  [
+                                                                     "U+17E5"
+                                                                 ],
+                                                  "names":  [
+                                                                "KHMER DIGIT FIVE"
+                                                            ]
+                                              },
+                                   "Shift":  {
+                                                 "text":  "%",
+                                                 "codepoints":  [
+                                                                    "U+0025"
+                                                                ],
+                                                 "names":  [
+                                                               "PERCENT SIGN"
+                                                           ]
+                                             },
+                                   "Control":  null,
+                                   "AltGr":  {
+                                                 "text":  "€",
+                                                 "codepoints":  [
+                                                                    "U+20AC"
+                                                                ],
+                                                 "names":  [
+                                                               "EURO SIGN"
+                                                           ]
+                                             },
+                                   "ShiftAltGr":  null
+                               }
+                 },
+                 {
+                     "scanCode":  "0x07",
+                     "vk":  54,
+                     "vkHex":  "0x36",
+                     "vkName":  "6",
+                     "usLegend":  "6",
+                     "chars":  {
+                                   "Normal":  {
+                                                  "text":  "៦",
+                                                  "codepoints":  [
+                                                                     "U+17E6"
+                                                                 ],
+                                                  "names":  [
+                                                                "KHMER DIGIT SIX"
+                                                            ]
+                                              },
+                                   "Shift":  {
+                                                 "text":  "៍",
+                                                 "codepoints":  [
+                                                                    "U+17CD"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER SIGN TOANDAKHIAT"
+                                                           ]
+                                             },
+                                   "Control":  null,
+                                   "AltGr":  {
+                                                 "text":  "៙",
+                                                 "codepoints":  [
+                                                                    "U+17D9"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER SIGN PHNAEK MUAN"
+                                                           ]
+                                             },
+                                   "ShiftAltGr":  null
+                               }
+                 },
+                 {
+                     "scanCode":  "0x08",
+                     "vk":  55,
+                     "vkHex":  "0x37",
+                     "vkName":  "7",
+                     "usLegend":  "7",
+                     "chars":  {
+                                   "Normal":  {
+                                                  "text":  "៧",
+                                                  "codepoints":  [
+                                                                     "U+17E7"
+                                                                 ],
+                                                  "names":  [
+                                                                "KHMER DIGIT SEVEN"
+                                                            ]
+                                              },
+                                   "Shift":  {
+                                                 "text":  "័",
+                                                 "codepoints":  [
+                                                                    "U+17D0"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER SIGN SAMYOK SANNYA"
+                                                           ]
+                                             },
+                                   "Control":  null,
+                                   "AltGr":  {
+                                                 "text":  "៚",
+                                                 "codepoints":  [
+                                                                    "U+17DA"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER SIGN KOOMUUT"
+                                                           ]
+                                             },
+                                   "ShiftAltGr":  null
+                               }
+                 },
+                 {
+                     "scanCode":  "0x09",
+                     "vk":  56,
+                     "vkHex":  "0x38",
+                     "vkName":  "8",
+                     "usLegend":  "8",
+                     "chars":  {
+                                   "Normal":  {
+                                                  "text":  "៨",
+                                                  "codepoints":  [
+                                                                     "U+17E8"
+                                                                 ],
+                                                  "names":  [
+                                                                "KHMER DIGIT EIGHT"
+                                                            ]
+                                              },
+                                   "Shift":  {
+                                                 "text":  "៏",
+                                                 "codepoints":  [
+                                                                    "U+17CF"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER SIGN AHSDA"
+                                                           ]
+                                             },
+                                   "Control":  null,
+                                   "AltGr":  {
+                                                 "text":  "*",
+                                                 "codepoints":  [
+                                                                    "U+002A"
+                                                                ],
+                                                 "names":  [
+                                                               "ASTERISK"
+                                                           ]
+                                             },
+                                   "ShiftAltGr":  null
+                               }
+                 },
+                 {
+                     "scanCode":  "0x0A",
+                     "vk":  57,
+                     "vkHex":  "0x39",
+                     "vkName":  "9",
+                     "usLegend":  "9",
+                     "chars":  {
+                                   "Normal":  {
+                                                  "text":  "៩",
+                                                  "codepoints":  [
+                                                                     "U+17E9"
+                                                                 ],
+                                                  "names":  [
+                                                                "KHMER DIGIT NINE"
+                                                            ]
+                                              },
+                                   "Shift":  {
+                                                 "text":  "(",
+                                                 "codepoints":  [
+                                                                    "U+0028"
+                                                                ],
+                                                 "names":  [
+                                                               "LEFT PARENTHESIS"
+                                                           ]
+                                             },
+                                   "Control":  null,
+                                   "AltGr":  {
+                                                 "text":  "{",
+                                                 "codepoints":  [
+                                                                    "U+007B"
+                                                                ],
+                                                 "names":  [
+                                                               "LEFT CURLY BRACKET"
+                                                           ]
+                                             },
+                                   "ShiftAltGr":  null
+                               }
+                 },
+                 {
+                     "scanCode":  "0x0B",
+                     "vk":  48,
+                     "vkHex":  "0x30",
+                     "vkName":  "0",
+                     "usLegend":  "0",
+                     "chars":  {
+                                   "Normal":  {
+                                                  "text":  "០",
+                                                  "codepoints":  [
+                                                                     "U+17E0"
+                                                                 ],
+                                                  "names":  [
+                                                                "KHMER DIGIT ZERO"
+                                                            ]
+                                              },
+                                   "Shift":  {
+                                                 "text":  ")",
+                                                 "codepoints":  [
+                                                                    "U+0029"
+                                                                ],
+                                                 "names":  [
+                                                               "RIGHT PARENTHESIS"
+                                                           ]
+                                             },
+                                   "Control":  null,
+                                   "AltGr":  {
+                                                 "text":  "}",
+                                                 "codepoints":  [
+                                                                    "U+007D"
+                                                                ],
+                                                 "names":  [
+                                                               "RIGHT CURLY BRACKET"
+                                                           ]
+                                             },
+                                   "ShiftAltGr":  null
+                               }
+                 },
+                 {
+                     "scanCode":  "0x0C",
+                     "vk":  189,
+                     "vkHex":  "0xBD",
+                     "vkName":  "OEM_MINUS",
+                     "usLegend":  "-",
+                     "chars":  {
+                                   "Normal":  {
+                                                  "text":  "ឥ",
+                                                  "codepoints":  [
+                                                                     "U+17A5"
+                                                                 ],
+                                                  "names":  [
+                                                                "KHMER INDEPENDENT VOWEL QI"
+                                                            ]
+                                              },
+                                   "Shift":  {
+                                                 "text":  "៌",
+                                                 "codepoints":  [
+                                                                    "U+17CC"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER SIGN ROBAT"
+                                                           ]
+                                             },
+                                   "Control":  null,
+                                   "AltGr":  {
+                                                 "text":  "×",
+                                                 "codepoints":  [
+                                                                    "U+00D7"
+                                                                ],
+                                                 "names":  [
+                                                               "MULTIPLICATION SIGN"
+                                                           ]
+                                             },
+                                   "ShiftAltGr":  null
+                               }
+                 },
+                 {
+                     "scanCode":  "0x0D",
+                     "vk":  187,
+                     "vkHex":  "0xBB",
+                     "vkName":  "OEM_PLUS",
+                     "usLegend":  "=",
+                     "chars":  {
+                                   "Normal":  {
+                                                  "text":  "ឲ",
+                                                  "codepoints":  [
+                                                                     "U+17B2"
+                                                                 ],
+                                                  "names":  [
+                                                                "KHMER INDEPENDENT VOWEL QOO TYPE TWO"
+                                                            ]
+                                              },
+                                   "Shift":  {
+                                                 "text":  "=",
+                                                 "codepoints":  [
+                                                                    "U+003D"
+                                                                ],
+                                                 "names":  [
+                                                               "EQUALS SIGN"
+                                                           ]
+                                             },
+                                   "Control":  null,
+                                   "AltGr":  {
+                                                 "text":  "៎",
+                                                 "codepoints":  [
+                                                                    "U+17CE"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER SIGN KAKABAT"
+                                                           ]
+                                             },
+                                   "ShiftAltGr":  null
+                               }
+                 },
+                 {
+                     "scanCode":  "0x10",
+                     "vk":  81,
+                     "vkHex":  "0x51",
+                     "vkName":  "Q",
+                     "usLegend":  "Q",
+                     "chars":  {
+                                   "Normal":  {
+                                                  "text":  "ឆ",
+                                                  "codepoints":  [
+                                                                     "U+1786"
+                                                                 ],
+                                                  "names":  [
+                                                                "KHMER LETTER CHA"
+                                                            ]
+                                              },
+                                   "Shift":  {
+                                                 "text":  "ឈ",
+                                                 "codepoints":  [
+                                                                    "U+1788"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER LETTER CHO"
+                                                           ]
+                                             },
+                                   "Control":  null,
+                                   "AltGr":  null,
+                                   "ShiftAltGr":  {
+                                                      "text":  "ឈ",
+                                                      "codepoints":  [
+                                                                         "U+1788"
+                                                                     ],
+                                                      "names":  [
+                                                                    "KHMER LETTER CHO"
+                                                                ],
+                                                      "note":  "Rule 5: static second-series consonant"
+                                                  }
+                               }
+                 },
+                 {
+                     "scanCode":  "0x11",
+                     "vk":  87,
+                     "vkHex":  "0x57",
+                     "vkName":  "W",
+                     "usLegend":  "W",
+                     "chars":  {
+                                   "Normal":  {
+                                                  "text":  "ឹ",
+                                                  "codepoints":  [
+                                                                     "U+17B9"
+                                                                 ],
+                                                  "names":  [
+                                                                "KHMER VOWEL SIGN Y"
+                                                            ]
+                                              },
+                                   "Shift":  {
+                                                 "text":  "ឺ",
+                                                 "codepoints":  [
+                                                                    "U+17BA"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER VOWEL SIGN YY"
+                                                           ]
+                                             },
+                                   "Control":  null,
+                                   "AltGr":  null,
+                                   "ShiftAltGr":  null
+                               }
+                 },
+                 {
+                     "scanCode":  "0x12",
+                     "vk":  69,
+                     "vkHex":  "0x45",
+                     "vkName":  "E",
+                     "usLegend":  "E",
+                     "chars":  {
+                                   "Normal":  {
+                                                  "text":  "េ",
+                                                  "codepoints":  [
+                                                                     "U+17C1"
+                                                                 ],
+                                                  "names":  [
+                                                                "KHMER VOWEL SIGN E"
+                                                            ]
+                                              },
+                                   "Shift":  {
+                                                 "text":  "ែ",
+                                                 "codepoints":  [
+                                                                    "U+17C2"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER VOWEL SIGN AE"
+                                                           ]
+                                             },
+                                   "Control":  null,
+                                   "AltGr":  {
+                                                 "text":  "ឯ",
+                                                 "codepoints":  [
+                                                                    "U+17AF"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER INDEPENDENT VOWEL QE"
+                                                           ]
+                                             },
+                                   "ShiftAltGr":  null
+                               }
+                 },
+                 {
+                     "scanCode":  "0x13",
+                     "vk":  82,
+                     "vkHex":  "0x52",
+                     "vkName":  "R",
+                     "usLegend":  "R",
+                     "chars":  {
+                                   "Normal":  {
+                                                  "text":  "រ",
+                                                  "codepoints":  [
+                                                                     "U+179A"
+                                                                 ],
+                                                  "names":  [
+                                                                "KHMER LETTER RO"
+                                                            ]
+                                              },
+                                   "Shift":  {
+                                                 "text":  "ឬ",
+                                                 "codepoints":  [
+                                                                    "U+17AC"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER INDEPENDENT VOWEL RYY"
+                                                           ]
+                                             },
+                                   "Control":  null,
+                                   "AltGr":  {
+                                                 "text":  "ឫ",
+                                                 "codepoints":  [
+                                                                    "U+17AB"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER INDEPENDENT VOWEL RY"
+                                                           ]
+                                             },
+                                   "ShiftAltGr":  null
+                               }
+                 },
+                 {
+                     "scanCode":  "0x14",
+                     "vk":  84,
+                     "vkHex":  "0x54",
+                     "vkName":  "T",
+                     "usLegend":  "T",
+                     "chars":  {
+                                   "Normal":  {
+                                                  "text":  "ត",
+                                                  "codepoints":  [
+                                                                     "U+178F"
+                                                                 ],
+                                                  "names":  [
+                                                                "KHMER LETTER TA"
+                                                            ]
+                                              },
+                                   "Shift":  {
+                                                 "text":  "ទ",
+                                                 "codepoints":  [
+                                                                    "U+1791"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER LETTER TO"
+                                                           ]
+                                             },
+                                   "Control":  null,
+                                   "AltGr":  null,
+                                   "ShiftAltGr":  {
+                                                      "text":  "ទ",
+                                                      "codepoints":  [
+                                                                         "U+1791"
+                                                                     ],
+                                                      "names":  [
+                                                                    "KHMER LETTER TO"
+                                                                ],
+                                                      "note":  "Rule 5: static second-series consonant"
+                                                  }
+                               }
+                 },
+                 {
+                     "scanCode":  "0x15",
+                     "vk":  89,
+                     "vkHex":  "0x59",
+                     "vkName":  "Y",
+                     "usLegend":  "Y",
+                     "chars":  {
+                                   "Normal":  {
+                                                  "text":  "យ",
+                                                  "codepoints":  [
+                                                                     "U+1799"
+                                                                 ],
+                                                  "names":  [
+                                                                "KHMER LETTER YO"
+                                                            ]
+                                              },
+                                   "Shift":  {
+                                                 "text":  "ួ",
+                                                 "codepoints":  [
+                                                                    "U+17BD"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER VOWEL SIGN UA"
+                                                           ]
+                                             },
+                                   "Control":  null,
+                                   "AltGr":  null,
+                                   "ShiftAltGr":  null
+                               }
+                 },
+                 {
+                     "scanCode":  "0x16",
+                     "vk":  85,
+                     "vkHex":  "0x55",
+                     "vkName":  "U",
+                     "usLegend":  "U",
+                     "chars":  {
+                                   "Normal":  {
+                                                  "text":  "ុ",
+                                                  "codepoints":  [
+                                                                     "U+17BB"
+                                                                 ],
+                                                  "names":  [
+                                                                "KHMER VOWEL SIGN U"
+                                                            ]
+                                              },
+                                   "Shift":  {
+                                                 "text":  "ូ",
+                                                 "codepoints":  [
+                                                                    "U+17BC"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER VOWEL SIGN UU"
+                                                           ]
+                                             },
+                                   "Control":  null,
+                                   "AltGr":  {
+                                                 "text":  "ឳ",
+                                                 "codepoints":  [
+                                                                    "U+17B3"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER INDEPENDENT VOWEL QAU"
+                                                           ],
+                                                 "note":  "Midpoint AltGr relocation"
+                                             },
+                                   "ShiftAltGr":  null
+                               }
+                 },
+                 {
+                     "scanCode":  "0x17",
+                     "vk":  73,
+                     "vkHex":  "0x49",
+                     "vkName":  "I",
+                     "usLegend":  "I",
+                     "chars":  {
+                                   "Normal":  {
+                                                  "text":  "ិ",
+                                                  "codepoints":  [
+                                                                     "U+17B7"
+                                                                 ],
+                                                  "names":  [
+                                                                "KHMER VOWEL SIGN I"
+                                                            ]
+                                              },
+                                   "Shift":  {
+                                                 "text":  "ី",
+                                                 "codepoints":  [
+                                                                    "U+17B8"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER VOWEL SIGN II"
+                                                           ]
+                                             },
+                                   "Control":  null,
+                                   "AltGr":  {
+                                                 "text":  "ឦ",
+                                                 "codepoints":  [
+                                                                    "U+17A6"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER INDEPENDENT VOWEL QII"
+                                                           ]
+                                             },
+                                   "ShiftAltGr":  null
+                               }
+                 },
+                 {
+                     "scanCode":  "0x18",
+                     "vk":  79,
+                     "vkHex":  "0x4F",
+                     "vkName":  "O",
+                     "usLegend":  "O",
+                     "chars":  {
+                                   "Normal":  {
+                                                  "text":  "ោ",
+                                                  "codepoints":  [
+                                                                     "U+17C4"
+                                                                 ],
+                                                  "names":  [
+                                                                "KHMER VOWEL SIGN OO"
+                                                            ]
+                                              },
+                                   "Shift":  {
+                                                 "text":  "ៅ",
+                                                 "codepoints":  [
+                                                                    "U+17C5"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER VOWEL SIGN AU"
+                                                           ]
+                                             },
+                                   "Control":  null,
+                                   "AltGr":  {
+                                                 "text":  "ឱ",
+                                                 "codepoints":  [
+                                                                    "U+17B1"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER INDEPENDENT VOWEL QOO TYPE ONE"
+                                                           ]
+                                             },
+                                   "ShiftAltGr":  null
+                               }
+                 },
+                 {
+                     "scanCode":  "0x19",
+                     "vk":  80,
+                     "vkHex":  "0x50",
+                     "vkName":  "P",
+                     "usLegend":  "P",
+                     "chars":  {
+                                   "Normal":  {
+                                                  "text":  "ផ",
+                                                  "codepoints":  [
+                                                                     "U+1795"
+                                                                 ],
+                                                  "names":  [
+                                                                "KHMER LETTER PHA"
+                                                            ]
+                                              },
+                                   "Shift":  {
+                                                 "text":  "ភ",
+                                                 "codepoints":  [
+                                                                    "U+1797"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER LETTER PHO"
+                                                           ]
+                                             },
+                                   "Control":  null,
+                                   "AltGr":  {
+                                                 "text":  "ឰ",
+                                                 "codepoints":  [
+                                                                    "U+17B0"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER INDEPENDENT VOWEL QAI"
+                                                           ]
+                                             },
+                                   "ShiftAltGr":  {
+                                                      "text":  "ភ",
+                                                      "codepoints":  [
+                                                                         "U+1797"
+                                                                     ],
+                                                      "names":  [
+                                                                    "KHMER LETTER PHO"
+                                                                ],
+                                                      "note":  "Rule 5: static second-series consonant"
+                                                  }
+                               }
+                 },
+                 {
+                     "scanCode":  "0x1A",
+                     "vk":  219,
+                     "vkHex":  "0xDB",
+                     "vkName":  "OEM_4",
+                     "usLegend":  "[",
+                     "chars":  {
+                                   "Normal":  {
+                                                  "text":  "ៀ",
+                                                  "codepoints":  [
+                                                                     "U+17C0"
+                                                                 ],
+                                                  "names":  [
+                                                                "KHMER VOWEL SIGN IE"
+                                                            ]
+                                              },
+                                   "Shift":  {
+                                                 "text":  "ឿ",
+                                                 "codepoints":  [
+                                                                    "U+17BF"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER VOWEL SIGN YA"
+                                                           ]
+                                             },
+                                   "Control":  null,
+                                   "AltGr":  {
+                                                 "text":  "ឩ",
+                                                 "codepoints":  [
+                                                                    "U+17A9"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER INDEPENDENT VOWEL QUU"
+                                                           ]
+                                             },
+                                   "ShiftAltGr":  null
+                               }
+                 },
+                 {
+                     "scanCode":  "0x1B",
+                     "vk":  221,
+                     "vkHex":  "0xDD",
+                     "vkName":  "OEM_6",
+                     "usLegend":  "]",
+                     "chars":  {
+                                   "Normal":  {
+                                                  "text":  "ំ",
+                                                  "codepoints":  [
+                                                                     "U+17C6"
+                                                                 ],
+                                                  "names":  [
+                                                                "KHMER SIGN NIKAHIT"
+                                                            ],
+                                                  "note":  "Rule 4: reclaimed unshifted key"
+                                              },
+                                   "Shift":  {
+                                                 "text":  "ឧ",
+                                                 "codepoints":  [
+                                                                    "U+17A7"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER INDEPENDENT VOWEL QU"
+                                                           ]
+                                             },
+                                   "Control":  null,
+                                   "AltGr":  {
+                                                 "text":  "ឪ",
+                                                 "codepoints":  [
+                                                                    "U+17AA"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER INDEPENDENT VOWEL QUUV"
+                                                           ],
+                                                 "note":  "Midpoint AltGr relocation"
+                                             },
+                                   "ShiftAltGr":  null
+                               }
+                 },
+                 {
+                     "scanCode":  "0x1E",
+                     "vk":  65,
+                     "vkHex":  "0x41",
+                     "vkName":  "A",
+                     "usLegend":  "A",
+                     "chars":  {
+                                   "Normal":  {
+                                                  "text":  "ា",
+                                                  "codepoints":  [
+                                                                     "U+17B6"
+                                                                 ],
+                                                  "names":  [
+                                                                "KHMER VOWEL SIGN AA"
+                                                            ]
+                                              },
+                                   "Shift":  {
+                                                 "text":  "ាំ",
+                                                 "codepoints":  [
+                                                                    "U+17B6",
+                                                                    "U+17C6"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER VOWEL SIGN AA",
+                                                               "KHMER SIGN NIKAHIT"
+                                                           ],
+                                                 "note":  "ligature",
+                                                 "isLigature":  true
+                                             },
+                                   "Control":  null,
+                                   "AltGr":  null,
+                                   "ShiftAltGr":  null
+                               }
+                 },
+                 {
+                     "scanCode":  "0x1F",
+                     "vk":  83,
+                     "vkHex":  "0x53",
+                     "vkName":  "S",
+                     "usLegend":  "S",
+                     "chars":  {
+                                   "Normal":  {
+                                                  "text":  "ស",
+                                                  "codepoints":  [
+                                                                     "U+179F"
+                                                                 ],
+                                                  "names":  [
+                                                                "KHMER LETTER SA"
+                                                            ]
+                                              },
+                                   "Shift":  {
+                                                 "text":  "ៃ",
+                                                 "codepoints":  [
+                                                                    "U+17C3"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER VOWEL SIGN AI"
+                                                           ]
+                                             },
+                                   "Control":  null,
+                                   "AltGr":  null,
+                                   "ShiftAltGr":  null
+                               }
+                 },
+                 {
+                     "scanCode":  "0x20",
+                     "vk":  68,
+                     "vkHex":  "0x44",
+                     "vkName":  "D",
+                     "usLegend":  "D",
+                     "chars":  {
+                                   "Normal":  {
+                                                  "text":  "ដ",
+                                                  "codepoints":  [
+                                                                     "U+178A"
+                                                                 ],
+                                                  "names":  [
+                                                                "KHMER LETTER DA"
+                                                            ]
+                                              },
+                                   "Shift":  {
+                                                 "text":  "ឌ",
+                                                 "codepoints":  [
+                                                                    "U+178C"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER LETTER DO"
+                                                           ]
+                                             },
+                                   "Control":  null,
+                                   "AltGr":  null,
+                                   "ShiftAltGr":  {
+                                                      "text":  "ឌ",
+                                                      "codepoints":  [
+                                                                         "U+178C"
+                                                                     ],
+                                                      "names":  [
+                                                                    "KHMER LETTER DO"
+                                                                ],
+                                                      "note":  "Rule 5: static second-series consonant"
+                                                  }
+                               }
+                 },
+                 {
+                     "scanCode":  "0x21",
+                     "vk":  70,
+                     "vkHex":  "0x46",
+                     "vkName":  "F",
+                     "usLegend":  "F",
+                     "chars":  {
+                                   "Normal":  {
+                                                  "text":  "ថ",
+                                                  "codepoints":  [
+                                                                     "U+1790"
+                                                                 ],
+                                                  "names":  [
+                                                                "KHMER LETTER THA"
+                                                            ]
+                                              },
+                                   "Shift":  {
+                                                 "text":  "ធ",
+                                                 "codepoints":  [
+                                                                    "U+1792"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER LETTER THO"
+                                                           ]
+                                             },
+                                   "Control":  null,
+                                   "AltGr":  null,
+                                   "ShiftAltGr":  {
+                                                      "text":  "ធ",
+                                                      "codepoints":  [
+                                                                         "U+1792"
+                                                                     ],
+                                                      "names":  [
+                                                                    "KHMER LETTER THO"
+                                                                ],
+                                                      "note":  "Rule 5: static second-series consonant"
+                                                  }
+                               }
+                 },
+                 {
+                     "scanCode":  "0x22",
+                     "vk":  71,
+                     "vkHex":  "0x47",
+                     "vkName":  "G",
+                     "usLegend":  "G",
+                     "chars":  {
+                                   "Normal":  {
+                                                  "text":  "ង",
+                                                  "codepoints":  [
+                                                                     "U+1784"
+                                                                 ],
+                                                  "names":  [
+                                                                "KHMER LETTER NGO"
+                                                            ]
+                                              },
+                                   "Shift":  {
+                                                 "text":  "អ",
+                                                 "codepoints":  [
+                                                                    "U+17A2"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER LETTER QA"
+                                                           ]
+                                             },
+                                   "Control":  null,
+                                   "AltGr":  null,
+                                   "ShiftAltGr":  {
+                                                      "text":  "អ",
+                                                      "codepoints":  [
+                                                                         "U+17A2"
+                                                                     ],
+                                                      "names":  [
+                                                                    "KHMER LETTER QA"
+                                                                ],
+                                                      "note":  "Rule 5: static second-series consonant"
+                                                  }
+                               }
+                 },
+                 {
+                     "scanCode":  "0x23",
+                     "vk":  72,
+                     "vkHex":  "0x48",
+                     "vkName":  "H",
+                     "usLegend":  "H",
+                     "chars":  {
+                                   "Normal":  {
+                                                  "text":  "ហ",
+                                                  "codepoints":  [
+                                                                     "U+17A0"
+                                                                 ],
+                                                  "names":  [
+                                                                "KHMER LETTER HA"
+                                                            ]
+                                              },
+                                   "Shift":  {
+                                                 "text":  "ះ",
+                                                 "codepoints":  [
+                                                                    "U+17C7"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER SIGN REAHMUK"
+                                                           ]
+                                             },
+                                   "Control":  null,
+                                   "AltGr":  null,
+                                   "ShiftAltGr":  null
+                               }
+                 },
+                 {
+                     "scanCode":  "0x24",
+                     "vk":  74,
+                     "vkHex":  "0x4A",
+                     "vkName":  "J",
+                     "usLegend":  "J",
+                     "chars":  {
+                                   "Normal":  {
+                                                  "text":  "្",
+                                                  "codepoints":  [
+                                                                     "U+17D2"
+                                                                 ],
+                                                  "names":  [
+                                                                "KHMER SIGN COENG"
+                                                            ]
+                                              },
+                                   "Shift":  {
+                                                 "text":  "្",
+                                                 "codepoints":  [
+                                                                    "U+17D2"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER SIGN COENG"
+                                                           ],
+                                                 "note":  "Rule 2: rollover-safe coeng"
+                                             },
+                                   "Control":  null,
+                                   "AltGr":  {
+                                                 "text":  "ញ",
+                                                 "codepoints":  [
+                                                                    "U+1789"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER LETTER NYO"
+                                                           ],
+                                                 "note":  "Midpoint AltGr relocation"
+                                             },
+                                   "ShiftAltGr":  null
+                               }
+                 },
+                 {
+                     "scanCode":  "0x25",
+                     "vk":  75,
+                     "vkHex":  "0x4B",
+                     "vkName":  "K",
+                     "usLegend":  "K",
+                     "chars":  {
+                                   "Normal":  {
+                                                  "text":  "ក",
+                                                  "codepoints":  [
+                                                                     "U+1780"
+                                                                 ],
+                                                  "names":  [
+                                                                "KHMER LETTER KA"
+                                                            ]
+                                              },
+                                   "Shift":  {
+                                                 "text":  "គ",
+                                                 "codepoints":  [
+                                                                    "U+1782"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER LETTER KO"
+                                                           ]
+                                             },
+                                   "Control":  null,
+                                   "AltGr":  null,
+                                   "ShiftAltGr":  {
+                                                      "text":  "គ",
+                                                      "codepoints":  [
+                                                                         "U+1782"
+                                                                     ],
+                                                      "names":  [
+                                                                    "KHMER LETTER KO"
+                                                                ],
+                                                      "note":  "Rule 5: static second-series consonant"
+                                                  }
+                               }
+                 },
+                 {
+                     "scanCode":  "0x26",
+                     "vk":  76,
+                     "vkHex":  "0x4C",
+                     "vkName":  "L",
+                     "usLegend":  "L",
+                     "chars":  {
+                                   "Normal":  {
+                                                  "text":  "ល",
+                                                  "codepoints":  [
+                                                                     "U+179B"
+                                                                 ],
+                                                  "names":  [
+                                                                "KHMER LETTER LO"
+                                                            ]
+                                              },
+                                   "Shift":  {
+                                                 "text":  "ឡ",
+                                                 "codepoints":  [
+                                                                    "U+17A1"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER LETTER LA"
+                                                           ]
+                                             },
+                                   "Control":  null,
+                                   "AltGr":  null,
+                                   "ShiftAltGr":  {
+                                                      "text":  "ឡ",
+                                                      "codepoints":  [
+                                                                         "U+17A1"
+                                                                     ],
+                                                      "names":  [
+                                                                    "KHMER LETTER LA"
+                                                                ],
+                                                      "note":  "Rule 5: static second-series consonant"
+                                                  }
+                               }
+                 },
+                 {
+                     "scanCode":  "0x27",
+                     "vk":  186,
+                     "vkHex":  "0xBA",
+                     "vkName":  "OEM_1",
+                     "usLegend":  ";",
+                     "chars":  {
+                                   "Normal":  {
+                                                  "text":  "ើ",
+                                                  "codepoints":  [
+                                                                     "U+17BE"
+                                                                 ],
+                                                  "names":  [
+                                                                "KHMER VOWEL SIGN OE"
+                                                            ]
+                                              },
+                                   "Shift":  {
+                                                 "text":  "ោះ",
+                                                 "codepoints":  [
+                                                                    "U+17C4",
+                                                                    "U+17C7"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER VOWEL SIGN OO",
+                                                               "KHMER SIGN REAHMUK"
+                                                           ],
+                                                 "note":  "ligature",
+                                                 "isLigature":  true
+                                             },
+                                   "Control":  null,
+                                   "AltGr":  {
+                                                 "text":  "៖",
+                                                 "codepoints":  [
+                                                                    "U+17D6"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER SIGN CAMNUC PII KUUH"
+                                                           ]
+                                             },
+                                   "ShiftAltGr":  null
+                               }
+                 },
+                 {
+                     "scanCode":  "0x28",
+                     "vk":  222,
+                     "vkHex":  "0xDE",
+                     "vkName":  "OEM_7",
+                     "usLegend":  "\u0027",
+                     "chars":  {
+                                   "Normal":  {
+                                                  "text":  "់",
+                                                  "codepoints":  [
+                                                                     "U+17CB"
+                                                                 ],
+                                                  "names":  [
+                                                                "KHMER SIGN BANTOC"
+                                                            ]
+                                              },
+                                   "Shift":  {
+                                                 "text":  "៉",
+                                                 "codepoints":  [
+                                                                    "U+17C9"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER SIGN MUUSIKATOAN"
+                                                           ]
+                                             },
+                                   "Control":  null,
+                                   "AltGr":  {
+                                                 "text":  "ៈ",
+                                                 "codepoints":  [
+                                                                    "U+17C8"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER SIGN YUUKALEAPINTU"
+                                                           ]
+                                             },
+                                   "ShiftAltGr":  null
+                               }
+                 },
+                 {
+                     "scanCode":  "0x2B",
+                     "vk":  220,
+                     "vkHex":  "0xDC",
+                     "vkName":  "OEM_5",
+                     "usLegend":  "\\",
+                     "chars":  {
+                                   "Normal":  {
+                                                  "text":  "ះ",
+                                                  "codepoints":  [
+                                                                     "U+17C7"
+                                                                 ],
+                                                  "names":  [
+                                                                "KHMER SIGN REAHMUK"
+                                                            ],
+                                                  "note":  "Rule 4: reclaimed unshifted key"
+                                              },
+                                   "Shift":  {
+                                                 "text":  "ឭ",
+                                                 "codepoints":  [
+                                                                    "U+17AD"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER INDEPENDENT VOWEL LY"
+                                                           ]
+                                             },
+                                   "Control":  null,
+                                   "AltGr":  {
+                                                 "text":  "ឮ",
+                                                 "codepoints":  [
+                                                                    "U+17AE"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER INDEPENDENT VOWEL LYY"
+                                                           ],
+                                                 "note":  "Midpoint AltGr relocation"
+                                             },
+                                   "ShiftAltGr":  null
+                               }
+                 },
+                 {
+                     "scanCode":  "0x2C",
+                     "vk":  90,
+                     "vkHex":  "0x5A",
+                     "vkName":  "Z",
+                     "usLegend":  "Z",
+                     "chars":  {
+                                   "Normal":  {
+                                                  "text":  "ឋ",
+                                                  "codepoints":  [
+                                                                     "U+178B"
+                                                                 ],
+                                                  "names":  [
+                                                                "KHMER LETTER TTHA"
+                                                            ]
+                                              },
+                                   "Shift":  {
+                                                 "text":  "ឍ",
+                                                 "codepoints":  [
+                                                                    "U+178D"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER LETTER TTHO"
+                                                           ]
+                                             },
+                                   "Control":  null,
+                                   "AltGr":  null,
+                                   "ShiftAltGr":  {
+                                                      "text":  "ឍ",
+                                                      "codepoints":  [
+                                                                         "U+178D"
+                                                                     ],
+                                                      "names":  [
+                                                                    "KHMER LETTER TTHO"
+                                                                ],
+                                                      "note":  "Rule 5: static second-series consonant"
+                                                  }
+                               }
+                 },
+                 {
+                     "scanCode":  "0x2D",
+                     "vk":  88,
+                     "vkHex":  "0x58",
+                     "vkName":  "X",
+                     "usLegend":  "X",
+                     "chars":  {
+                                   "Normal":  {
+                                                  "text":  "ខ",
+                                                  "codepoints":  [
+                                                                     "U+1781"
+                                                                 ],
+                                                  "names":  [
+                                                                "KHMER LETTER KHA"
+                                                            ]
+                                              },
+                                   "Shift":  {
+                                                 "text":  "ឃ",
+                                                 "codepoints":  [
+                                                                    "U+1783"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER LETTER KHO"
+                                                           ]
+                                             },
+                                   "Control":  null,
+                                   "AltGr":  null,
+                                   "ShiftAltGr":  {
+                                                      "text":  "ឃ",
+                                                      "codepoints":  [
+                                                                         "U+1783"
+                                                                     ],
+                                                      "names":  [
+                                                                    "KHMER LETTER KHO"
+                                                                ],
+                                                      "note":  "Rule 5: static second-series consonant"
+                                                  }
+                               }
+                 },
+                 {
+                     "scanCode":  "0x2E",
+                     "vk":  67,
+                     "vkHex":  "0x43",
+                     "vkName":  "C",
+                     "usLegend":  "C",
+                     "chars":  {
+                                   "Normal":  {
+                                                  "text":  "ច",
+                                                  "codepoints":  [
+                                                                     "U+1785"
+                                                                 ],
+                                                  "names":  [
+                                                                "KHMER LETTER CA"
+                                                            ]
+                                              },
+                                   "Shift":  {
+                                                 "text":  "ជ",
+                                                 "codepoints":  [
+                                                                    "U+1787"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER LETTER CO"
+                                                           ]
+                                             },
+                                   "Control":  null,
+                                   "AltGr":  null,
+                                   "ShiftAltGr":  {
+                                                      "text":  "ជ",
+                                                      "codepoints":  [
+                                                                         "U+1787"
+                                                                     ],
+                                                      "names":  [
+                                                                    "KHMER LETTER CO"
+                                                                ],
+                                                      "note":  "Rule 5: static second-series consonant"
+                                                  }
+                               }
+                 },
+                 {
+                     "scanCode":  "0x2F",
+                     "vk":  86,
+                     "vkHex":  "0x56",
+                     "vkName":  "V",
+                     "usLegend":  "V",
+                     "chars":  {
+                                   "Normal":  {
+                                                  "text":  "វ",
+                                                  "codepoints":  [
+                                                                     "U+179C"
+                                                                 ],
+                                                  "names":  [
+                                                                "KHMER LETTER VO"
+                                                            ]
+                                              },
+                                   "Shift":  {
+                                                 "text":  "េះ",
+                                                 "codepoints":  [
+                                                                    "U+17C1",
+                                                                    "U+17C7"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER VOWEL SIGN E",
+                                                               "KHMER SIGN REAHMUK"
+                                                           ],
+                                                 "note":  "ligature",
+                                                 "isLigature":  true
+                                             },
+                                   "Control":  null,
+                                   "AltGr":  null,
+                                   "ShiftAltGr":  null
+                               }
+                 },
+                 {
+                     "scanCode":  "0x30",
+                     "vk":  66,
+                     "vkHex":  "0x42",
+                     "vkName":  "B",
+                     "usLegend":  "B",
+                     "chars":  {
+                                   "Normal":  {
+                                                  "text":  "ប",
+                                                  "codepoints":  [
+                                                                     "U+1794"
+                                                                 ],
+                                                  "names":  [
+                                                                "KHMER LETTER BA"
+                                                            ]
+                                              },
+                                   "Shift":  {
+                                                 "text":  "ព",
+                                                 "codepoints":  [
+                                                                    "U+1796"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER LETTER PO"
+                                                           ]
+                                             },
+                                   "Control":  null,
+                                   "AltGr":  null,
+                                   "ShiftAltGr":  {
+                                                      "text":  "ព",
+                                                      "codepoints":  [
+                                                                         "U+1796"
+                                                                     ],
+                                                      "names":  [
+                                                                    "KHMER LETTER PO"
+                                                                ],
+                                                      "note":  "Rule 5: static second-series consonant"
+                                                  }
+                               }
+                 },
+                 {
+                     "scanCode":  "0x31",
+                     "vk":  78,
+                     "vkHex":  "0x4E",
+                     "vkName":  "N",
+                     "usLegend":  "N",
+                     "chars":  {
+                                   "Normal":  {
+                                                  "text":  "ន",
+                                                  "codepoints":  [
+                                                                     "U+1793"
+                                                                 ],
+                                                  "names":  [
+                                                                "KHMER LETTER NO"
+                                                            ]
+                                              },
+                                   "Shift":  {
+                                                 "text":  "ណ",
+                                                 "codepoints":  [
+                                                                    "U+178E"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER LETTER NNO"
+                                                           ]
+                                             },
+                                   "Control":  null,
+                                   "AltGr":  null,
+                                   "ShiftAltGr":  {
+                                                      "text":  "ណ",
+                                                      "codepoints":  [
+                                                                         "U+178E"
+                                                                     ],
+                                                      "names":  [
+                                                                    "KHMER LETTER NNO"
+                                                                ],
+                                                      "note":  "Rule 5: static second-series consonant"
+                                                  }
+                               }
+                 },
+                 {
+                     "scanCode":  "0x32",
+                     "vk":  77,
+                     "vkHex":  "0x4D",
+                     "vkName":  "M",
+                     "usLegend":  "M",
+                     "chars":  {
+                                   "Normal":  {
+                                                  "text":  "ម",
+                                                  "codepoints":  [
+                                                                     "U+1798"
+                                                                 ],
+                                                  "names":  [
+                                                                "KHMER LETTER MO"
+                                                            ]
+                                              },
+                                   "Shift":  {
+                                                 "text":  "ំ",
+                                                 "codepoints":  [
+                                                                    "U+17C6"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER SIGN NIKAHIT"
+                                                           ]
+                                             },
+                                   "Control":  null,
+                                   "AltGr":  null,
+                                   "ShiftAltGr":  null
+                               }
+                 },
+                 {
+                     "scanCode":  "0x33",
+                     "vk":  188,
+                     "vkHex":  "0xBC",
+                     "vkName":  "OEM_COMMA",
+                     "usLegend":  ",",
+                     "chars":  {
+                                   "Normal":  {
+                                                  "text":  "ុំ",
+                                                  "codepoints":  [
+                                                                     "U+17BB",
+                                                                     "U+17C6"
+                                                                 ],
+                                                  "names":  [
+                                                                "KHMER VOWEL SIGN U",
+                                                                "KHMER SIGN NIKAHIT"
+                                                            ],
+                                                  "note":  "ligature",
+                                                  "isLigature":  true
+                                              },
+                                   "Shift":  {
+                                                 "text":  "ុះ",
+                                                 "codepoints":  [
+                                                                    "U+17BB",
+                                                                    "U+17C7"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER VOWEL SIGN U",
+                                                               "KHMER SIGN REAHMUK"
+                                                           ],
+                                                 "note":  "ligature",
+                                                 "isLigature":  true
+                                             },
+                                   "Control":  null,
+                                   "AltGr":  {
+                                                 "text":  ",",
+                                                 "codepoints":  [
+                                                                    "U+002C"
+                                                                ],
+                                                 "names":  [
+                                                               "COMMA"
+                                                           ]
+                                             },
+                                   "ShiftAltGr":  null
+                               }
+                 },
+                 {
+                     "scanCode":  "0x34",
+                     "vk":  190,
+                     "vkHex":  "0xBE",
+                     "vkName":  "OEM_PERIOD",
+                     "usLegend":  ".",
+                     "chars":  {
+                                   "Normal":  {
+                                                  "text":  "។",
+                                                  "codepoints":  [
+                                                                     "U+17D4"
+                                                                 ],
+                                                  "names":  [
+                                                                "KHMER SIGN KHAN"
+                                                            ]
+                                              },
+                                   "Shift":  {
+                                                 "text":  "៕",
+                                                 "codepoints":  [
+                                                                    "U+17D5"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER SIGN BARIYOOSAN"
+                                                           ]
+                                             },
+                                   "Control":  null,
+                                   "AltGr":  {
+                                                 "text":  ".",
+                                                 "codepoints":  [
+                                                                    "U+002E"
+                                                                ],
+                                                 "names":  [
+                                                               "FULL STOP"
+                                                           ]
+                                             },
+                                   "ShiftAltGr":  null
+                               }
+                 },
+                 {
+                     "scanCode":  "0x35",
+                     "vk":  191,
+                     "vkHex":  "0xBF",
+                     "vkName":  "OEM_2",
+                     "usLegend":  "/",
+                     "chars":  {
+                                   "Normal":  {
+                                                  "text":  "៊",
+                                                  "codepoints":  [
+                                                                     "U+17CA"
+                                                                 ],
+                                                  "names":  [
+                                                                "KHMER SIGN TRIISAP"
+                                                            ]
+                                              },
+                                   "Shift":  {
+                                                 "text":  "?",
+                                                 "codepoints":  [
+                                                                    "U+003F"
+                                                                ],
+                                                 "names":  [
+                                                               "QUESTION MARK"
+                                                           ]
+                                             },
+                                   "Control":  null,
+                                   "AltGr":  {
+                                                 "text":  "/",
+                                                 "codepoints":  [
+                                                                    "U+002F"
+                                                                ],
+                                                 "names":  [
+                                                               "SOLIDUS"
+                                                           ]
+                                             },
+                                   "ShiftAltGr":  null
+                               }
+                 },
+                 {
+                     "scanCode":  "0x29",
+                     "vk":  192,
+                     "vkHex":  "0xC0",
+                     "vkName":  "OEM_3",
+                     "usLegend":  "`",
+                     "chars":  {
+                                   "Normal":  {
+                                                  "text":  "«",
+                                                  "codepoints":  [
+                                                                     "U+00AB"
+                                                                 ],
+                                                  "names":  [
+                                                                "LEFT-POINTING DOUBLE ANGLE QUOTATION MARK"
+                                                            ]
+                                              },
+                                   "Shift":  {
+                                                 "text":  "»",
+                                                 "codepoints":  [
+                                                                    "U+00BB"
+                                                                ],
+                                                 "names":  [
+                                                               "RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK"
+                                                           ]
+                                             },
+                                   "Control":  null,
+                                   "AltGr":  {
+                                                 "text":  "‍",
+                                                 "codepoints":  [
+                                                                    "U+200D"
+                                                                ],
+                                                 "names":  [
+                                                               "ZERO WIDTH JOINER"
+                                                           ]
+                                             },
+                                   "ShiftAltGr":  null
+                               }
+                 },
+                 {
+                     "scanCode":  "0x39",
+                     "vk":  32,
+                     "vkHex":  "0x20",
+                     "vkName":  "Space",
+                     "usLegend":  "Space",
+                     "chars":  {
+                                   "Normal":  {
+                                                  "text":  "​",
+                                                  "codepoints":  [
+                                                                     "U+200B"
+                                                                 ],
+                                                  "names":  [
+                                                                "ZERO WIDTH SPACE"
+                                                            ]
+                                              },
+                                   "Shift":  {
+                                                 "text":  " ",
+                                                 "codepoints":  [
+                                                                    "U+0020"
+                                                                ],
+                                                 "names":  [
+                                                               "SPACE"
+                                                           ]
+                                             },
+                                   "Control":  null,
+                                   "AltGr":  {
+                                                 "text":  " ",
+                                                 "codepoints":  [
+                                                                    "U+00A0"
+                                                                ],
+                                                 "names":  [
+                                                               "NO-BREAK SPACE"
+                                                           ]
+                                             },
+                                   "ShiftAltGr":  null
+                               }
+                 },
+                 {
+                     "scanCode":  null,
+                     "vk":  110,
+                     "vkHex":  "0x6E",
+                     "vkName":  "Decimal",
+                     "usLegend":  ".",
+                     "chars":  {
+                                   "Normal":  {
+                                                  "text":  ",",
+                                                  "codepoints":  [
+                                                                     "U+002C"
+                                                                 ],
+                                                  "names":  [
+                                                                "COMMA"
+                                                            ]
+                                              },
+                                   "Shift":  {
+                                                 "text":  ".",
+                                                 "codepoints":  [
+                                                                    "U+002E"
+                                                                ],
+                                                 "names":  [
+                                                               "FULL STOP"
+                                                           ]
+                                             },
+                                   "Control":  null,
+                                   "AltGr":  null,
+                                   "ShiftAltGr":  null
+                               }
+                 }
+             ],
+    "sequences":  [
+                      {
+                          "sequence":  "k/",
+                          "rule":  "Rule 1",
+                          "note":  "plosive 1st -\u003e 2nd series",
+                          "text":  "គ",
+                          "codepoints":  [
+                                             "U+1782"
+                                         ],
+                          "names":  [
+                                        "KHMER LETTER KO"
+                                    ]
+                      },
+                      {
+                          "sequence":  "x/",
+                          "rule":  "Rule 1",
+                          "note":  "plosive 1st -\u003e 2nd series",
+                          "text":  "ឃ",
+                          "codepoints":  [
+                                             "U+1783"
+                                         ],
+                          "names":  [
+                                        "KHMER LETTER KHO"
+                                    ]
+                      },
+                      {
+                          "sequence":  "c/",
+                          "rule":  "Rule 1",
+                          "note":  "plosive 1st -\u003e 2nd series",
+                          "text":  "ជ",
+                          "codepoints":  [
+                                             "U+1787"
+                                         ],
+                          "names":  [
+                                        "KHMER LETTER CO"
+                                    ]
+                      },
+                      {
+                          "sequence":  "q/",
+                          "rule":  "Rule 1",
+                          "note":  "plosive 1st -\u003e 2nd series",
+                          "text":  "ឈ",
+                          "codepoints":  [
+                                             "U+1788"
+                                         ],
+                          "names":  [
+                                        "KHMER LETTER CHO"
+                                    ]
+                      },
+                      {
+                          "sequence":  "d/",
+                          "rule":  "Rule 1",
+                          "note":  "plosive 1st -\u003e 2nd series",
+                          "text":  "ឌ",
+                          "codepoints":  [
+                                             "U+178C"
+                                         ],
+                          "names":  [
+                                        "KHMER LETTER DO"
+                                    ]
+                      },
+                      {
+                          "sequence":  "z/",
+                          "rule":  "Rule 1",
+                          "note":  "plosive 1st -\u003e 2nd series",
+                          "text":  "ឍ",
+                          "codepoints":  [
+                                             "U+178D"
+                                         ],
+                          "names":  [
+                                        "KHMER LETTER TTHO"
+                                    ]
+                      },
+                      {
+                          "sequence":  "t/",
+                          "rule":  "Rule 1",
+                          "note":  "plosive 1st -\u003e 2nd series",
+                          "text":  "ទ",
+                          "codepoints":  [
+                                             "U+1791"
+                                         ],
+                          "names":  [
+                                        "KHMER LETTER TO"
+                                    ]
+                      },
+                      {
+                          "sequence":  "f/",
+                          "rule":  "Rule 1",
+                          "note":  "plosive 1st -\u003e 2nd series",
+                          "text":  "ធ",
+                          "codepoints":  [
+                                             "U+1792"
+                                         ],
+                          "names":  [
+                                        "KHMER LETTER THO"
+                                    ]
+                      },
+                      {
+                          "sequence":  "b/",
+                          "rule":  "Rule 1",
+                          "note":  "plosive 1st -\u003e 2nd series",
+                          "text":  "ព",
+                          "codepoints":  [
+                                             "U+1796"
+                                         ],
+                          "names":  [
+                                        "KHMER LETTER PO"
+                                    ]
+                      },
+                      {
+                          "sequence":  "p/",
+                          "rule":  "Rule 1",
+                          "note":  "plosive 1st -\u003e 2nd series",
+                          "text":  "ភ",
+                          "codepoints":  [
+                                             "U+1797"
+                                         ],
+                          "names":  [
+                                        "KHMER LETTER PHO"
+                                    ]
+                      },
+                      {
+                          "sequence":  "n/",
+                          "rule":  "Rule 1",
+                          "note":  "nasal/lateral/velar flip",
+                          "text":  "ណ",
+                          "codepoints":  [
+                                             "U+178E"
+                                         ],
+                          "names":  [
+                                        "KHMER LETTER NNO"
+                                    ]
+                      },
+                      {
+                          "sequence":  "l/",
+                          "rule":  "Rule 1",
+                          "note":  "nasal/lateral/velar flip",
+                          "text":  "ឡ",
+                          "codepoints":  [
+                                             "U+17A1"
+                                         ],
+                          "names":  [
+                                        "KHMER LETTER LA"
+                                    ]
+                      },
+                      {
+                          "sequence":  "g/",
+                          "rule":  "Rule 1",
+                          "note":  "nasal/lateral/velar flip",
+                          "text":  "អ",
+                          "codepoints":  [
+                                             "U+17A2"
+                                         ],
+                          "names":  [
+                                        "KHMER LETTER QA"
+                                    ]
+                      },
+                      {
+                          "sequence":  "m/",
+                          "rule":  "Rule 1",
+                          "note":  "sonorant + muusikatoan",
+                          "text":  "ម៉",
+                          "codepoints":  [
+                                             "U+1798",
+                                             "U+17C9"
+                                         ],
+                          "names":  [
+                                        "KHMER LETTER MO",
+                                        "KHMER SIGN MUUSIKATOAN"
+                                    ]
+                      },
+                      {
+                          "sequence":  "y/",
+                          "rule":  "Rule 1",
+                          "note":  "sonorant + muusikatoan",
+                          "text":  "យ៉",
+                          "codepoints":  [
+                                             "U+1799",
+                                             "U+17C9"
+                                         ],
+                          "names":  [
+                                        "KHMER LETTER YO",
+                                        "KHMER SIGN MUUSIKATOAN"
+                                    ]
+                      },
+                      {
+                          "sequence":  "r/",
+                          "rule":  "Rule 1",
+                          "note":  "sonorant + muusikatoan",
+                          "text":  "រ៉",
+                          "codepoints":  [
+                                             "U+179A",
+                                             "U+17C9"
+                                         ],
+                          "names":  [
+                                        "KHMER LETTER RO",
+                                        "KHMER SIGN MUUSIKATOAN"
+                                    ]
+                      },
+                      {
+                          "sequence":  "v/",
+                          "rule":  "Rule 1",
+                          "note":  "sonorant + muusikatoan",
+                          "text":  "វ៉",
+                          "codepoints":  [
+                                             "U+179C",
+                                             "U+17C9"
+                                         ],
+                          "names":  [
+                                        "KHMER LETTER VO",
+                                        "KHMER SIGN MUUSIKATOAN"
+                                    ]
+                      },
+                      {
+                          "sequence":  "s/",
+                          "rule":  "Rule 1",
+                          "note":  "fricative + traysap",
+                          "text":  "ស៊",
+                          "codepoints":  [
+                                             "U+179F",
+                                             "U+17CA"
+                                         ],
+                          "names":  [
+                                        "KHMER LETTER SA",
+                                        "KHMER SIGN TRIISAP"
+                                    ]
+                      },
+                      {
+                          "sequence":  "h/",
+                          "rule":  "Rule 1",
+                          "note":  "fricative + traysap",
+                          "text":  "ហ៊",
+                          "codepoints":  [
+                                             "U+17A0",
+                                             "U+17CA"
+                                         ],
+                          "names":  [
+                                        "KHMER LETTER HA",
+                                        "KHMER SIGN TRIISAP"
+                                    ]
+                      },
+                      {
+                          "sequence":  "jj",
+                          "rule":  "Rule 2",
+                          "note":  "double-tap j -\u003e nyo",
+                          "text":  "ញ",
+                          "codepoints":  [
+                                             "U+1789"
+                                         ],
+                          "names":  [
+                                        "KHMER LETTER NYO"
+                                    ]
+                      },
+                      {
+                          "sequence":  "jj/",
+                          "rule":  "Rule 2",
+                          "note":  "nyo + muusikatoan",
+                          "text":  "ញ៉",
+                          "codepoints":  [
+                                             "U+1789",
+                                             "U+17C9"
+                                         ],
+                          "names":  [
+                                        "KHMER LETTER NYO",
+                                        "KHMER SIGN MUUSIKATOAN"
+                                    ]
+                      },
+                      {
+                          "sequence":  "j/",
+                          "rule":  "Rule 2",
+                          "note":  "coeng + nyo",
+                          "text":  "្ញ",
+                          "codepoints":  [
+                                             "U+17D2",
+                                             "U+1789"
+                                         ],
+                          "names":  [
+                                        "KHMER SIGN COENG",
+                                        "KHMER LETTER NYO"
+                                    ]
+                      },
+                      {
+                          "sequence":  "ii",
+                          "rule":  "Rule 3",
+                          "note":  "double-tap upgrade",
+                          "text":  "ី",
+                          "codepoints":  [
+                                             "U+17B8"
+                                         ],
+                          "names":  [
+                                        "KHMER VOWEL SIGN II"
+                                    ]
+                      },
+                      {
+                          "sequence":  "uu",
+                          "rule":  "Rule 3",
+                          "note":  "double-tap upgrade",
+                          "text":  "ូ",
+                          "codepoints":  [
+                                             "U+17BC"
+                                         ],
+                          "names":  [
+                                        "KHMER VOWEL SIGN UU"
+                                    ]
+                      },
+                      {
+                          "sequence":  "ee",
+                          "rule":  "Rule 3",
+                          "note":  "double-tap upgrade",
+                          "text":  "ែ",
+                          "codepoints":  [
+                                             "U+17C2"
+                                         ],
+                          "names":  [
+                                        "KHMER VOWEL SIGN AE"
+                                    ]
+                      },
+                      {
+                          "sequence":  "ww",
+                          "rule":  "Rule 3",
+                          "note":  "double-tap upgrade",
+                          "text":  "ឺ",
+                          "codepoints":  [
+                                             "U+17BA"
+                                         ],
+                          "names":  [
+                                        "KHMER VOWEL SIGN YY"
+                                    ]
+                      },
+                      {
+                          "sequence":  "oo",
+                          "rule":  "Rule 3",
+                          "note":  "double-tap upgrade",
+                          "text":  "ៅ",
+                          "codepoints":  [
+                                             "U+17C5"
+                                         ],
+                          "names":  [
+                                        "KHMER VOWEL SIGN AU"
+                                    ]
+                      },
+                      {
+                          "sequence":  "[[",
+                          "rule":  "Rule 3",
+                          "note":  "double-tap upgrade",
+                          "text":  "ឿ",
+                          "codepoints":  [
+                                             "U+17BF"
+                                         ],
+                          "names":  [
+                                        "KHMER VOWEL SIGN YA"
+                                    ]
+                      },
+                      {
+                          "sequence":  "..",
+                          "rule":  "Rule 3",
+                          "note":  "double-tap upgrade",
+                          "text":  "៕",
+                          "codepoints":  [
+                                             "U+17D5"
+                                         ],
+                          "names":  [
+                                        "KHMER SIGN BARIYOOSAN"
+                                    ]
+                      },
+                      {
+                          "sequence":  "aa",
+                          "rule":  "Rule 3",
+                          "note":  "double-tap upgrade",
+                          "text":  "ាំ",
+                          "codepoints":  [
+                                             "U+17B6",
+                                             "U+17C6"
+                                         ],
+                          "names":  [
+                                        "KHMER VOWEL SIGN AA",
+                                        "KHMER SIGN NIKAHIT"
+                                    ]
+                      },
+                      {
+                          "sequence":  ";;",
+                          "rule":  "Rule 3",
+                          "note":  "double-tap upgrade",
+                          "text":  "ោះ",
+                          "codepoints":  [
+                                             "U+17C4",
+                                             "U+17C7"
+                                         ],
+                          "names":  [
+                                        "KHMER VOWEL SIGN OO",
+                                        "KHMER SIGN REAHMUK"
+                                    ]
+                      },
+                      {
+                          "sequence":  "\u0027\u0027",
+                          "rule":  "Rule 3",
+                          "note":  "double-tap upgrade",
+                          "text":  "៉",
+                          "codepoints":  [
+                                             "U+17C9"
+                                         ],
+                          "names":  [
+                                        "KHMER SIGN MUUSIKATOAN"
+                                    ]
+                      },
+                      {
+                          "sequence":  ",,",
+                          "rule":  "Rule 3",
+                          "note":  "double-tap upgrade",
+                          "text":  "ុះ",
+                          "codepoints":  [
+                                             "U+17BB",
+                                             "U+17C7"
+                                         ],
+                          "names":  [
+                                        "KHMER VOWEL SIGN U",
+                                        "KHMER SIGN REAHMUK"
+                                    ]
+                      },
+                      {
+                          "sequence":  "]]",
+                          "rule":  "Rule 3",
+                          "note":  "double-tap upgrade",
+                          "text":  "ឧ",
+                          "codepoints":  [
+                                             "U+17A7"
+                                         ],
+                          "names":  [
+                                        "KHMER INDEPENDENT VOWEL QU"
+                                    ]
+                      },
+                      {
+                          "sequence":  "\\\\",
+                          "rule":  "Rule 3",
+                          "note":  "double-tap upgrade",
+                          "text":  "ៈ",
+                          "codepoints":  [
+                                             "U+17C8"
+                                         ],
+                          "names":  [
+                                        "KHMER SIGN YUUKALEAPINTU"
+                                    ]
+                      },
+                      {
+                          "sequence":  "  ",
+                          "rule":  "Rule 3",
+                          "note":  "double-tap upgrade",
+                          "text":  " ",
+                          "codepoints":  [
+                                             "U+0020"
+                                         ],
+                          "names":  [
+                                        "SPACE"
+                                    ]
+                      },
+                      {
+                          "sequence":  "ea",
+                          "rule":  "Rule 3",
+                          "note":  "e then a -\u003e au",
+                          "text":  "ោ",
+                          "codepoints":  [
+                                             "U+17C4"
+                                         ],
+                          "names":  [
+                                        "KHMER VOWEL SIGN OO"
+                                    ]
+                      },
+                      {
+                          "sequence":  "ei",
+                          "rule":  "Rule 3",
+                          "note":  "e then i -\u003e oe",
+                          "text":  "ើ",
+                          "codepoints":  [
+                                             "U+17BE"
+                                         ],
+                          "names":  [
+                                        "KHMER VOWEL SIGN OE"
+                                    ]
+                      },
+                      {
+                          "sequence":  "ua",
+                          "rule":  "Rule 3",
+                          "note":  "u then a -\u003e ua",
+                          "text":  "ួ",
+                          "codepoints":  [
+                                             "U+17BD"
+                                         ],
+                          "names":  [
+                                        "KHMER VOWEL SIGN UA"
+                                    ]
+                      },
+                      {
+                          "sequence":  "u/",
+                          "rule":  "Rule 3",
+                          "note":  "u slash -\u003e ua",
+                          "text":  "ួ",
+                          "codepoints":  [
+                                             "U+17BD"
+                                         ],
+                          "names":  [
+                                        "KHMER VOWEL SIGN UA"
+                                    ]
+                      },
+                      {
+                          "sequence":  "ai",
+                          "rule":  "Rule 3",
+                          "note":  "a then i -\u003e ai",
+                          "text":  "ៃ",
+                          "codepoints":  [
+                                             "U+17C3"
+                                         ],
+                          "names":  [
+                                        "KHMER VOWEL SIGN AI"
+                                    ]
+                      },
+                      {
+                          "sequence":  "i/",
+                          "rule":  "Rule 3",
+                          "note":  "i slash -\u003e ai",
+                          "text":  "ៃ",
+                          "codepoints":  [
+                                             "U+17C3"
+                                         ],
+                          "names":  [
+                                        "KHMER VOWEL SIGN AI"
+                                    ]
+                      },
+                      {
+                          "sequence":  " /",
+                          "rule":  "Rule 3",
+                          "note":  "space slash -\u003e ASCII space",
+                          "text":  " ",
+                          "codepoints":  [
+                                             "U+0020"
+                                         ],
+                          "names":  [
+                                        "SPACE"
+                                    ]
+                      },
+                      {
+                          "sequence":  "2/",
+                          "rule":  "Rule 3",
+                          "note":  "2 slash -\u003e lek too",
+                          "text":  "ៗ",
+                          "codepoints":  [
+                                             "U+17D7"
+                                         ],
+                          "names":  [
+                                        "KHMER SIGN LEK TOO"
+                                    ]
+                      },
+                      {
+                          "sequence":  "6/",
+                          "rule":  "Rule 3",
+                          "note":  "6 slash -\u003e toandakhiat",
+                          "text":  "៍",
+                          "codepoints":  [
+                                             "U+17CD"
+                                         ],
+                          "names":  [
+                                        "KHMER SIGN TOANDAKHIAT"
+                                    ]
+                      },
+                      {
+                          "sequence":  "7/",
+                          "rule":  "Rule 3",
+                          "note":  "7 slash -\u003e samyok sannya",
+                          "text":  "័",
+                          "codepoints":  [
+                                             "U+17D0"
+                                         ],
+                          "names":  [
+                                        "KHMER SIGN SAMYOK SANNYA"
+                                    ]
+                      },
+                      {
+                          "sequence":  "8/",
+                          "rule":  "Rule 3",
+                          "note":  "8 slash -\u003e ahsda",
+                          "text":  "៏",
+                          "codepoints":  [
+                                             "U+17CF"
+                                         ],
+                          "names":  [
+                                        "KHMER SIGN AHSDA"
+                                    ]
+                      },
+                      {
+                          "sequence":  "-/",
+                          "rule":  "Rule 3",
+                          "note":  "minus slash -\u003e robat",
+                          "text":  "៌",
+                          "codepoints":  [
+                                             "U+17CC"
+                                         ],
+                          "names":  [
+                                        "KHMER SIGN ROBAT"
+                                    ]
+                      },
+                      {
+                          "sequence":  ";/",
+                          "rule":  "Rule 3",
+                          "note":  "semicolon slash -\u003e camnuc pii kuuh",
+                          "text":  "៖",
+                          "codepoints":  [
+                                             "U+17D6"
+                                         ],
+                          "names":  [
+                                        "KHMER SIGN CAMNUC PII KUUH"
+                                    ]
+                      },
+                      {
+                          "sequence":  "./",
+                          "rule":  "Rule 3",
+                          "note":  "dot slash -\u003e ASCII period",
+                          "text":  ".",
+                          "codepoints":  [
+                                             "U+002E"
+                                         ],
+                          "names":  [
+                                        "FULL STOP"
+                                    ]
+                      },
+                      {
+                          "sequence":  ",/",
+                          "rule":  "Rule 3",
+                          "note":  "comma slash -\u003e ASCII comma",
+                          "text":  ",",
+                          "codepoints":  [
+                                             "U+002C"
+                                         ],
+                          "names":  [
+                                        "COMMA"
+                                    ]
+                      }
+                  ],
+    "ligatures":  [
+                      {
+                          "scanCode":  "0x1E",
+                          "vk":  65,
+                          "vkHex":  "0x41",
+                          "key":  "A",
+                          "modNumber":  1,
+                          "chord":  "Shift + A",
+                          "text":  "ាំ",
+                          "codepoints":  [
+                                             "U+17B6",
+                                             "U+17C6"
+                                         ],
+                          "names":  [
+                                        "KHMER VOWEL SIGN AA",
+                                        "KHMER SIGN NIKAHIT"
+                                    ],
+                          "note":  "Srak AM - word-final nikahit after vowel AA (U+17B6 + U+17C6)"
+                      },
+                      {
+                          "scanCode":  "0x2F",
+                          "vk":  86,
+                          "vkHex":  "0x56",
+                          "key":  "V",
+                          "modNumber":  1,
+                          "chord":  "Shift + V",
+                          "text":  "េះ",
+                          "codepoints":  [
+                                             "U+17C1",
+                                             "U+17C7"
+                                         ],
+                          "names":  [
+                                        "KHMER VOWEL SIGN E",
+                                        "KHMER SIGN REAHMUK"
+                                    ],
+                          "note":  "Srah EH - word-final reahmuk after vowel E (U+17C1 + U+17C7)"
+                      },
+                      {
+                          "scanCode":  "0x27",
+                          "vk":  186,
+                          "vkHex":  "0xBA",
+                          "key":  "OEM_1",
+                          "modNumber":  1,
+                          "chord":  "Shift + OEM_1",
+                          "text":  "ោះ",
+                          "codepoints":  [
+                                             "U+17C4",
+                                             "U+17C7"
+                                         ],
+                          "names":  [
+                                        "KHMER VOWEL SIGN OO",
+                                        "KHMER SIGN REAHMUK"
+                                    ],
+                          "note":  null
+                      },
+                      {
+                          "scanCode":  "0x33",
+                          "vk":  188,
+                          "vkHex":  "0xBC",
+                          "key":  "OEM_COMMA",
+                          "modNumber":  0,
+                          "chord":  "OEM_COMMA",
+                          "text":  "ុំ",
+                          "codepoints":  [
+                                             "U+17BB",
+                                             "U+17C6"
+                                         ],
+                          "names":  [
+                                        "KHMER VOWEL SIGN U",
+                                        "KHMER SIGN NIKAHIT"
+                                    ],
+                          "note":  null
+                      },
+                      {
+                          "scanCode":  "0x33",
+                          "vk":  188,
+                          "vkHex":  "0xBC",
+                          "key":  "OEM_COMMA",
+                          "modNumber":  1,
+                          "chord":  "Shift + OEM_COMMA",
+                          "text":  "ុះ",
+                          "codepoints":  [
+                                             "U+17BB",
+                                             "U+17C7"
+                                         ],
+                          "names":  [
+                                        "KHMER VOWEL SIGN U",
+                                        "KHMER SIGN REAHMUK"
+                                    ],
+                          "note":  null
+                      }
+                  ],
+    "secondaryTables":  [
+                            {
+                                "tableIndex":  0,
+                                "role":  "Special keys needing per-state entries. Slot 2 verified to be the Control character: Ctrl+Backspace is Delete and Ctrl+Enter is Line feed, matching ToUnicodeEx on all 4 keys.",
+                                "cStates":  3,
+                                "cbEntry":  8,
+                                "entryCount":  4,
+                                "keys":  [
+                                             {
+                                                 "vk":  8,
+                                                 "vkHex":  "0x08",
+                                                 "key":  "Backspace",
+                                                 "slots":  {
+                                                               "Slot0":  {
+                                                                             "text":  "\b",
+                                                                             "codepoints":  [
+                                                                                                "U+0008"
+                                                                                            ],
+                                                                             "names":  [
+                                                                                           "BACKSPACE (BS)"
+                                                                                       ]
+                                                                         },
+                                                               "Slot1":  {
+                                                                             "text":  "\b",
+                                                                             "codepoints":  [
+                                                                                                "U+0008"
+                                                                                            ],
+                                                                             "names":  [
+                                                                                           "BACKSPACE (BS)"
+                                                                                       ]
+                                                                         },
+                                                               "Slot2":  {
+                                                                             "text":  "",
+                                                                             "codepoints":  [
+                                                                                                "U+007F"
+                                                                                            ],
+                                                                             "names":  [
+                                                                                           "DELETE (DEL)"
+                                                                                       ]
+                                                                         }
+                                                           }
+                                             },
+                                             {
+                                                 "vk":  27,
+                                                 "vkHex":  "0x1B",
+                                                 "key":  "Esc",
+                                                 "slots":  {
+                                                               "Slot0":  {
+                                                                             "text":  "\u001b",
+                                                                             "codepoints":  [
+                                                                                                "U+001B"
+                                                                                            ],
+                                                                             "names":  [
+                                                                                           "ESCAPE (ESC)"
+                                                                                       ]
+                                                                         },
+                                                               "Slot1":  {
+                                                                             "text":  "\u001b",
+                                                                             "codepoints":  [
+                                                                                                "U+001B"
+                                                                                            ],
+                                                                             "names":  [
+                                                                                           "ESCAPE (ESC)"
+                                                                                       ]
+                                                                         },
+                                                               "Slot2":  {
+                                                                             "text":  "\u001b",
+                                                                             "codepoints":  [
+                                                                                                "U+001B"
+                                                                                            ],
+                                                                             "names":  [
+                                                                                           "ESCAPE (ESC)"
+                                                                                       ]
+                                                                         }
+                                                           }
+                                             },
+                                             {
+                                                 "vk":  13,
+                                                 "vkHex":  "0x0D",
+                                                 "key":  "Enter",
+                                                 "slots":  {
+                                                               "Slot0":  {
+                                                                             "text":  "\r",
+                                                                             "codepoints":  [
+                                                                                                "U+000D"
+                                                                                            ],
+                                                                             "names":  [
+                                                                                           "CARRIAGE RETURN (CR)"
+                                                                                       ]
+                                                                         },
+                                                               "Slot1":  {
+                                                                             "text":  "\r",
+                                                                             "codepoints":  [
+                                                                                                "U+000D"
+                                                                                            ],
+                                                                             "names":  [
+                                                                                           "CARRIAGE RETURN (CR)"
+                                                                                       ]
+                                                                         },
+                                                               "Slot2":  {
+                                                                             "text":  "\n",
+                                                                             "codepoints":  [
+                                                                                                "U+000A"
+                                                                                            ],
+                                                                             "names":  [
+                                                                                           "LINE FEED (LF)"
+                                                                                       ]
+                                                                         }
+                                                           }
+                                             },
+                                             {
+                                                 "vk":  3,
+                                                 "vkHex":  "0x03",
+                                                 "key":  "VK_03",
+                                                 "slots":  {
+                                                               "Slot0":  {
+                                                                             "text":  "\u0003",
+                                                                             "codepoints":  [
+                                                                                                "U+0003"
+                                                                                            ],
+                                                                             "names":  [
+                                                                                           "END OF TEXT (ETX)"
+                                                                                       ]
+                                                                         },
+                                                               "Slot1":  {
+                                                                             "text":  "\u0003",
+                                                                             "codepoints":  [
+                                                                                                "U+0003"
+                                                                                            ],
+                                                                             "names":  [
+                                                                                           "END OF TEXT (ETX)"
+                                                                                       ]
+                                                                         },
+                                                               "Slot2":  {
+                                                                             "text":  "\u0003",
+                                                                             "codepoints":  [
+                                                                                                "U+0003"
+                                                                                            ],
+                                                                             "names":  [
+                                                                                           "END OF TEXT (ETX)"
+                                                                                       ]
+                                                                         }
+                                                           }
+                                             }
+                                         ]
+                            },
+                            {
+                                "tableIndex":  2,
+                                "role":  "Base characters for keys absent from the main table (Tab and the keypad operators). Verified equal to the unshifted character, NOT the Control character.",
+                                "cStates":  2,
+                                "cbEntry":  6,
+                                "entryCount":  5,
+                                "keys":  [
+                                             {
+                                                 "vk":  9,
+                                                 "vkHex":  "0x09",
+                                                 "key":  "Tab",
+                                                 "slots":  {
+                                                               "Slot0":  {
+                                                                             "text":  "\t",
+                                                                             "codepoints":  [
+                                                                                                "U+0009"
+                                                                                            ],
+                                                                             "names":  [
+                                                                                           "CHARACTER TABULATION (TAB)"
+                                                                                       ]
+                                                                         },
+                                                               "Slot1":  {
+                                                                             "text":  "\t",
+                                                                             "codepoints":  [
+                                                                                                "U+0009"
+                                                                                            ],
+                                                                             "names":  [
+                                                                                           "CHARACTER TABULATION (TAB)"
+                                                                                       ]
+                                                                         }
+                                                           }
+                                             },
+                                             {
+                                                 "vk":  107,
+                                                 "vkHex":  "0x6B",
+                                                 "key":  "Add",
+                                                 "slots":  {
+                                                               "Slot0":  {
+                                                                             "text":  "+",
+                                                                             "codepoints":  [
+                                                                                                "U+002B"
+                                                                                            ],
+                                                                             "names":  [
+                                                                                           "PLUS SIGN"
+                                                                                       ]
+                                                                         },
+                                                               "Slot1":  {
+                                                                             "text":  "+",
+                                                                             "codepoints":  [
+                                                                                                "U+002B"
+                                                                                            ],
+                                                                             "names":  [
+                                                                                           "PLUS SIGN"
+                                                                                       ]
+                                                                         }
+                                                           }
+                                             },
+                                             {
+                                                 "vk":  111,
+                                                 "vkHex":  "0x6F",
+                                                 "key":  "Divide",
+                                                 "slots":  {
+                                                               "Slot0":  {
+                                                                             "text":  "/",
+                                                                             "codepoints":  [
+                                                                                                "U+002F"
+                                                                                            ],
+                                                                             "names":  [
+                                                                                           "SOLIDUS"
+                                                                                       ]
+                                                                         },
+                                                               "Slot1":  {
+                                                                             "text":  "/",
+                                                                             "codepoints":  [
+                                                                                                "U+002F"
+                                                                                            ],
+                                                                             "names":  [
+                                                                                           "SOLIDUS"
+                                                                                       ]
+                                                                         }
+                                                           }
+                                             },
+                                             {
+                                                 "vk":  106,
+                                                 "vkHex":  "0x6A",
+                                                 "key":  "Multiply",
+                                                 "slots":  {
+                                                               "Slot0":  {
+                                                                             "text":  "*",
+                                                                             "codepoints":  [
+                                                                                                "U+002A"
+                                                                                            ],
+                                                                             "names":  [
+                                                                                           "ASTERISK"
+                                                                                       ]
+                                                                         },
+                                                               "Slot1":  {
+                                                                             "text":  "*",
+                                                                             "codepoints":  [
+                                                                                                "U+002A"
+                                                                                            ],
+                                                                             "names":  [
+                                                                                           "ASTERISK"
+                                                                                       ]
+                                                                         }
+                                                           }
+                                             },
+                                             {
+                                                 "vk":  109,
+                                                 "vkHex":  "0x6D",
+                                                 "key":  "Subtract",
+                                                 "slots":  {
+                                                               "Slot0":  {
+                                                                             "text":  "-",
+                                                                             "codepoints":  [
+                                                                                                "U+002D"
+                                                                                            ],
+                                                                             "names":  [
+                                                                                           "HYPHEN-MINUS"
+                                                                                       ]
+                                                                         },
+                                                               "Slot1":  {
+                                                                             "text":  "-",
+                                                                             "codepoints":  [
+                                                                                                "U+002D"
+                                                                                            ],
+                                                                             "names":  [
+                                                                                           "HYPHEN-MINUS"
+                                                                                       ]
+                                                                         }
+                                                           }
+                                             }
+                                         ]
+                            },
+                            {
+                                "tableIndex":  3,
+                                "role":  "Base characters for the numeric keypad digits.",
+                                "cStates":  1,
+                                "cbEntry":  4,
+                                "entryCount":  10,
+                                "keys":  [
+                                             {
+                                                 "vk":  96,
+                                                 "vkHex":  "0x60",
+                                                 "key":  "Numpad 0",
+                                                 "slots":  {
+                                                               "Slot0":  {
+                                                                             "text":  "0",
+                                                                             "codepoints":  [
+                                                                                                "U+0030"
+                                                                                            ],
+                                                                             "names":  [
+                                                                                           "DIGIT ZERO"
+                                                                                       ]
+                                                                         }
+                                                           }
+                                             },
+                                             {
+                                                 "vk":  97,
+                                                 "vkHex":  "0x61",
+                                                 "key":  "Numpad 1",
+                                                 "slots":  {
+                                                               "Slot0":  {
+                                                                             "text":  "1",
+                                                                             "codepoints":  [
+                                                                                                "U+0031"
+                                                                                            ],
+                                                                             "names":  [
+                                                                                           "DIGIT ONE"
+                                                                                       ]
+                                                                         }
+                                                           }
+                                             },
+                                             {
+                                                 "vk":  98,
+                                                 "vkHex":  "0x62",
+                                                 "key":  "Numpad 2",
+                                                 "slots":  {
+                                                               "Slot0":  {
+                                                                             "text":  "2",
+                                                                             "codepoints":  [
+                                                                                                "U+0032"
+                                                                                            ],
+                                                                             "names":  [
+                                                                                           "DIGIT TWO"
+                                                                                       ]
+                                                                         }
+                                                           }
+                                             },
+                                             {
+                                                 "vk":  99,
+                                                 "vkHex":  "0x63",
+                                                 "key":  "Numpad 3",
+                                                 "slots":  {
+                                                               "Slot0":  {
+                                                                             "text":  "3",
+                                                                             "codepoints":  [
+                                                                                                "U+0033"
+                                                                                            ],
+                                                                             "names":  [
+                                                                                           "DIGIT THREE"
+                                                                                       ]
+                                                                         }
+                                                           }
+                                             },
+                                             {
+                                                 "vk":  100,
+                                                 "vkHex":  "0x64",
+                                                 "key":  "Numpad 4",
+                                                 "slots":  {
+                                                               "Slot0":  {
+                                                                             "text":  "4",
+                                                                             "codepoints":  [
+                                                                                                "U+0034"
+                                                                                            ],
+                                                                             "names":  [
+                                                                                           "DIGIT FOUR"
+                                                                                       ]
+                                                                         }
+                                                           }
+                                             },
+                                             {
+                                                 "vk":  101,
+                                                 "vkHex":  "0x65",
+                                                 "key":  "Numpad 5",
+                                                 "slots":  {
+                                                               "Slot0":  {
+                                                                             "text":  "5",
+                                                                             "codepoints":  [
+                                                                                                "U+0035"
+                                                                                            ],
+                                                                             "names":  [
+                                                                                           "DIGIT FIVE"
+                                                                                       ]
+                                                                         }
+                                                           }
+                                             },
+                                             {
+                                                 "vk":  102,
+                                                 "vkHex":  "0x66",
+                                                 "key":  "Numpad 6",
+                                                 "slots":  {
+                                                               "Slot0":  {
+                                                                             "text":  "6",
+                                                                             "codepoints":  [
+                                                                                                "U+0036"
+                                                                                            ],
+                                                                             "names":  [
+                                                                                           "DIGIT SIX"
+                                                                                       ]
+                                                                         }
+                                                           }
+                                             },
+                                             {
+                                                 "vk":  103,
+                                                 "vkHex":  "0x67",
+                                                 "key":  "Numpad 7",
+                                                 "slots":  {
+                                                               "Slot0":  {
+                                                                             "text":  "7",
+                                                                             "codepoints":  [
+                                                                                                "U+0037"
+                                                                                            ],
+                                                                             "names":  [
+                                                                                           "DIGIT SEVEN"
+                                                                                       ]
+                                                                         }
+                                                           }
+                                             },
+                                             {
+                                                 "vk":  104,
+                                                 "vkHex":  "0x68",
+                                                 "key":  "Numpad 8",
+                                                 "slots":  {
+                                                               "Slot0":  {
+                                                                             "text":  "8",
+                                                                             "codepoints":  [
+                                                                                                "U+0038"
+                                                                                            ],
+                                                                             "names":  [
+                                                                                           "DIGIT EIGHT"
+                                                                                       ]
+                                                                         }
+                                                           }
+                                             },
+                                             {
+                                                 "vk":  105,
+                                                 "vkHex":  "0x69",
+                                                 "key":  "Numpad 9",
+                                                 "slots":  {
+                                                               "Slot0":  {
+                                                                             "text":  "9",
+                                                                             "codepoints":  [
+                                                                                                "U+0039"
+                                                                                            ],
+                                                                             "names":  [
+                                                                                           "DIGIT NINE"
+                                                                                       ]
+                                                                         }
+                                                           }
+                                             }
+                                         ]
+                            }
+                        ]
+}

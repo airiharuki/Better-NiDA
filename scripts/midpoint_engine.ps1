@@ -8,25 +8,18 @@
     check is derived from this file, so the platforms cannot silently disagree
     with each other.
 
-    Midpoint is split into two halves, because they have very different costs:
+    Midpoint is split into two halves, because they have different host needs:
 
-      STATIC subset  - plain layer remapping. No state machine, no display lag.
-                       Rules 2, 4, 5. Works everywhere, including macOS.
+      STATIC subset   - plain layer remapping. No state machine, no display lag.
+                        Rules 2 (Shift+J / AltGr+J), 4 (] and \), 5 (Shift+AltGr).
+                        Works everywhere, including macOS .keylayout and Linux XKB.
 
-      SEQUENCE subset - prefix-buffered rules. Rule 1 (series flip on '/') and
-                       Rule 3 (double-tap vowels). Needs an input method that
-                       holds output: m17n, Keyman, AutoHotkey.
-
-    macOS gets the static subset only. Reason: Rule 3 makes every vowel key
-    pending, and Rule 1 makes 21 consonant keys pending. That is 32 of 49 keys
-    - 65% of the keyboard - invisible until the following keystroke. That is not
-    an acceptable cost for a layout whose purpose is fluid typing. macOS
-    .keylayout also has no backspace-and-re-emit primitive, so a retro-replace
-    is impossible there regardless.
-
-    Static layering recovers most of the benefit instead: the 13 second-series
-    consonants move to Shift+AltGr, which stock NiDA leaves entirely unused
-    (0 of 49 keys), so nothing is displaced.
+      SEQUENCE subset - prefix-buffered / contextual rules:
+                        Rule 1 (universal '/' series switch),
+                        Rule 2 ('jj' -> nyo, 'jj/' -> nyo+muusikatoan, 'j/' -> coeng+nyo),
+                        Rule 3 (double-tap and two-key vowel, sign, and space upgrades).
+                        Implemented with zero display lag via contextual replacement
+                        in Keyman (.kmn) and preedit maps in m17n (.mim).
 
 .NOTES
     ASCII-only by design; see scripts\README.md. Khmer is written as hex.
@@ -89,21 +82,27 @@ function Get-Stock($key, $state) {
 
 # --- Midpoint static overrides ----------------------------------------------
 #
-# Rule 4: niakahit and reahmuk are extremely common word-final marks. Stock NiDA
-# puts both behind Shift (Shift+M, Shift+H). Move them to unshifted ] and \ and
-# push the two rare independent vowels down to AltGr, where every other
-# independent vowel in NiDA already lives.
+# Rule 4: nikahit (U+17C6) and reahmuk (U+17C7) are extremely common word-final
+# marks. Stock NiDA puts both behind Shift (Shift+M, Shift+H). Move them to
+# unshifted ] and \ and push the two rare independent vowels (U+17AA, U+17AE)
+# down to AltGr. U+17B3 (previously on AltGr+]) moves to AltGr+U (which is
+# unmapped in stock NiDA), preserving 100% of stock NiDA's character repertoire.
 
 $STATIC_NORMAL = @{ ']' = @(0x17C6); '\' = @(0x17C7) }   # was U+17AA / U+17AE
-$STATIC_SHIFT  = @{ 'J' = @(0x17D2) }                    # was U+1789
-$STATIC_ALTGR  = @{ ']' = @(0x17AA); '\' = @(0x17AE); 'J' = @(0x1789) }
+$STATIC_SHIFT  = @{ 'J' = @(0x17D2) }                    # was U+1789 (Rule 2 rollover-safe coeng)
+$STATIC_ALTGR  = @{
+    ']' = @(0x17AA)   # moved from Normal ]
+    '\' = @(0x17AE)   # moved from Normal \
+    'J' = @(0x1789)   # static-layer fallback for nyo (U+1789)
+    'U' = @(0x17B3)   # rescued from AltGr+] (stock AltGr+U is empty)
+}
 
-# How the subscript coeng+nyo (U+17D2 U+1789) is typed, as in the common word
-# for "I". See the note on 'j' below for why neither 'jj' nor 'j/' is used.
-$SCRATCH_SUBSCRIPT = 'j~j'
+# Primary sequence for subscript coeng+nyo (U+17D2 U+1789), as in "khnhom" (I).
+$SCRATCH_SUBSCRIPT = 'j/'
 
-# Rule 5 / macOS substitution for Rule 1: second-series consonants on Shift+AltGr.
-# Stock NiDA leaves this level completely empty, so this displaces nothing.
+# Rule 5 / macOS and XKB static substitution for Rule 1: second-series
+# consonants on Shift+AltGr. Stock NiDA leaves this level completely empty
+# (0 of 49 keys), so nothing is displaced.
 $SECOND_SERIES = [ordered]@{
     'k' = 0x1782; 'x' = 0x1783; 'c' = 0x1787; 'q' = 0x1788
     'd' = 0x178C; 'z' = 0x178D; 't' = 0x1791; 'f' = 0x1792
@@ -120,9 +119,9 @@ function New-Rule($seq, $out, $rule, $note) {
 $rules = New-Object System.Collections.ArrayList
 
 # Rule 1 - universal series flip. '/' replaces the preceding base consonant.
-# NOTE: for m, y, r, v the output is base+shifted, NOT stock's Shift character.
-# Stock Shift+m is U+17C6 (niakahit) and Shift+v is a ligature, so the flip is
-# genuinely different output rather than a Shift chord replacement.
+# NOTE: for m, y, r, v the output is base+muusikatoan, NOT stock's Shift character.
+# Stock Shift+m is U+17C6 (nikahit) and Shift+v is a ligature, so the flip is
+# genuinely consonant series modulation rather than a raw Shift chord alias.
 $flipPlosive = [ordered]@{
     'k' = 0x1782; 'x' = 0x1783; 'c' = 0x1787; 'q' = 0x1788
     'd' = 0x178C; 'z' = 0x178D; 't' = 0x1791; 'f' = 0x1792
@@ -141,49 +140,56 @@ foreach ($key in @('m','y','r','v')) {
 [void]$rules.Add((New-Rule 's/' @(0x179F, $SHIFTER_TRAYSAP)     'Rule 1' 'fricative + traysap'))
 [void]$rules.Add((New-Rule 'h/' @(0x17A0, $SHIFTER_TRAYSAP)     'Rule 1' 'fricative + traysap'))
 
-# Rule 2 - rollover-safe coeng.
+# Rule 2 - rollover-safe coeng and Shift-free / AltGr-free nyo (U+1789):
+#   j       -> U+17D2 (coeng, single tap)
+#   Shift+J -> U+17D2 (rollover-safe coeng during shifted clusters)
+#   jj      -> U+1789 (standalone nyo, zero modifiers)
+#   jj/     -> U+1789 U+17C9 (nyo + muusikatoan, e.g. "nham" to eat)
+#   j/      -> U+17D2 U+1789 (subscript coeng + nyo in 2 keys, e.g. "khnhom")
 #
-# Deliberately NOT defined, having been tested and rejected:
-#
-#   jj  -> U+1789   Breaks every coeng cluster whose subscript is a flipped
-#                   consonant. 'kmjb/uc/a' (the word for "Cambodia") needs
-#                   coeng then b-slash; with jj present the coeng stays pending
-#                   and swallows the slash. Verified failing.
-#   j/  -> coeng+nyo  Same collision, and worse: every post-coeng flip in the
-#                   language dies with it.
-#   jjj -> coeng+nyo  Incoherent in a left-to-right resolver. Once 'jj' has
-#                   committed U+1789, a third j yields nyo+coeng, not
-#                   coeng+nyo. Only works under m17n prefix semantics, so
-#                   macOS and Linux would disagree.
-#
-# Instead: j gives coeng, Shift+J also gives coeng (so holding Shift through a
-# cluster can never produce a stray nyo), and AltGr+J gives nyo. The subscript
-# coeng+nyo is therefore 'j' then AltGr+J - two keys, no Shift, no collision.
-# This keeps 'j' out of the pending set entirely, which also removes one of the
-# keys whose lag motivated the macOS decision.
+# Note on 'jj' + 'j' in clusters like U+1789 U+17D2 U+1785 (nyo + coeng + ca):
+# Because 'jjj' is NOT a rule, typing 'jj' followed by 'j' + 'c' hits a dead end
+# at 'jjj', commits the longest exact rule 'jj' (U+1789), and starts a fresh 'j'
+# (U+17D2) before 'c' (U+1785). And in 'kmjb/uc/a', 'j' followed by 'b' hits a
+# dead end at 'jb', commits 'j' (U+17D2), and resolves 'b/' (U+1796).
+[void]$rules.Add((New-Rule 'jj'  @(0x1789)                         'Rule 2' 'double-tap j -> nyo'))
+[void]$rules.Add((New-Rule 'jj/' @(0x1789, $SHIFTER_MUUSIKATOAN)   'Rule 2' 'nyo + muusikatoan'))
+[void]$rules.Add((New-Rule 'j/'  @(0x17D2, 0x1789)                 'Rule 2' 'coeng + nyo'))
 
-# Rule 3 - additive double-tap upgrades. Single taps keep stock output, and
-# Shift+Key keeps working, so these are purely additive.
+# Rule 3 - additive double-tap and sequence upgrades for vowels, signs, and space.
+# Single taps keep stock output, and Shift+Key keeps working as a fallback.
 $doubleTap = [ordered]@{
     'i' = @(0x17B8); 'u' = @(0x17BC); 'e' = @(0x17C2); 'w' = @(0x17BA)
     'o' = @(0x17C5); '[' = @(0x17BF); '.' = @(0x17D5)
     'a' = @(0x17B6, 0x17C6); ';' = @(0x17C4, 0x17C7)
     "'" = @(0x17C9);            ',' = @(0x17BB, 0x17C7)
+    ']' = @(0x17A7);            '\' = @(0x17C8)
+    ' ' = @(0x0020)
 }
 foreach ($key in $doubleTap.Keys) {
     [void]$rules.Add((New-Rule ($key + $key) $doubleTap[$key] 'Rule 3' 'double-tap upgrade'))
 }
-[void]$rules.Add((New-Rule 'ea' @(0x17C4) 'Rule 3' 'e then a'))
-[void]$rules.Add((New-Rule 'ei' @(0x17BE) 'Rule 3' 'e then i'))
+[void]$rules.Add((New-Rule 'ea' @(0x17C4) 'Rule 3' 'e then a -> au'))
+[void]$rules.Add((New-Rule 'ei' @(0x17BE) 'Rule 3' 'e then i -> oe'))
+[void]$rules.Add((New-Rule 'ua' @(0x17BD) 'Rule 3' 'u then a -> ua'))
+[void]$rules.Add((New-Rule 'u/' @(0x17BD) 'Rule 3' 'u slash -> ua'))
+[void]$rules.Add((New-Rule 'ai' @(0x17C3) 'Rule 3' 'a then i -> ai'))
+[void]$rules.Add((New-Rule 'i/' @(0x17C3) 'Rule 3' 'i slash -> ai'))
+[void]$rules.Add((New-Rule ' /' @(0x0020) 'Rule 3' 'space slash -> ASCII space'))
+[void]$rules.Add((New-Rule '2/' @(0x17D7) 'Rule 3' '2 slash -> lek too'))
+[void]$rules.Add((New-Rule '6/' @(0x17CD) 'Rule 3' '6 slash -> toandakhiat'))
+[void]$rules.Add((New-Rule '7/' @(0x17D0) 'Rule 3' '7 slash -> samyok sannya'))
+[void]$rules.Add((New-Rule '8/' @(0x17CF) 'Rule 3' '8 slash -> ahsda'))
+[void]$rules.Add((New-Rule '-/' @(0x17CC) 'Rule 3' 'minus slash -> robat'))
+[void]$rules.Add((New-Rule ';/' @(0x17D6) 'Rule 3' 'semicolon slash -> camnuc pii kuuh'))
+[void]$rules.Add((New-Rule './' @(0x002E) 'Rule 3' 'dot slash -> ASCII period'))
+[void]$rules.Add((New-Rule ',/' @(0x002C) 'Rule 3' 'comma slash -> ASCII comma'))
 
-# Keys that become PENDING under the sequence subset, i.e. they emit nothing
-# until the next keystroke resolves them.
+# Keys that can begin a multi-key sequence under prefix buffering.
 $pendingKeys = @{}
 foreach ($r in $rules) {
-    if ($r.Seq.Length -ge 2) { $pendingKeys[$r.Seq[0]] = $true }
+    if ($r.Seq.Length -ge 2) { $pendingKeys[[string]$r.Seq[0]] = $true }
 }
-# Single-key j is pending only because 'j' can begin 'jj' or 'j/'.
-$pendingKeys['j'] = $true
 
 # --- static layer resolution (used as the sequence fallback) -----------------
 
@@ -198,16 +204,10 @@ function Get-Static($key, $shifted) {
 
 # --- longest-prefix resolver -------------------------------------------------
 #
-# Emits nothing while a prefix could still grow, commits on exact match, and on
-# a dead end backtracks one character at a time. This is the same semantics m17n
-# and Keyman use, so a sequence generated from here means the same thing on
-# every platform that supports prefix buffering.
-
-# These three are deliberately plain, script-scope functions that take and
-# return data explicitly. An earlier version nested them inside the resolver and
-# relied on closure captures, which silently returned nothing under PS 5.1 -
-# Get-Stock answered correctly when called directly and empty when called from
-# the nested scope. No closures, no surprises.
+# Holds a prefix while it can still grow into a longer rule, commits immediately
+# when a matched rule cannot grow further, and on a dead end commits the buffer
+# left-to-right using longest-exact-rule matching before falling back to single
+# static keys.
 
 function Add-Output($list, $out) {
     if ($out) { foreach ($cp in $out) { [void]$list.Add([int]$cp) } }
@@ -228,25 +228,33 @@ function Test-PendingPrefix([string]$buf) {
     return $false
 }
 
-# Commit a pending buffer as individual keys, left to right.
-#
-# Two things this must get right, both of which were bugs first:
-#   - order. Emitting right to left, or deferring the remainder, produces text
-#     whose characters appear before the ones they should follow.
-#   - modifier state. The Shift path goes through Get-Static, not Get-Stock, so
-#     Midpoint's own Shift overrides (Shift+J -> coeng) are honoured.
-#
-# The lists are passed in rather than captured, because a nested function
-# relying on closure silently returned nothing under PS 5.1.
+# Commit a pending buffer left to right, preferring longest exact sequence rules
+# (e.g. 'jj' -> U+1789 when 'jj' was held waiting for a possible '/') before
+# falling back to single-key static output.
 function Add-Commit($emitted, $steps, [string]$buf) {
-    foreach ($raw in $buf.ToCharArray()) {
-        # [string] cast is required: a [char] does not match a [string] key in a
-        # .NET hashtable, so every lookup below silently returned null.
-        $ch = [string]$raw
-        $sh = ($ch -cmatch '^[A-Z]$')
-        $one = Get-Static $ch.ToLower() $sh
-        Add-Output $emitted $one
-        [void]$steps.Add([PSCustomObject]@{ Keys = $ch; Shift = $sh; Out = $one; Rule = 'commit' })
+    $pos = 0
+    while ($pos -lt $buf.Length) {
+        $matched = $false
+        for ($len = $buf.Length - $pos; $len -ge 2; $len--) {
+            $sub = $buf.Substring($pos, $len)
+            if ($sub -cmatch '[A-Z]') { continue }
+            $ex = Get-ExactRule $sub
+            if ($ex) {
+                Add-Output $emitted $ex.Out
+                [void]$steps.Add([PSCustomObject]@{ Keys = $sub; Shift = $false; Out = $ex.Out; Rule = $ex.Rule })
+                $pos += $len
+                $matched = $true
+                break
+            }
+        }
+        if (-not $matched) {
+            $ch = [string]$buf[$pos]
+            $sh = ($ch -cmatch '^[A-Z]')
+            $one = Get-Static $ch.ToLower() $sh
+            Add-Output $emitted $one
+            [void]$steps.Add([PSCustomObject]@{ Keys = $ch; Shift = $sh; Out = $one; Rule = 'commit' })
+            $pos++
+        }
     }
 }
 
@@ -259,8 +267,6 @@ function Resolve-Sequence([string]$keys, $keyStream) {
     $tokens = @()
     $i = 0
     while ($i -lt $keyStream.Length) {
-        # Cast once: [char] has no string methods in PS 5.1, so ToLower() on a
-        # char throws. Everything below works on [string].
         $ch = [string]$keyStream[$i]
         if ($ch -eq '~') {
             $nxt = [string]$keyStream[$i + 1]
@@ -269,9 +275,6 @@ function Resolve-Sequence([string]$keys, $keyStream) {
         }
         elseif ($ch -eq '+') { $i++ }
         else {
-            # Raw keeps the original case. The pending buffer must retain it or
-            # the Shift flag is lost: storing lowercase made 'B' commit as an
-            # unshifted b, which silently downgraded every Shift chord.
             $tokens += [PSCustomObject]@{
                 Raw = $ch
                 Key = $ch.ToLower()
@@ -287,9 +290,6 @@ function Resolve-Sequence([string]$keys, $keyStream) {
     foreach ($tok in $tokens) {
         # AltGr chords are static and never participate in sequences.
         if ($tok.Alt) {
-            # Any pending sequence must commit first. Emitting the chord while a
-            # sequence is still buffered puts its character before the ones it
-            # follows, which silently reorders the word.
             if ($pending.Length -gt 0) { Add-Commit $emitted $steps $pending; $pending = '' }
             $alt = $null
             if ($STATIC_ALTGR.ContainsKey($tok.Key)) { $alt = $STATIC_ALTGR[$tok.Key] }
@@ -299,31 +299,34 @@ function Resolve-Sequence([string]$keys, $keyStream) {
             continue
         }
 
-        $trial = $pending + $tok.Raw
-
-        $exact = Get-ExactRule $trial.ToLower()
-        if ($exact) {
-            Add-Output $emitted $exact.Out
-            [void]$steps.Add([PSCustomObject]@{ Keys = $trial; Shift = $tok.Shift; Out = $exact.Out; Rule = $exact.Rule })
-            $pending = ''
-            continue
+        # Only unshifted keys participate in sequence rules; shifted keys must
+        # commit any pending buffer and resolve via Get-Static so Guardrail 3
+        # (100% additive Shift chords) is never intercepted by a lowercase rule.
+        if (-not $tok.Shift) {
+            $trial = $pending + $tok.Raw
+            if (Test-PendingPrefix $trial) { $pending = $trial; continue }
+            $exact = Get-ExactRule $trial
+            if ($exact) {
+                Add-Output $emitted $exact.Out
+                [void]$steps.Add([PSCustomObject]@{ Keys = $trial; Shift = $false; Out = $exact.Out; Rule = $exact.Rule })
+                $pending = ''
+                continue
+            }
         }
 
-        if (Test-PendingPrefix $trial.ToLower()) { $pending = $trial; continue }
-
-        # Dead end. Commit whatever was pending, in order, then give this key a
-        # fresh chance to start its own sequence. Committing the buffer first is
-        # what preserves ordering; skipping straight to the new key is what
-        # previously inverted characters against the ones they should follow.
+        # Dead end or Shift chord: commit whatever was pending, in order, then
+        # give this token a fresh chance to start its own sequence.
         if ($pending.Length -gt 0) { Add-Commit $emitted $steps $pending; $pending = '' }
 
-        $exact = Get-ExactRule $tok.Key
-        if ($exact) {
-            Add-Output $emitted $exact.Out
-            [void]$steps.Add([PSCustomObject]@{ Keys = $tok.Raw; Shift = $tok.Shift; Out = $exact.Out; Rule = $exact.Rule })
-            continue
+        if (-not $tok.Shift) {
+            if (Test-PendingPrefix $tok.Key) { $pending = $tok.Raw; continue }
+            $exact = Get-ExactRule $tok.Key
+            if ($exact) {
+                Add-Output $emitted $exact.Out
+                [void]$steps.Add([PSCustomObject]@{ Keys = $tok.Raw; Shift = $false; Out = $exact.Out; Rule = $exact.Rule })
+                continue
+            }
         }
-        if (Test-PendingPrefix $tok.Key) { $pending = $tok.Raw; continue }
 
         $one = Get-Static $tok.Key $tok.Shift
         Add-Output $emitted $one
@@ -383,10 +386,10 @@ if ($Resolve) {
 }
 
 return [PSCustomObject]@{
-    Rules       = @($rules)
-    PendingKeys = Get-PendingKeys
+    Rules        = @($rules)
+    PendingKeys  = Get-PendingKeys
     SecondSeries = $SECOND_SERIES
-    Static      = [PSCustomObject]@{
+    Static       = [PSCustomObject]@{
         Normal = $STATIC_NORMAL; Shift = $STATIC_SHIFT; AltGr = $STATIC_ALTGR
     }
 }
