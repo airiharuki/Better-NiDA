@@ -17,6 +17,7 @@
 *.md    text eol=lf
 *.keylayout text eol=lf
 *.kmn       text eol=lf
+*.kps       text eol=lf
 *.command   text eol=lf
 
 # The XKB symbols files have no extension, so no wildcard above matched them

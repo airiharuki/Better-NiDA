@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package>
+  <System>
+    <KeymanDeveloperVersion>17.0</KeymanDeveloperVersion>
+    <FileVersion>7.0</FileVersion>
+  </System>
+  <Options>
+    <ExecuteProgram></ExecuteProgram>
+    <MSIFileName></MSIFileName>
+    <MSIOptions></MSIOptions>
+  </Options>
+  <Info>
+    <Name URL="">Khmer Better-NiDA (Midpoint)</Name>
+    <Copyright URL="">(c) 2026 Better-NiDA Contributors</Copyright>
+    <Author URL="">Better-NiDA Contributors</Author>
+    <WebSite URL="https://github.com/airiharuki/Better-NiDA">https://github.com/airiharuki/Better-NiDA</WebSite>
+    <Version URL="">1.0.0</Version>
+    <Description URL="https://github.com/airiharuki/Better-NiDA">Khmer Better-NiDA (Midpoint) keyboard layout with universal / series switch, double-tap vowel upgrades, rollover-safe coeng, and 100% unshifted NiDA compatibility.</Description>
+  </Info>
+  <Files>
+    <File>
+      <Name>..\dist\better_nida_midpoint.kmx</Name>
+      <Description>Keyboard Khmer Better-NiDA (Midpoint)</Description>
+      <CopyLocation>0</CopyLocation>
+      <FileType>.kmx</FileType>
+    </File>
+  </Files>
+  <Keyboards>
+    <Keyboard>
+      <Name>Khmer Better-NiDA (Midpoint)</Name>
+      <ID>better_nida_midpoint</ID>
+      <Version>1.0</Version>
+      <Languages>
+        <Language ID="km">Khmer</Language>
+      </Languages>
+    </Keyboard>
+  </Keyboards>
+</Package>

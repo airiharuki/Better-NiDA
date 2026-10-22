@@ -361,5 +361,9 @@ foreach ($f in @($linuxPath, $macPath)) {
     Write-Host ("   {0,-34} {1,7} bytes" -f (Split-Path -Leaf $f), (Get-Item $f).Length)
 }
 
+# Build Windows standalone runner and m17n copy in dist/
+& (Join-Path $PSScriptRoot 'build_windows_runner.ps1') -OutExe (Join-Path $OutDir 'BetterNiDA-Midpoint-Windows.exe')
+Copy-Item (Join-Path $root 'linux\m17n\nida-midpoint.mim') (Join-Path $OutDir 'nida-midpoint.mim') -Force
+
 if ($fail -gt 0) { Write-Host "`n$fail installer problem(s)." -ForegroundColor Red; exit 1 }
 Write-Host "`ninstallers built and validated -> $OutDir"

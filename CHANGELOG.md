@@ -17,6 +17,18 @@ by the size of the diff.
 
 ### Added
 
+- Nothing yet.
+
+### Fixed
+
+- Nothing yet.
+
+---
+
+## [0.4.0] - 2026-10-22
+
+### Added
+
 - **Better-NiDA Midpoint engine, specification, and cross-platform targets:**
   - `scripts/midpoint_engine.ps1`: Single source of truth for the Better-NiDA
     Midpoint layout, combining static layer remapping (Rules 2, 4, 5) and
@@ -24,8 +36,15 @@ by the size of the diff.
   - `scripts/export_midpoint_spec.ps1` and `midpoint_layout.json`: Machine-readable
     Midpoint specification with 49 keys across 5 modifier levels and 51 sequence
     rules.
-  - `windows/better_nida_midpoint.kmn`: Keyman keyboard source using zero-lag
-    inline contextual replacement (`U+1780 + [K_SLASH] > U+1782`).
+  - `windows/better_nida_midpoint.kmn` and `windows/better_nida_midpoint.kps`:
+    Keyman keyboard source and package descriptor using zero-lag inline
+    contextual replacement (`U+1780 + [K_SLASH] > U+1782`), compiled via
+    `@keymanapp/kmc` into `better_nida_midpoint.kmp`, `.kmx`, and `.js`.
+  - `scripts/build_windows_runner.ps1`: Compiles a zero-dependency standalone
+    Windows executable (`BetterNiDA-Midpoint-Windows.exe`) directly from
+    `midpoint_layout.json`, featuring a built-in live typing sandbox, Unicode
+    codepoint inspector, and a system-wide low-level keyboard hook toggle
+    (`Ctrl+Shift+Space`).
   - `linux/m17n/nida-midpoint.mim`: Linux m17n input method implementing the full
     sequence and static rule set.
   - `linux/nida_midpoint` and `macos/Khmer Better-NiDA.keylayout`: Static-subset
@@ -215,7 +234,8 @@ Reported alongside each release because the claims are specific:
 The last row is the important one. Everything above it can be checked on a
 Windows machine; that one cannot.
 
-[Unreleased]: https://github.com/airiharuki/Better-NiDA/compare/v0.3.1...HEAD
+[Unreleased]: https://github.com/airiharuki/Better-NiDA/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/airiharuki/Better-NiDA/compare/v0.3.1...v0.4.0
 [0.3.1]: https://github.com/airiharuki/Better-NiDA/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/airiharuki/Better-NiDA/compare/v0.2.1...v0.3.0
 [0.2.1]: https://github.com/airiharuki/Better-NiDA/compare/v0.2.0...v0.2.1
