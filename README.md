@@ -1,7 +1,33 @@
 # Better-NiDA
 
+[![Latest Release](https://img.shields.io/github/v/release/airiharuki/Better-NiDA?style=for-the-badge&color=121A6B&label=Release)](https://github.com/airiharuki/Better-NiDA/releases/latest)
+[![Platform Support](https://img.shields.io/badge/Platform-Windows%20%7C%20macOS%20%7C%20Linux-2563EB?style=for-the-badge)](#khmer-nida-layout---for-macos--linux)
+[![Shift Reduction](https://img.shields.io/badge/Shift%20Load-%E2%88%9297.5%25%20(0.5%25%20Share)-16A34A?style=for-the-badge)](#current-work-the-midpoint-hybrid-engine)
+[![AltGr Reduction](https://img.shields.io/badge/AltGr%20Load-%E2%88%9286.1%25-0D9488?style=for-the-badge)](#current-work-the-midpoint-hybrid-engine)
+[![NiDA Parity](https://img.shields.io/badge/NiDA%20Parity-144%2F144%20Verified-7C3AED?style=for-the-badge)](#reverse-engineering-results)
+[![License: MIT](https://img.shields.io/github/license/airiharuki/Better-NiDA?style=for-the-badge&color=475569)](LICENSE)
+
 An improved, modern, and ergonomic evolution of the standard **Khmer NiDA**
-keyboard layout.
+keyboard layout—delivering **zero-lag speed**, **−97.5% `Shift` utilization**,
+and **100% muscle-memory compatibility**.
+
+### Quick Downloads (`v0.4.0`)
+
+[![Windows Standalone Installer](https://img.shields.io/badge/Windows-BetterNiDA--Midpoint--Windows.exe-0078D6?style=flat-square&logo=windows)](https://github.com/airiharuki/Better-NiDA/releases/download/v0.4.0/BetterNiDA-Midpoint-Windows.exe)
+[![Keyman Package](https://img.shields.io/badge/Keyman-better__nida__midpoint.kmp-F59E0B?style=flat-square)](https://github.com/airiharuki/Better-NiDA/releases/download/v0.4.0/better_nida_midpoint.kmp)
+[![macOS Installer](https://img.shields.io/badge/macOS-install--nida--macos.command-111827?style=flat-square&logo=apple)](https://github.com/airiharuki/Better-NiDA/releases/download/v0.4.0/install-nida-macos.command)
+[![Linux Installer](https://img.shields.io/badge/Linux-install--nida.sh-FCC624?style=flat-square&logo=linux&logoColor=black)](https://github.com/airiharuki/Better-NiDA/releases/download/v0.4.0/install-nida.sh)
+[![Printable Layout Guide (PDF)](https://img.shields.io/badge/Layout%20Guide-Printable%20PDF-EC4899?style=flat-square&logo=adobeacrobatreader)](docs/better_nida_layout_guide.pdf)
+
+---
+
+## Keyboard Layout Guide
+
+![Better-NiDA Standard Khmer Unicode Keyboard Layout Guide](https://raw.githubusercontent.com/airiharuki/Better-NiDA/refs/heads/main/docs/better_nida_layout_guide.png)
+
+> **1-to-1 Reference Sheet:** Styled after the classic 2005 NiDA Standard Khmer Unicode Keyboard chart (`ក្ដារចុចយូនីកូដខ្មែរ`). Available as a [high-resolution PNG](docs/better_nida_layout_guide.png) and a [vector PDF](docs/better_nida_layout_guide.pdf).
+
+---
 
 ## Background
 
@@ -227,6 +253,7 @@ For deep dives into layout limits, modifier capacity, and design trade-offs, con
 
 | File | Contents |
 | :-- | :-- |
+| [docs/better_nida_layout_guide.png](docs/better_nida_layout_guide.png) / [.pdf](docs/better_nida_layout_guide.pdf) | 1-to-1 visual keyboard reference chart (300-DPI PNG & vector PDF) |
 | [REVERSE_ENGINEERING_NIDA.md](REVERSE_ENGINEERING_NIDA.md) | Full technical specification and findings |
 | [ROADMAP.md](ROADMAP.md) | In-depth development plan, empirical baseline, and architecture trade-offs |
 | [nida_layout.json](nida_layout.json) | Machine-readable NiDA spec: 49 keys, all states, ligatures, official Unicode names |
@@ -252,6 +279,9 @@ Character names come from the official Unicode Character Database
 
 ```
 Better-NiDA/
+├── docs/
+│   ├── better_nida_layout_guide.png  # 300-DPI 1-to-1 visual keyboard guide
+│   └── better_nida_layout_guide.pdf  # Printable vector PDF keyboard guide
 ├── REVERSE_ENGINEERING_NIDA.md   # Full technical specification
 ├── ROADMAP.md                    # Plan for improving on NiDA
 ├── CHANGELOG.md                  # Release history
@@ -260,7 +290,7 @@ Better-NiDA/
 ├── tables_kbd*.json / .csv       # Tables decoded from the driver DLLs
 ├── kni_layout.csv                # Behavioural probe: NiDA
 ├── khmr_layout.csv               # Behavioural probe: legacy Khmer
-├── windows/                      # Keyman (.kmn) keyboard source for Better-NiDA Midpoint
+├── windows/                      # Keyman (.kmn/.kps) source for Better-NiDA Midpoint
 ├── macos/                        # macOS .keylayout layouts + installer
 ├── linux/                        # XKB layouts + installer + m17n input methods
 ├── scripts/
@@ -270,6 +300,7 @@ Better-NiDA/
 │   ├── verify_tables.ps1         # Assert the two paths agree (CI-friendly)
 │   ├── verify_control.ps1        # Check secondary tables vs Control behaviour
 │   ├── build_platform_layouts.ps1 # Generate the macOS, Linux, m17n, and Keyman files
+│   ├── build_installers.ps1      # Compile and bundle release installers into dist/
 │   ├── verify_platform_layouts.ps1 # Validate all generated platform files
 │   ├── verify_all.ps1            # Rebuild and verify everything, one command
 │   ├── build_unicode_names.ps1   # Refresh official Unicode character names
