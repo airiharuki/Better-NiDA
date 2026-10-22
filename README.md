@@ -15,9 +15,12 @@ and **100% muscle-memory compatibility**.
 
 [![Windows Standalone Installer](https://img.shields.io/badge/Windows-BetterNiDA--Midpoint--Windows.exe-0078D6?style=flat-square&logo=windows)](https://github.com/airiharuki/Better-NiDA/releases/download/v0.4.0/BetterNiDA-Midpoint-Windows.exe)
 [![Keyman Package](https://img.shields.io/badge/Keyman-better__nida__midpoint.kmp-F59E0B?style=flat-square)](https://github.com/airiharuki/Better-NiDA/releases/download/v0.4.0/better_nida_midpoint.kmp)
+[![Get Keyman Engine](https://img.shields.io/badge/Keyman-Download%20Keyman%20(Free)-D97706?style=flat-square)](https://keyman.com/downloads/)
 [![macOS Installer](https://img.shields.io/badge/macOS-install--nida--macos.command-111827?style=flat-square&logo=apple)](https://github.com/airiharuki/Better-NiDA/releases/download/v0.4.0/install-nida-macos.command)
 [![Linux Installer](https://img.shields.io/badge/Linux-install--nida.sh-FCC624?style=flat-square&logo=linux&logoColor=black)](https://github.com/airiharuki/Better-NiDA/releases/download/v0.4.0/install-nida.sh)
 [![Printable Layout Guide (PDF)](https://img.shields.io/badge/Layout%20Guide-Printable%20PDF-EC4899?style=flat-square&logo=adobeacrobatreader)](docs/better_nida_layout_guide.pdf)
+
+> 💡 **Testing with Keyman:** First download and install the free [Keyman Desktop Engine](https://keyman.com/downloads/) (available for Windows, macOS, and Linux). Once Keyman is running, double-click [`better_nida_midpoint.kmp`](https://github.com/airiharuki/Better-NiDA/releases/download/v0.4.0/better_nida_midpoint.kmp) to install the full Better-NiDA keyboard with 1-click! Alternatively on Windows, you can test immediately with zero installations using [`BetterNiDA-Midpoint-Windows.exe`](https://github.com/airiharuki/Better-NiDA/releases/download/v0.4.0/BetterNiDA-Midpoint-Windows.exe).
 
 ---
 
