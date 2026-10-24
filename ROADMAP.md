@@ -16,17 +16,19 @@ Done and verified:
   generating macOS, Linux (XKB and m17n), and Windows (Keyman `.kmn`) files
   reproducibly. Byte-identical run to run.
 - **`scripts/midpoint_engine.ps1`** — Midpoint defined as data, with a
-  longest-prefix resolver. `scripts/verify_midpoint.ps1` gates it: 16 checks
+  longest-prefix resolver. `scripts/verify_midpoint.ps1` gates it: 18 checks
   across 3 gates, all passing.
 - **`scripts/score_midpoint.ps1`** — Shortest-path corpus scorer comparing pure
-  stock NiDA against Better-NiDA Midpoint on 565.4 M characters of Khmer prose.
+  stock NiDA against Better-NiDA Midpoint on 565.4 M characters of Khmer prose
+  (smoke corpus KSPC reduced from `1.167` to **`1.000`** with **`0.0%` Shift**).
+- **`windows/better_nida_midpoint.kmn`** — Compiled cleanly via `@keymanapp/kmc`
+  (`0` warnings) into `dist/better_nida_midpoint.kmx` and `.kmp`, alongside the
+  standalone Windows hook runner `dist/BetterNiDA-Midpoint-Windows.exe`.
 
 Not done:
 
 - **Nothing has been loaded on a real Mac or Linux machine.**
-- Keyman is not installed on the build host, so `windows/better_nida_midpoint.kmn`
-  is validated structurally and round-tripped against `midpoint_layout.json`, not
-  compiled with `kmcomp`.
+- Real-world user timing/error study on hardware with Cambodian typists.
 
 ---
 
@@ -74,15 +76,24 @@ coeng cluster, diacritic mark, and space in standard Khmer prose is **100%
 
 Key structural properties verified by `scripts/verify_midpoint.ps1`:
 
-- `ំ` (`U+17C6`) and `ះ` (`U+17C7`) live on unshifted `]` and `\`, saving 1 full
-  press on every word ending in Nikahit or Reahmuk.
+- **Bold Hybrid Unshifted Promotion**: High-frequency second-series consonants
+  (`ជ` on `Q`, `ទ` on `F`, `ព` on `P`, `គ` on `X`, `ញ` on `Z`, `អ` on `-`),
+  dependent vowel `ៃ` (`=`), and word-final marks `ំ` (`]`) and `ះ` (`\`) live on
+  unshifted Normal keys, cutting multi-press sequences down to 1 keystroke per
+  character (`1.000` KSPC on the smoke benchmark) while keeping 100% of stock NiDA
+  `/` flips (`c/`, `t/`, `b/`, `k/`, `jj`, `g/`, `s/`, `m/`, `h/`) active.
+- **100% Universal `/` Command**: Every vowel, sign, number, and punctuation key
+  across all 49 keys responds to `KEY + /` (`i/`, `u/`, `e/`, `w/`, `o/`, `a/`,
+  `[/`, `;/`, `,/`, `'/`, `./`, `]/`, `\/`, `=/`, `` `/ ``, ` /`, `//`, `1/`..`0/`)
+  in addition to double-taps (`ii`, `uu`, `ee`, `ww`, `oo`, `aa`, `[[`, `;;`, `,,`,
+  `''`, `..`, `]]`, `\\`, `==`, `  `).
 - `j/` types subscript `្ញ` (`U+17D2 U+1789`) in **2 unshifted keys** instead of
   3 presses (`j` + `Shift+J`).
 - `Shift+J` emits `្` (`U+17D2`), eliminating rollover typos (`ញ`) mid-cluster.
-- 100% of unshifted `A–Z` and 100% of letter `Shift` chords (except `Shift+J`)
-  are preserved.
-- `AltGr+U` rescues `ឳ` (`U+17B3`, displaced from `AltGr+]`), maintaining 100%
-  character repertoire parity with stock NiDA.
+- 100% of letter `Shift` chords (except `Shift+J`) are preserved.
+- Displaced `AltGr` characters are rescued onto previously empty `AltGr` slots
+  (`AltGr+U`→`ឳ`, `AltGr+Y`→`ឰ`, `AltGr+K`→`៎`, `AltGr+V`→`\`, `AltGr+W`→`×`),
+  maintaining 100% character repertoire parity with stock NiDA.
 
 ---
 

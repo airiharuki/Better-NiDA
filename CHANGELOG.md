@@ -17,11 +17,31 @@ by the size of the diff.
 
 ### Added
 
-- Nothing yet.
-
-### Fixed
-
-- Nothing yet.
+- **Bold Hybrid Rearrangement (Khmerism speed + NiDA accessibility):**
+  - Promoted the 6 high-frequency second-series consonants (`ជ` on `Q`, `ទ` on `F`,
+    `ព` on `P`, `គ` on `X`, `ញ` on `Z`, `អ` on `-`), dependent vowel `ៃ` (`=`),
+    and word-final marks `ំ` (`]`) and `ះ` (`\`) directly onto unshifted Normal
+    keys.
+  - Displaced low-frequency aspirated consonants and independent vowels (`ឆ`, `ថ`,
+    `ផ`, `ខ`, `ឋ`, `ឥ`, `ឲ`, `ឪ`, `ឮ`) are preserved on `AltGr` (`Option`) and
+    via `/` sequences (`q/`, `f/`, `p/`, `x/`, `zz`, `--/`, `=/`, `]]`, `\\/`),
+    while displaced `AltGr` characters (`ឰ` on `AltGr+Y`, `ឳ` on `AltGr+U`, `៎`
+    on `AltGr+K`, `\` on `AltGr+V`, `×` on `AltGr+W`) are rescued onto previously
+    empty `AltGr` slots for 100% character repertoire parity.
+- **100% Universal `/` Command (91 sequence rules):**
+  - Expanded contextual `/` rules across all 49 keys so every vowel, diacritic,
+    punctuation mark, and number key responds to `KEY + /` in addition to
+    double-tap `KEY + KEY` (`i/` or `ii` → `ី`, `u/` or `uu` → `ូ`, `e/` or `ee`
+    → `ែ`, `w/` or `ww` → `ឺ`, `o/` or `oo` → `ៅ`, `a/` or `aa` → `ាំ`, `[/` or
+    `[[` → `ឿ`, `;/` or `;;` → `ោះ`, `,/` or `,,` → `ុះ`, `'/` or `''` → `៉`,
+    `./` or `..` → `៕`, `]/` → `ឧ`, `\/` → `ៈ`, `` `/ `` → `»`, `//` → `?`,
+    `1/`..`0/` → `!`..`)`).
+  - Preserved 100% of stock NiDA `/` series flips (`k/`→`គ`, `t/`→`ទ`, `b/`→`ព`,
+    `c/`→`ជ`, `g/`→`អ`, `jj`→`ញ`, `j/`→`្ញ`) alongside the new 1-key Bold Hybrid
+    bindings.
+- **Visual Layout Guide (`docs/better_nida_layout_guide.png` & `.pdf`):**
+  - Added 300-DPI PNG and vector PDF 1-to-1 reference charts styled after the
+    classic 2005 NiDA Standard Khmer Unicode Keyboard poster.
 
 ---
 
