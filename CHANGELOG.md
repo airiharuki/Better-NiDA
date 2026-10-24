@@ -17,15 +17,7 @@ by the size of the diff.
 
 ### Added
 
-- Nothing yet.
-
----
-
-## [0.5.0] - 2026-10-24
-
-### Added
-
-- **Bold Hybrid Rearrangement (Khmerism speed + NiDA accessibility):**
+- **Bold Hybrid Rearrangement (Khmerism speed + NiDA accessibility - Work in Progress):**
   - Promoted the 6 high-frequency second-series consonants (`ជ` on `Q`, `ទ` on `F`,
     `ព` on `P`, `គ` on `X`, `ញ` on `Z`, `អ` on `-`), dependent vowel `ៃ` (`=`),
     and word-final marks `ំ` (`]`) and `ះ` (`\`) directly onto unshifted Normal
@@ -262,8 +254,7 @@ Reported alongside each release because the claims are specific:
 The last row is the important one. Everything above it can be checked on a
 Windows machine; that one cannot.
 
-[Unreleased]: https://github.com/airiharuki/Better-NiDA/compare/v0.5.0...HEAD
-[0.5.0]: https://github.com/airiharuki/Better-NiDA/compare/v0.4.0...v0.5.0
+[Unreleased]: https://github.com/airiharuki/Better-NiDA/compare/v0.4.0...HEAD
 [0.4.0]: https://github.com/airiharuki/Better-NiDA/compare/v0.3.1...v0.4.0
 [0.3.1]: https://github.com/airiharuki/Better-NiDA/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/airiharuki/Better-NiDA/compare/v0.2.1...v0.3.0
