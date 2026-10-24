@@ -17,7 +17,15 @@ by the size of the diff.
 
 ### Added
 
-- **Bold Hybrid Rearrangement (Khmerism speed + NiDA accessibility - Work in Progress):**
+- Nothing yet.
+
+---
+
+## [0.5.0] - 2026-10-24
+
+### Added
+
+- **Bold Hybrid Rearrangement (Khmerism speed + NiDA accessibility):**
   - Promoted the 6 high-frequency second-series consonants (`ជ` on `Q`, `ទ` on `F`,
     `ព` on `P`, `គ` on `X`, `ញ` on `Z`, `អ` on `-`), dependent vowel `ៃ` (`=`),
     and word-final marks `ំ` (`]`) and `ះ` (`\`) directly onto unshifted Normal
@@ -39,9 +47,15 @@ by the size of the diff.
   - Preserved 100% of stock NiDA `/` series flips (`k/`→`គ`, `t/`→`ទ`, `b/`→`ព`,
     `c/`→`ជ`, `g/`→`អ`, `jj`→`ញ`, `j/`→`្ញ`) alongside the new 1-key Bold Hybrid
     bindings.
+- **Smart Syllable Reordering & Anti-Glitch Normalization:**
+  - Added intelligent contextual reordering rules in Keyman (`windows/better_nida_midpoint.kmn`)
+    and the engine (`scripts/midpoint_engine.ps1`) that automatically swap visual
+    mis-types into canonical Unicode order (e.g. vowel before subscript `kejr` → `ក្រេ`,
+    vowel before shifter `ba'/` → `ប៉ា`, and word-start pre-base vowel `ek` → `កេ`),
+    eliminating broken dotted circles (`◌`) while protecting syllable-final consonants.
 - **Visual Layout Guide (`docs/better_nida_layout_guide.png` & `.pdf`):**
   - Added 300-DPI PNG and vector PDF 1-to-1 reference charts styled after the
-    classic 2005 NiDA Standard Khmer Unicode Keyboard poster.
+    classic 2005 NiDA Standard Khmer Unicode Keyboard poster, stamped with V 0.5.0.
 
 ---
 
@@ -254,7 +268,8 @@ Reported alongside each release because the claims are specific:
 The last row is the important one. Everything above it can be checked on a
 Windows machine; that one cannot.
 
-[Unreleased]: https://github.com/airiharuki/Better-NiDA/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/airiharuki/Better-NiDA/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/airiharuki/Better-NiDA/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/airiharuki/Better-NiDA/compare/v0.3.1...v0.4.0
 [0.3.1]: https://github.com/airiharuki/Better-NiDA/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/airiharuki/Better-NiDA/compare/v0.2.1...v0.3.0
