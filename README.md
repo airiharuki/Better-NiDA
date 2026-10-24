@@ -26,13 +26,13 @@ and **100% muscle-memory compatibility**.
 
 ---
 
-## Keyboard Layout Guide -- Conservative
+## Keyboard Layout Guide (Conservative)
 
 ![Better-NiDA Standard Khmer Unicode Keyboard Layout Guide](https://raw.githubusercontent.com/airiharuki/Better-NiDA/refs/heads/main/docs/better_nida_conservative_guide.png)
 
 > **1-to-1 Reference Sheet:** Styled after the classic 2005 NiDA Standard Khmer Unicode Keyboard chart (`ក្ដារចុចយូនីកូដខ្មែរ`). Available as a [high-resolution PNG](docs/better_nida_conservative_guide.png) and a [vector PDF](docs/better_nida_conservative_guide.pdf).
 > 
-> Image displayed is v0.4.0, 0.5.0 Khmer Unicode chart is available in [in vecctor PDF](docs/better_nida_conservative_guide.pdf) and [in high-resolution PNG](docs/better_nida_conservative_guide.png). It wasn't displayed due to v0.5.0 is in its testing phase which meant rearranging the keys all around the keyboard to make it better.
+> The image displayed above is the **v0.4.0 Conservative** layout. The **v0.5.0 Bold Hybrid** chart is available as a [vector PDF](docs/better_nida_bold_hybrid_guide.pdf) and a [high-resolution PNG](docs/better_nida_bold_hybrid_guide.png) (featuring the rearranged unshifted consonants and universal `/` rules currently in testing).
 
 ---
 
