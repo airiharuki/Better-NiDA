@@ -10,26 +10,26 @@
     <MSIOptions></MSIOptions>
   </Options>
   <Info>
-    <Name URL="">Khmer Better-NiDA (Midpoint)</Name>
+    <Name URL="">Khmer Better-NiDA (Bold Hybrid)</Name>
     <Copyright URL="">(c) 2026 Better-NiDA Contributors</Copyright>
     <Author URL="">Better-NiDA Contributors</Author>
     <WebSite URL="https://github.com/airiharuki/Better-NiDA">https://github.com/airiharuki/Better-NiDA</WebSite>
-    <Version URL="">1.0.0</Version>
-    <Description URL="https://github.com/airiharuki/Better-NiDA">Khmer Better-NiDA (Midpoint) keyboard layout with universal / series switch, double-tap vowel upgrades, rollover-safe coeng, and 100% unshifted NiDA compatibility.</Description>
+    <Version URL="">0.5.0</Version>
+    <Description URL="https://github.com/airiharuki/Better-NiDA">Khmer Better-NiDA (Bold Hybrid) keyboard layout combining Khmerism speed and NiDA muscle-memory with Big 6 consonants unshifted (Q, F, P, X, Z, -) and 100% universal / sequence rules.</Description>
   </Info>
   <Files>
     <File>
       <Name>..\dist\better_nida_midpoint.kmx</Name>
-      <Description>Keyboard Khmer Better-NiDA (Midpoint)</Description>
+      <Description>Keyboard Khmer Better-NiDA (Bold Hybrid)</Description>
       <CopyLocation>0</CopyLocation>
       <FileType>.kmx</FileType>
     </File>
   </Files>
   <Keyboards>
     <Keyboard>
-      <Name>Khmer Better-NiDA (Midpoint)</Name>
+      <Name>Khmer Better-NiDA (Bold Hybrid)</Name>
       <ID>better_nida_midpoint</ID>
-      <Version>1.0</Version>
+      <Version>0.5.0</Version>
       <Languages>
         <Language ID="km">Khmer</Language>
       </Languages>
