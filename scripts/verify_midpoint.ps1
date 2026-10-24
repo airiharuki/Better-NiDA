@@ -73,6 +73,9 @@ $matrix = @(
     @{ Id = 'T10';  Keys = 'kua  k=';     Exp = '1780 17BD 0020 1780 17C3';                Note = 'ua -> vowel UA, double-space -> U+0020, = -> vowel AI' }
     @{ Id = 'T11';  Keys = 'g//,';        Exp = '17A2 17CA 17BB 17C6';                     Note = 'g/ commits qo, following / emits traysap' }
     @{ Id = 'T12';  Keys = 'fe/o/w/;/.';  Exp = '1791 17C2 17C5 17BA 17C4 17C7 17D4';      Note = '1-key to (f) + universal slash on vowels (e/, o/, w/, ;/)' }
+    @{ Id = 'T13';  Keys = 'kejr';        Exp = '1780 17D2 179A 17C1';                     Note = 'smart reordering: vowel before subscript -> kre' }
+    @{ Id = 'T14';  Keys = "ba'/";        Exp = '1794 17C9 17B6';                          Note = 'smart reordering: vowel before shifter -> ba' }
+    @{ Id = 'T15';  Keys = 'ek';          Exp = '1780 17C1';                               Note = 'smart reordering: pre-base vowel at word start -> ke' }
 )
 
 Write-Output "=== gate 1: keystroke matrix ==="

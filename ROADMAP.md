@@ -145,37 +145,34 @@ Key structural properties verified by `scripts/verify_midpoint.ps1`:
 
 ---
 
-## 5. What Midpoint does not solve (Phase 2+)
+## 5. Phase 2 Track: Ergonomics, Reordering & Modern Capabilities
 
-### 5.1 Typing length — the coeng ligature case
+### 5.1 Smart Syllable Reordering & Anti-Glitch Normalization (Status: Implemented)
 
-Coeng `្` is **7.7%** of typed characters, and `្` + subscript consonant is a
-**contiguous two-character substring** — `្រ` inside `ព្រ` — so it ligates
-directly with no reordering.
+Resolves the #1 complaint in Khmer digital typing: broken dotted circles (`◌`) caused by typing visual/phonetic orders rather than rigid Unicode storage order:
+- **Vowel before Subscript swap**: Typing `{Consonant} + {Vowel} + [j] + {Subscript}` (e.g. `k + e + j + r` for `ក្រេ`, or `x + e + j + r` for `គ្រេ`) automatically swaps into canonical `{Consonant} + {Coeng} + {Subscript} + {Vowel}` order (`0` dotted circles).
+- **Vowel before Shifter swap**: Typing `{Consonant} + {Vowel} + [Shifter]` (e.g. `b + a + '/` for `ប៉ា`) automatically swaps into canonical `{Consonant} + {Shifter} + {Vowel}`.
+- **Pre-Base Vowel at Word Boundary**: Typing a pre-base vowel (`េ`, `ែ`, `ៃ`) at the beginning of a word followed by a base consonant (e.g. `e + k`) automatically swaps to `{Consonant} + {PreBaseVowel}` (`កេ`). Syllable-final consonants (e.g. `pez` in `ភ្នំពេញ`) are protected from false swaps.
+- Supported in both `scripts/midpoint_engine.ps1` (`Normalize-Khmer`, verified in `T13`–`T15`) and Keyman contextual rules in `windows/better_nida_midpoint.kmn`.
 
-Ranked from 41.6 M real coengs (`scripts/data/coeng_pairs.json`):
+### 5.2 Ergonomic Tuning for Annoying Keys (Status: Backlog / Next)
+- **`៌` (Robat `U+17CC`)**: Very common in formal Khmer (e.g. `ធម៌`, `ការងារ`). Currently requires `--` or `Shift+-`. Target: more fluid combination or shortcut.
+- **`៍` (Toandakhiat `U+17CD`)**: Silent consonant marker (e.g. `ទូរទស្សន៍`). Currently on `6/` or `Shift+6`.
+- **`៖` (Camnuc Pii Kuuh / Colon `U+17D6`)**: Khmer colon/explanation mark, currently on `;//`.
+- **Quotes (`«` and `»`)**: Streamline Khmer angled quotes (`U+00AB` and `U+00BB`).
 
-| Pairs added | Coverage of all coengs |
-| :-- | --: |
-| 1 (`្រ` alone) | 26.4% |
-| 5 | 58.7% |
-| 10 | 75.9% |
-| 20 | 94.7% |
-| 25 | 98.7% |
+### 5.3 Full Character Repertoire Parity (Status: Backlog)
+- **45 Khmer-script characters reachable in legacy Khmer are unreachable in NiDA**, including:
+  - Consonants: `ឝ` SHA (`U+179D`) and `ឞ` SSO (`U+179E`)
+  - Rare mark: `៝` ATTHACAN (`U+17DD`)
+  - The 9 `LEK ATTAK` symbols and all 32 lunar calendar symbols (`U+19E0..U+19FF`).
+- Target: map to vacant `Shift+AltGr` or multi-key sequence slots.
 
-### 5.2 Character coverage
+### 5.4 Keyman Mobile Touch Layout (Status: Backlog)
+- Build a native `.keyman-touch-layout` definition targeting Android and iOS so Better-NiDA can be used directly on smartphones and tablets via the free Keyman app.
 
-**45 Khmer-script characters reachable in legacy Khmer are unreachable in
-NiDA**, including two consonants NiDA cannot type at all: `ឝ` SHA (`U+179D`) and
-`ឞ` SSO (`U+179E`), plus `៝` ATTHACAN, the 9 `LEK ATTAK` symbols, and all 32 of
-`U+19E0..19FF`.
-
-### 5.3 Automatic ZWSP
-
-**Word separators are 13.2% of everything typed** — `U+200B` at 8.2% and
-`U+0020` at 5.0%. Midpoint solves the `Shift` cost of `U+0020` via double-space
-(`  `) and `Space`+`/` (` /`). Automatic `U+200B` insertion at syllable
-boundaries remains a future dictionary-IME task.
+### 5.5 Automatic ZWSP
+- **Word separators are 13.2% of everything typed** — `U+200B` at 8.2% and `U+0020` at 5.0%. Midpoint solves the `Shift` cost of `U+0020` via double-space (`  `) and `Space`+`/` (` /`). Automatic `U+200B` insertion at syllable boundaries remains a future dictionary-IME task.
 
 ---
 

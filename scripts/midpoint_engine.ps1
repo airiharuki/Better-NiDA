@@ -248,8 +248,76 @@ function Get-Static($key, $shifted) {
 # left-to-right using longest-exact-rule matching before falling back to single
 # static keys.
 
+$VOWELS_SINGLE = 0x17B6..0x17C5
+$PRE_VOWELS    = @(0x17C1, 0x17C2, 0x17C3)
+$CONSONANTS    = 0x1780..0x17A2
+$WORD_BREAKS   = @(0x0020, 0x200B, 0x17D4, 0x17D5, 0x0028, 0x0022, 0x00AB)
+
+# Smart Syllable Reordering (Khmer Angkor anti-glitch normalization):
+# Automatically repairs visual mis-ordering (e.g. vowel before subscript,
+# or vowel before shifter) into canonical Unicode order, eliminating dotted circles.
+function Normalize-Khmer($list) {
+    $n = $list.Count
+    if ($n -lt 2) { return }
+
+    # R1a: 2-codepoint Vowel + Coeng + Subscript -> Coeng + Subscript + 2-codepoint Vowel
+    if ($n -ge 4 -and $list[$n - 2] -eq 0x17D2 -and ($list[$n - 1] -in $CONSONANTS)) {
+        $c1 = $list[$n - 4]; $c2 = $list[$n - 3]
+        $isPairVowel = ($c1 -eq 0x17B6 -and $c2 -eq 0x17C6) -or # am
+                       ($c1 -eq 0x17C4 -and $c2 -eq 0x17C7) -or # oh
+                       ($c1 -eq 0x17BB -and $c2 -eq 0x17C7) -or # uh
+                       ($c1 -eq 0x17C1 -and $c2 -eq 0x17C7)    # eh
+        if ($isPairVowel) {
+            $coeng = $list[$n - 2]
+            $sub   = $list[$n - 1]
+            $list[$n - 4] = $coeng
+            $list[$n - 3] = $sub
+            $list[$n - 2] = $c1
+            $list[$n - 1] = $c2
+            return
+        }
+    }
+
+    # R1b: 1-codepoint Vowel + Coeng + Subscript -> Coeng + Subscript + Vowel
+    if ($n -ge 3 -and $list[$n - 2] -eq 0x17D2 -and ($list[$n - 1] -in $CONSONANTS) -and ($list[$n - 3] -in $VOWELS_SINGLE)) {
+        $vowel = $list[$n - 3]
+        $coeng = $list[$n - 2]
+        $sub   = $list[$n - 1]
+        $list[$n - 3] = $coeng
+        $list[$n - 2] = $sub
+        $list[$n - 1] = $vowel
+        return
+    }
+
+    # R2: Vowel + Shifter -> Shifter + Vowel
+    if ($n -ge 2 -and ($list[$n - 1] -in @(0x17C9, 0x17CA)) -and ($list[$n - 2] -in $VOWELS_SINGLE)) {
+        $vowel   = $list[$n - 2]
+        $shifter = $list[$n - 1]
+        $list[$n - 2] = $shifter
+        $list[$n - 1] = $vowel
+        return
+    }
+
+    # R3: Pre-Base Vowel at Word Boundary + Consonant -> Consonant + Pre-Base Vowel
+    if ($n -ge 2 -and ($list[$n - 1] -in $CONSONANTS) -and ($list[$n - 2] -in $PRE_VOWELS)) {
+        $isBoundary = ($n -eq 2) -or ($list[$n - 3] -in $WORD_BREAKS)
+        if ($isBoundary) {
+            $prev = $list[$n - 2]
+            $cons = $list[$n - 1]
+            $list[$n - 2] = $cons
+            $list[$n - 1] = $prev
+            return
+        }
+    }
+}
+
 function Add-Output($list, $out) {
-    if ($out) { foreach ($cp in $out) { [void]$list.Add([int]$cp) } }
+    if ($out) {
+        foreach ($cp in $out) {
+            [void]$list.Add([int]$cp)
+            Normalize-Khmer $list
+        }
+    }
 }
 
 function Get-ExactRule([string]$buf) {

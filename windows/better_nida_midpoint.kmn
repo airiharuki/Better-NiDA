@@ -262,3 +262,39 @@ c --- Shift+AltGr layer (Rule 5 static second-series consonants) ---
 + [SHIFT RALT K_C] > U+1787
 + [SHIFT RALT K_B] > U+1796
 + [SHIFT RALT K_N] > U+178E
+
+c ===========================================================================
+c SMART SYLLABLE REORDERING & ANTI-GLITCH NORMALIZATION
+c ===========================================================================
+store(sub_key)       [K_K] [K_X] [K_C] [K_Q] [K_D] [K_Z] [K_T] [K_F] [K_N] [K_P] [K_B] [K_M] [K_Y] [K_R] [K_L] [K_V] [K_S] [K_H] [K_G] [K_HYPHEN]
+store(sub_out)       U+1780 U+1782 U+1785 U+1787 U+178A U+1789 U+178F U+1791 U+1793 U+1796 U+1794 U+1798 U+1799 U+179A U+179B U+179C U+179F U+17A0 U+1784 U+17A2
+
+store(sub_shift_key) [SHIFT K_K] [SHIFT K_X] [SHIFT K_C] [SHIFT K_Q] [SHIFT K_D] [SHIFT K_Z] [SHIFT K_T] [SHIFT K_F] [SHIFT K_N] [SHIFT K_P] [SHIFT K_B] [SHIFT K_L]
+store(sub_shift_out) U+1782 U+1783 U+1787 U+1788 U+178C U+178D U+1791 U+1792 U+178E U+1797 U+1796 U+17A1
+
+store(vowel_all)     U+17B6 U+17B7 U+17B8 U+17B9 U+17BA U+17BB U+17BC U+17BD U+17BE U+17BF U+17C0 U+17C1 U+17C2 U+17C3 U+17C4 U+17C5
+store(pre_vowel)     U+17C1 U+17C2 U+17C3
+store(word_break)    U+0020 U+200B U+17D4 U+17D5 U+0028 U+00AB U+0022
+
+c --- 1. Single vowel + Coeng + Subscript -> Coeng + Subscript + Vowel ---
+any(vowel_all) U+17D2 + any(sub_key) > U+17D2 index(sub_out, 3) index(vowel_all, 1)
+any(vowel_all) U+17D2 + any(sub_shift_key) > U+17D2 index(sub_shift_out, 3) index(vowel_all, 1)
+
+c --- 2. Two-character vowels + Coeng + Subscript ---
+U+17B6 U+17C6 U+17D2 + any(sub_key) > U+17D2 index(sub_out, 4) U+17B6 U+17C6
+U+17B6 U+17C6 U+17D2 + any(sub_shift_key) > U+17D2 index(sub_shift_out, 4) U+17B6 U+17C6
+U+17C4 U+17C7 U+17D2 + any(sub_key) > U+17D2 index(sub_out, 4) U+17C4 U+17C7
+U+17C4 U+17C7 U+17D2 + any(sub_shift_key) > U+17D2 index(sub_shift_out, 4) U+17C4 U+17C7
+U+17BB U+17C7 U+17D2 + any(sub_key) > U+17D2 index(sub_out, 4) U+17BB U+17C7
+U+17BB U+17C7 U+17D2 + any(sub_shift_key) > U+17D2 index(sub_shift_out, 4) U+17BB U+17C7
+U+17C1 U+17C7 U+17D2 + any(sub_key) > U+17D2 index(sub_out, 4) U+17C1 U+17C7
+U+17C1 U+17C7 U+17D2 + any(sub_shift_key) > U+17D2 index(sub_shift_out, 4) U+17C1 U+17C7
+
+c --- 3. Vowel + Shifter -> Shifter + Vowel ---
+any(vowel_all) + [K_QUOTE] > U+17C9 index(vowel_all, 1)
+
+c --- 4. Pre-Base Vowel at Word Boundary -> Consonant + Pre-Base Vowel ---
+nul any(pre_vowel) + any(sub_key) > index(sub_out, 3) index(pre_vowel, 2)
+any(word_break) any(pre_vowel) + any(sub_key) > index(word_break, 1) index(sub_out, 3) index(pre_vowel, 2)
+nul any(pre_vowel) + any(sub_shift_key) > index(sub_shift_out, 3) index(pre_vowel, 2)
+any(word_break) any(pre_vowel) + any(sub_shift_key) > index(word_break, 1) index(sub_shift_out, 3) index(pre_vowel, 2)
