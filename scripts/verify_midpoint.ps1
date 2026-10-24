@@ -57,19 +57,22 @@ function Legend-To-Chars([string]$legend) {
 # NOTE: strings here are deliberately ASCII-only. PS 5.1 mangles non-ASCII
 # literals in a .ps1 and the resulting parse error is extremely confusing.
 $matrix = @(
-    @{ Id = 'T01';  Keys = 'b/jr\g/gjk/'; Exp = '1796 17D2 179A 17C7 17A2 1784 17D2 1782'; Note = 'series flips, coeng, reclaimed backslash' }
-    @{ Id = 'T02';  Keys = 'kmjb/uc/a';   Exp = '1780 1798 17D2 1796 17BB 1787 17B6';      Note = 'post-coeng flip, c-slash (Cambodia)' }
-    @{ Id = 'T03a'; Keys = 'jjaa';        Exp = '1789 17B6 17C6';                          Note = 'double-tap jj -> nyo, then aa' }
-    @{ Id = 'T03b'; Keys = 'jj/aa';       Exp = '1789 17C9 17B6 17C6';                     Note = 'jj/ -> nyo + muusikatoan, then aa (nham)' }
-    @{ Id = 'T04';  Keys = 'miin';        Exp = '1798 17B8 1793';                          Note = 'double-tap vowel ii' }
+    @{ Id = 'T01';  Keys = 'pjr\-gjx';    Exp = '1796 17D2 179A 17C7 17A2 1784 17D2 1782'; Note = '1-key po (p), qo (-), ko (x), reahmuk (\) - Preah Ang' }
+    @{ Id = 'T01b'; Keys = 'b/jr\g/gjk/'; Exp = '1796 17D2 179A 17C7 17A2 1784 17D2 1782'; Note = 'NiDA muscle-memory slash flips (b/, g/, k/)' }
+    @{ Id = 'T02';  Keys = 'kmjpuqa';     Exp = '1780 1798 17D2 1796 17BB 1787 17B6';      Note = '1-key po (p) and co (q) (Kampuchea in 7 keys)' }
+    @{ Id = 'T02b'; Keys = 'kmjb/uc/a';   Exp = '1780 1798 17D2 1796 17BB 1787 17B6';      Note = 'post-coeng flip, c-slash (Kampuchea)' }
+    @{ Id = 'T03a'; Keys = 'za/';         Exp = '1789 17B6 17C6';                          Note = '1-key nyo (z) + universal a/ -> am' }
+    @{ Id = 'T03b'; Keys = 'z/aa';        Exp = '1789 17C9 17B6 17C6';                     Note = 'z/ -> nyo + muusikatoan, then aa (nham)' }
+    @{ Id = 'T04';  Keys = 'mi/n';        Exp = '1798 17B8 1793';                          Note = 'universal i/ -> vowel ii (and miin)' }
     @{ Id = 'T05';  Keys = 'min';         Exp = '1798 17B7 1793';                          Note = 'single tap commits cleanly' }
-    @{ Id = 'T06a'; Keys = 'xj/,';        Exp = '1781 17D2 1789 17BB 17C6';                Note = 'subscript coeng-nyo via j/ (khnhom)' }
-    @{ Id = 'T06b'; Keys = 'xj~j,';       Exp = '1781 17D2 1789 17BB 17C6';                Note = 'subscript coeng-nyo via AltGr fallback' }
+    @{ Id = 'T06a'; Keys = 'x/j/,';       Exp = '1781 17D2 1789 17BB 17C6';                Note = 'x/ -> kha, subscript coeng-nyo via j/ (khnhom)' }
+    @{ Id = 'T06b'; Keys = 'x/j~j,';      Exp = '1781 17D2 1789 17BB 17C6';                Note = 'subscript coeng-nyo via AltGr fallback' }
     @{ Id = 'T07';  Keys = 'B+Jr\';       Exp = '1796 17D2 179A 17C7';                     Note = 'rollover-safe Shift+J emits coeng' }
-    @{ Id = 'T08';  Keys = 'p/jn]b/ejj';  Exp = '1797 17D2 1793 17C6 1796 17C1 1789';      Note = 'reclaimed bracket, p-slash, jj nyo (Phnom Penh)' }
+    @{ Id = 'T08';  Keys = 'p//jn]pez';   Exp = '1797 17D2 1793 17C6 1796 17C1 1789';      Note = 'p// -> pho, ] -> nikahit, p -> po, z -> nyo (Phnom Penh)' }
     @{ Id = 'T09';  Keys = "bjjjcb'";     Exp = '1794 1789 17D2 1785 1794 17CB';           Note = 'jj + j + c resolves nyo + coeng + ca cleanly' }
-    @{ Id = 'T10';  Keys = 'kua  kai';    Exp = '1780 17BD 0020 1780 17C3';                Note = 'ua -> vowel UA, double-space -> U+0020, ai -> vowel AI' }
+    @{ Id = 'T10';  Keys = 'kua  k=';     Exp = '1780 17BD 0020 1780 17C3';                Note = 'ua -> vowel UA, double-space -> U+0020, = -> vowel AI' }
     @{ Id = 'T11';  Keys = 'g//,';        Exp = '17A2 17CA 17BB 17C6';                     Note = 'g/ commits qo, following / emits traysap' }
+    @{ Id = 'T12';  Keys = 'fe/o/w/;/.';  Exp = '1791 17C2 17C5 17BA 17C4 17C7 17D4';      Note = '1-key to (f) + universal slash on vowels (e/, o/, w/, ;/)' }
 )
 
 Write-Output "=== gate 1: keystroke matrix ==="

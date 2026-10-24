@@ -17,19 +17,25 @@ begin Unicode > use(main)
 group(main) using keys
 
 c --- contextual sequence rules (Rules 1, 2, 3) ---
-U+1780 + [K_SLASH] > U+1782   c k/ (Rule 1: plosive 1st -> 2nd series)
-U+1781 + [K_SLASH] > U+1783   c x/ (Rule 1: plosive 1st -> 2nd series)
-U+1785 + [K_SLASH] > U+1787   c c/ (Rule 1: plosive 1st -> 2nd series)
-U+1786 + [K_SLASH] > U+1788   c q/ (Rule 1: plosive 1st -> 2nd series)
-U+178A + [K_SLASH] > U+178C   c d/ (Rule 1: plosive 1st -> 2nd series)
-U+178B + [K_SLASH] > U+178D   c z/ (Rule 1: plosive 1st -> 2nd series)
-U+178F + [K_SLASH] > U+1791   c t/ (Rule 1: plosive 1st -> 2nd series)
-U+1790 + [K_SLASH] > U+1792   c f/ (Rule 1: plosive 1st -> 2nd series)
-U+1794 + [K_SLASH] > U+1796   c b/ (Rule 1: plosive 1st -> 2nd series)
-U+1795 + [K_SLASH] > U+1797   c p/ (Rule 1: plosive 1st -> 2nd series)
-U+1793 + [K_SLASH] > U+178E   c n/ (Rule 1: nasal/lateral/velar flip)
-U+179B + [K_SLASH] > U+17A1   c l/ (Rule 1: nasal/lateral/velar flip)
-U+1784 + [K_SLASH] > U+17A2   c g/ (Rule 1: nasal/lateral/velar flip)
+U+1780 + [K_SLASH] > U+1782   c k/ (Rule 1: consonant series/aspirated flip)
+U+1782 + [K_SLASH] > U+1781   c x/ (Rule 1: consonant series/aspirated flip)
+U+1781 + [K_SLASH] > U+1783   c x// (Rule 1: consonant series/aspirated flip)
+U+1785 + [K_SLASH] > U+1787   c c/ (Rule 1: consonant series/aspirated flip)
+U+1787 + [K_SLASH] > U+1786   c q/ (Rule 1: consonant series/aspirated flip)
+U+1786 + [K_SLASH] > U+1788   c q// (Rule 1: consonant series/aspirated flip)
+U+178A + [K_SLASH] > U+178C   c d/ (Rule 1: consonant series/aspirated flip)
+U+1789 + [K_SLASH] > U+1789 U+17C9   c z/ (Rule 1: consonant series/aspirated flip)
+U+1789 + [K_Z] > U+178B   c zz (Rule 1: consonant series/aspirated flip)
+U+178B + [K_SLASH] > U+178D   c zz/ (Rule 1: consonant series/aspirated flip)
+U+178F + [K_SLASH] > U+1791   c t/ (Rule 1: consonant series/aspirated flip)
+U+1791 + [K_SLASH] > U+1790   c f/ (Rule 1: consonant series/aspirated flip)
+U+1790 + [K_SLASH] > U+1792   c f// (Rule 1: consonant series/aspirated flip)
+U+1794 + [K_SLASH] > U+1796   c b/ (Rule 1: consonant series/aspirated flip)
+U+1796 + [K_SLASH] > U+1795   c p/ (Rule 1: consonant series/aspirated flip)
+U+1795 + [K_SLASH] > U+1797   c p// (Rule 1: consonant series/aspirated flip)
+U+1793 + [K_SLASH] > U+178E   c n/ (Rule 1: consonant series/aspirated flip)
+U+179B + [K_SLASH] > U+17A1   c l/ (Rule 1: consonant series/aspirated flip)
+U+1784 + [K_SLASH] > U+17A2   c g/ (Rule 1: consonant series/aspirated flip)
 U+1798 + [K_SLASH] > U+1798 U+17C9   c m/ (Rule 1: sonorant + muusikatoan)
 U+1799 + [K_SLASH] > U+1799 U+17C9   c y/ (Rule 1: sonorant + muusikatoan)
 U+179A + [K_SLASH] > U+179A U+17C9   c r/ (Rule 1: sonorant + muusikatoan)
@@ -37,7 +43,6 @@ U+179C + [K_SLASH] > U+179C U+17C9   c v/ (Rule 1: sonorant + muusikatoan)
 U+179F + [K_SLASH] > U+179F U+17CA   c s/ (Rule 1: fricative + traysap)
 U+17A0 + [K_SLASH] > U+17A0 U+17CA   c h/ (Rule 1: fricative + traysap)
 U+17D2 + [K_J] > U+1789   c jj (Rule 2: double-tap j -> nyo)
-U+1789 + [K_SLASH] > U+1789 U+17C9   c jj/ (Rule 2: nyo + muusikatoan)
 U+17D2 + [K_SLASH] > U+17D2 U+1789   c j/ (Rule 2: coeng + nyo)
 U+17B7 + [K_I] > U+17B8   c ii (Rule 3: double-tap upgrade)
 U+17BB + [K_U] > U+17BC   c uu (Rule 3: double-tap upgrade)
@@ -52,22 +57,57 @@ U+17CB + [K_QUOTE] > U+17C9   c '' (Rule 3: double-tap upgrade)
 U+17BB U+17C6 + [K_COMMA] > U+17BB U+17C7   c ,, (Rule 3: double-tap upgrade)
 U+17C6 + [K_RBRKT] > U+17A7   c ]] (Rule 3: double-tap upgrade)
 U+17C7 + [K_BKSLASH] > U+17C8   c \\ (Rule 3: double-tap upgrade)
+U+1799 + [K_Y] > U+17BD   c yy (Rule 3: double-tap upgrade)
+U+179C + [K_V] > U+17C1 U+17C7   c vv (Rule 3: double-tap upgrade)
+U+179A + [K_R] > U+17AC   c rr (Rule 3: double-tap upgrade)
+U+00AB + [K_BKQUOTE] > U+00BB   c `` (Rule 3: double-tap upgrade)
+U+17A2 + [K_HYPHEN] > U+17CC   c -- (Rule 3: double-tap upgrade)
+U+17C3 + [K_EQUAL] > U+003D   c == (Rule 3: double-tap upgrade)
+U+17CA + [K_SLASH] > U+003F   c // (Rule 3: double-tap upgrade)
 U+200B + [K_SPACE] > U+0020   c    (Rule 3: double-tap upgrade)
+U+17B7 + [K_SLASH] > U+17B8   c i/ (Rule 3: universal slash upgrade)
+U+17BB + [K_SLASH] > U+17BC   c u/ (Rule 3: universal slash upgrade)
+U+17C1 + [K_SLASH] > U+17C2   c e/ (Rule 3: universal slash upgrade)
+U+17B9 + [K_SLASH] > U+17BA   c w/ (Rule 3: universal slash upgrade)
+U+17C4 + [K_SLASH] > U+17C5   c o/ (Rule 3: universal slash upgrade)
+U+17C0 + [K_SLASH] > U+17BF   c [/ (Rule 3: universal slash upgrade)
+U+17B6 + [K_SLASH] > U+17B6 U+17C6   c a/ (Rule 3: universal slash upgrade)
+U+17BE + [K_SLASH] > U+17C4 U+17C7   c ;/ (Rule 3: universal slash upgrade)
+U+17C4 U+17C7 + [K_SLASH] > U+17D6   c ;// (Rule 3: universal slash upgrade)
+U+17CB + [K_SLASH] > U+17C9   c '/ (Rule 3: universal slash upgrade)
+U+17C9 + [K_SLASH] > U+17C8   c '// (Rule 3: universal slash upgrade)
+U+17BB U+17C6 + [K_SLASH] > U+17BB U+17C7   c ,/ (Rule 3: universal slash upgrade)
+U+17BB U+17C7 + [K_SLASH] > U+002C   c ,// (Rule 3: universal slash upgrade)
+U+17D4 + [K_SLASH] > U+17D5   c ./ (Rule 3: universal slash upgrade)
+U+17D5 + [K_SLASH] > U+002E   c .// (Rule 3: universal slash upgrade)
+U+17C6 + [K_SLASH] > U+17A7   c ]/ (Rule 3: universal slash upgrade)
+U+17A7 + [K_SLASH] > U+17AA   c ]// (Rule 3: universal slash upgrade)
+U+17C7 + [K_SLASH] > U+17C8   c \/ (Rule 3: universal slash upgrade)
+U+17C8 + [K_SLASH] > U+17AD   c \// (Rule 3: universal slash upgrade)
+U+00AB + [K_SLASH] > U+00BB   c `/ (Rule 3: universal slash upgrade)
+U+200B + [K_SLASH] > U+0020   c  / (Rule 3: universal slash upgrade)
+U+003F + [K_SLASH] > U+002F   c /// (Rule 3: universal slash upgrade)
+U+17AC + [K_SLASH] > U+17AB   c rr/ (Rule 3: universal slash upgrade)
+U+17CC + [K_SLASH] > U+17A5   c --/ (Rule 3: universal slash upgrade)
+U+17C3 + [K_SLASH] > U+17B2   c =/ (Rule 3: universal slash upgrade)
+U+17B2 + [K_SLASH] > U+17CE   c =// (Rule 3: universal slash upgrade)
+U+17E1 + [K_SLASH] > U+0021   c 1/ (Rule 3: universal slash upgrade)
+U+17E2 + [K_SLASH] > U+17D7   c 2/ (Rule 3: universal slash upgrade)
+U+17E3 + [K_SLASH] > U+0022   c 3/ (Rule 3: universal slash upgrade)
+U+0022 + [K_SLASH] > U+17D1   c 3// (Rule 3: universal slash upgrade)
+U+17E4 + [K_SLASH] > U+17DB   c 4/ (Rule 3: universal slash upgrade)
+U+17E5 + [K_SLASH] > U+0025   c 5/ (Rule 3: universal slash upgrade)
+U+17E6 + [K_SLASH] > U+17CD   c 6/ (Rule 3: universal slash upgrade)
+U+17CD + [K_SLASH] > U+17D9   c 6// (Rule 3: universal slash upgrade)
+U+17E7 + [K_SLASH] > U+17D0   c 7/ (Rule 3: universal slash upgrade)
+U+17D0 + [K_SLASH] > U+17DA   c 7// (Rule 3: universal slash upgrade)
+U+17E8 + [K_SLASH] > U+17CF   c 8/ (Rule 3: universal slash upgrade)
+U+17E9 + [K_SLASH] > U+0028   c 9/ (Rule 3: universal slash upgrade)
+U+17E0 + [K_SLASH] > U+0029   c 0/ (Rule 3: universal slash upgrade)
 U+17C1 + [K_A] > U+17C4   c ea (Rule 3: e then a -> au)
 U+17C1 + [K_I] > U+17BE   c ei (Rule 3: e then i -> oe)
 U+17BB + [K_A] > U+17BD   c ua (Rule 3: u then a -> ua)
-U+17BB + [K_SLASH] > U+17BD   c u/ (Rule 3: u slash -> ua)
 U+17B6 + [K_I] > U+17C3   c ai (Rule 3: a then i -> ai)
-U+17B7 + [K_SLASH] > U+17C3   c i/ (Rule 3: i slash -> ai)
-U+200B + [K_SLASH] > U+0020   c  / (Rule 3: space slash -> ASCII space)
-U+17E2 + [K_SLASH] > U+17D7   c 2/ (Rule 3: 2 slash -> lek too)
-U+17E6 + [K_SLASH] > U+17CD   c 6/ (Rule 3: 6 slash -> toandakhiat)
-U+17E7 + [K_SLASH] > U+17D0   c 7/ (Rule 3: 7 slash -> samyok sannya)
-U+17E8 + [K_SLASH] > U+17CF   c 8/ (Rule 3: 8 slash -> ahsda)
-U+17A5 + [K_SLASH] > U+17CC   c -/ (Rule 3: minus slash -> robat)
-U+17BE + [K_SLASH] > U+17D6   c ;/ (Rule 3: semicolon slash -> camnuc pii kuuh)
-U+17D4 + [K_SLASH] > U+002E   c ./ (Rule 3: dot slash -> ASCII period)
-U+17BB U+17C6 + [K_SLASH] > U+002C   c ,/ (Rule 3: comma slash -> ASCII comma)
 
 c --- unshifted base layer (Normal) ---
 + [K_1] > U+17E1
@@ -80,9 +120,9 @@ c --- unshifted base layer (Normal) ---
 + [K_8] > U+17E8
 + [K_9] > U+17E9
 + [K_0] > U+17E0
-+ [K_HYPHEN] > U+17A5
-+ [K_EQUAL] > U+17B2
-+ [K_Q] > U+1786
++ [K_HYPHEN] > U+17A2
++ [K_EQUAL] > U+17C3
++ [K_Q] > U+1787
 + [K_W] > U+17B9
 + [K_E] > U+17C1
 + [K_R] > U+179A
@@ -91,13 +131,13 @@ c --- unshifted base layer (Normal) ---
 + [K_U] > U+17BB
 + [K_I] > U+17B7
 + [K_O] > U+17C4
-+ [K_P] > U+1795
++ [K_P] > U+1796
 + [K_LBRKT] > U+17C0
 + [K_RBRKT] > U+17C6
 + [K_A] > U+17B6
 + [K_S] > U+179F
 + [K_D] > U+178A
-+ [K_F] > U+1790
++ [K_F] > U+1791
 + [K_G] > U+1784
 + [K_H] > U+17A0
 + [K_J] > U+17D2
@@ -106,8 +146,8 @@ c --- unshifted base layer (Normal) ---
 + [K_COLON] > U+17BE
 + [K_QUOTE] > U+17CB
 + [K_BKSLASH] > U+17C7
-+ [K_Z] > U+178B
-+ [K_X] > U+1781
++ [K_Z] > U+1789
++ [K_X] > U+1782
 + [K_C] > U+1785
 + [K_V] > U+179C
 + [K_B] > U+1794
@@ -180,20 +220,28 @@ c --- AltGr layer (Right Alt) ---
 + [RALT K_8] > U+002A
 + [RALT K_9] > U+007B
 + [RALT K_0] > U+007D
-+ [RALT K_HYPHEN] > U+00D7
-+ [RALT K_EQUAL] > U+17CE
++ [RALT K_HYPHEN] > U+17A5
++ [RALT K_EQUAL] > U+17B2
++ [RALT K_Q] > U+1786
++ [RALT K_W] > U+00D7
 + [RALT K_E] > U+17AF
 + [RALT K_R] > U+17AB
++ [RALT K_Y] > U+17B0
 + [RALT K_U] > U+17B3
 + [RALT K_I] > U+17A6
 + [RALT K_O] > U+17B1
-+ [RALT K_P] > U+17B0
++ [RALT K_P] > U+1795
 + [RALT K_LBRKT] > U+17A9
 + [RALT K_RBRKT] > U+17AA
++ [RALT K_F] > U+1790
 + [RALT K_J] > U+1789
++ [RALT K_K] > U+17CE
 + [RALT K_COLON] > U+17D6
 + [RALT K_QUOTE] > U+17C8
 + [RALT K_BKSLASH] > U+17AE
++ [RALT K_Z] > U+178B
++ [RALT K_X] > U+1781
++ [RALT K_V] > U+005C
 + [RALT K_COMMA] > U+002C
 + [RALT K_PERIOD] > U+002E
 + [RALT K_SLASH] > U+002F

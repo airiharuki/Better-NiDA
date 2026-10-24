@@ -82,17 +82,41 @@ function Get-Stock($key, $state) {
 
 # --- Midpoint static overrides ----------------------------------------------
 #
-# Rule 4: nikahit (U+17C6) and reahmuk (U+17C7) are extremely common word-final
-# marks. Stock NiDA puts both behind Shift (Shift+M, Shift+H). Move them to
-# unshifted ] and \ and push the two rare independent vowels (U+17AA, U+17AE)
-# down to AltGr. U+17B3 (previously on AltGr+]) moves to AltGr+U (which is
-# unmapped in stock NiDA), preserving 100% of stock NiDA's character repertoire.
+# Bold Hybrid Rearrangement (Khmerism speed + NiDA accessibility):
+#   - High-frequency 2nd-series consonants promoted to unshifted keys:
+#       q -> U+1787 (co), f -> U+1791 (to), p -> U+1796 (po),
+#       x -> U+1782 (ko), z -> U+1789 (nyo), - -> U+17A2 (qo)
+#   - High-frequency vowel ai (U+17C3) promoted to unshifted '='
+#   - High-frequency finals nikahit (U+17C6) and reahmuk (U+17C7) on ']' and '\'
+#   - Displaced rare characters moved to AltGr (and reachable via '/' sequences),
+#     preserving 100% of stock NiDA's character repertoire.
 
-$STATIC_NORMAL = @{ ']' = @(0x17C6); '\' = @(0x17C7) }   # was U+17AA / U+17AE
-$STATIC_SHIFT  = @{ 'J' = @(0x17D2) }                    # was U+1789 (Rule 2 rollover-safe coeng)
+$STATIC_NORMAL = @{
+    'q' = @(0x1787)   # was U+1786 (cho) -> promoted U+1787 (co)
+    'f' = @(0x1791)   # was U+1790 (tho) -> promoted U+1791 (to)
+    'p' = @(0x1796)   # was U+1795 (pho) -> promoted U+1796 (po)
+    'x' = @(0x1782)   # was U+1781 (kha) -> promoted U+1782 (ko)
+    'z' = @(0x1789)   # was U+178B (tha) -> promoted U+1789 (nyo)
+    '-' = @(0x17A2)   # was U+17A5 (qi)  -> promoted U+17A2 (qo)
+    '=' = @(0x17C3)   # was U+17B2 (qoo) -> promoted U+17C3 (vowel ai)
+    ']' = @(0x17C6)   # was U+17AA (quv) -> promoted U+17C6 (nikahit)
+    '\' = @(0x17C7)   # was U+17AE (lyy) -> promoted U+17C7 (reahmuk)
+}
+$STATIC_SHIFT  = @{ 'J' = @(0x17D2) }   # was U+1789 (Rule 2 rollover-safe coeng)
 $STATIC_ALTGR  = @{
+    'Q' = @(0x1786)   # displaced from Normal q (cho)
+    'F' = @(0x1790)   # displaced from Normal f (tho)
+    'P' = @(0x1795)   # displaced from Normal p (pho)
+    'Y' = @(0x17B0)   # rescued from AltGr+P (stock AltGr+Y is empty)
+    'X' = @(0x1781)   # displaced from Normal x (kha)
+    'Z' = @(0x178B)   # displaced from Normal z (tha)
+    '-' = @(0x17A5)   # displaced from Normal - (qi)
+    'W' = @(0x00D7)   # rescued from AltGr+- (stock AltGr+W is empty)
+    '=' = @(0x17B2)   # displaced from Normal = (qoo)
+    'K' = @(0x17CE)   # rescued from AltGr+= (stock AltGr+K is empty)
     ']' = @(0x17AA)   # moved from Normal ]
     '\' = @(0x17AE)   # moved from Normal \
+    'V' = @(0x005C)   # rescued from AltGr+\ (stock AltGr+V is empty)
     'J' = @(0x1789)   # static-layer fallback for nyo (U+1789)
     'U' = @(0x17B3)   # rescued from AltGr+] (stock AltGr+U is empty)
 }
@@ -118,20 +142,21 @@ function New-Rule($seq, $out, $rule, $note) {
 
 $rules = New-Object System.Collections.ArrayList
 
-# Rule 1 - universal series flip. '/' replaces the preceding base consonant.
-# NOTE: for m, y, r, v the output is base+muusikatoan, NOT stock's Shift character.
-# Stock Shift+m is U+17C6 (nikahit) and Shift+v is a ligature, so the flip is
-# genuinely consonant series modulation rather than a raw Shift chord alias.
-$flipPlosive = [ordered]@{
-    'k' = 0x1782; 'x' = 0x1783; 'c' = 0x1787; 'q' = 0x1788
-    'd' = 0x178C; 'z' = 0x178D; 't' = 0x1791; 'f' = 0x1792
-    'b' = 0x1796; 'p' = 0x1797
+# Rule 1 - universal consonant series flip and aspirated progression via '/'.
+# Preserves NiDA muscle memory (k/ -> ko, t/ -> to, b/ -> po, c/ -> co, g/ -> qo)
+# AND lets the newly promoted unshifted keys (x, f, p, q, z) step to their
+# displaced 1st-series aspirated and 2nd-series aspirated partners via '/' and '//'.
+$consonantSlash = [ordered]@{
+    'k/'  = @(0x1782); 'x/'  = @(0x1781); 'x//' = @(0x1783)
+    'c/'  = @(0x1787); 'q/'  = @(0x1786); 'q//' = @(0x1788)
+    'd/'  = @(0x178C); 'z/'  = @(0x1789, $SHIFTER_MUUSIKATOAN)
+    'zz'  = @(0x178B); 'zz/' = @(0x178D)
+    't/'  = @(0x1791); 'f/'  = @(0x1790); 'f//' = @(0x1792)
+    'b/'  = @(0x1796); 'p/'  = @(0x1795); 'p//' = @(0x1797)
+    'n/'  = @(0x178E); 'l/'  = @(0x17A1); 'g/'  = @(0x17A2)
 }
-foreach ($key in $flipPlosive.Keys) {
-    [void]$rules.Add((New-Rule "$key/" @($flipPlosive[$key]) 'Rule 1' 'plosive 1st -> 2nd series'))
-}
-foreach ($key in @('n','l','g')) {
-    [void]$rules.Add((New-Rule "$key/" @($SECOND_SERIES[$key]) 'Rule 1' 'nasal/lateral/velar flip'))
+foreach ($seq in $consonantSlash.Keys) {
+    [void]$rules.Add((New-Rule $seq $consonantSlash[$seq] 'Rule 1' 'consonant series/aspirated flip'))
 }
 foreach ($key in @('m','y','r','v')) {
     $base = (Get-Stock $key 'Normal')
@@ -143,47 +168,61 @@ foreach ($key in @('m','y','r','v')) {
 # Rule 2 - rollover-safe coeng and Shift-free / AltGr-free nyo (U+1789):
 #   j       -> U+17D2 (coeng, single tap)
 #   Shift+J -> U+17D2 (rollover-safe coeng during shifted clusters)
-#   jj      -> U+1789 (standalone nyo, zero modifiers)
-#   jj/     -> U+1789 U+17C9 (nyo + muusikatoan, e.g. "nham" to eat)
+#   z / jj  -> U+1789 (standalone nyo, zero modifiers)
+#   z/ / jj/-> U+1789 U+17C9 (nyo + muusikatoan, e.g. "nham" to eat)
 #   j/      -> U+17D2 U+1789 (subscript coeng + nyo in 2 keys, e.g. "khnhom")
-#
-# Note on 'jj' + 'j' in clusters like U+1789 U+17D2 U+1785 (nyo + coeng + ca):
-# Because 'jjj' is NOT a rule, typing 'jj' followed by 'j' + 'c' hits a dead end
-# at 'jjj', commits the longest exact rule 'jj' (U+1789), and starts a fresh 'j'
-# (U+17D2) before 'c' (U+1785). And in 'kmjb/uc/a', 'j' followed by 'b' hits a
-# dead end at 'jb', commits 'j' (U+17D2), and resolves 'b/' (U+1796).
 [void]$rules.Add((New-Rule 'jj'  @(0x1789)                         'Rule 2' 'double-tap j -> nyo'))
-[void]$rules.Add((New-Rule 'jj/' @(0x1789, $SHIFTER_MUUSIKATOAN)   'Rule 2' 'nyo + muusikatoan'))
 [void]$rules.Add((New-Rule 'j/'  @(0x17D2, 0x1789)                 'Rule 2' 'coeng + nyo'))
 
-# Rule 3 - additive double-tap and sequence upgrades for vowels, signs, and space.
-# Single taps keep stock output, and Shift+Key keeps working as a fallback.
+# Rule 3 - 100% universal '/' upgrades AND additive double-tap upgrades for
+# every vowel, sign, number, and space on the keyboard.
 $doubleTap = [ordered]@{
     'i' = @(0x17B8); 'u' = @(0x17BC); 'e' = @(0x17C2); 'w' = @(0x17BA)
     'o' = @(0x17C5); '[' = @(0x17BF); '.' = @(0x17D5)
     'a' = @(0x17B6, 0x17C6); ';' = @(0x17C4, 0x17C7)
     "'" = @(0x17C9);            ',' = @(0x17BB, 0x17C7)
     ']' = @(0x17A7);            '\' = @(0x17C8)
-    ' ' = @(0x0020)
+    'y' = @(0x17BD);            'v' = @(0x17C1, 0x17C7)
+    'r' = @(0x17AC);            '`' = @(0x00BB)
+    '-' = @(0x17CC);            '=' = @(0x003D)
+    '/' = @(0x003F);            ' ' = @(0x0020)
 }
 foreach ($key in $doubleTap.Keys) {
     [void]$rules.Add((New-Rule ($key + $key) $doubleTap[$key] 'Rule 3' 'double-tap upgrade'))
 }
+
+# Universal '/' on vowels, signs, numbers, and symbols (where distinct from Rule 1):
+$slashUpgrades = [ordered]@{
+    'i/'  = @(0x17B8);           'u/'  = @(0x17BC)
+    'e/'  = @(0x17C2);           'w/'  = @(0x17BA)
+    'o/'  = @(0x17C5);           '[/'  = @(0x17BF)
+    'a/'  = @(0x17B6, 0x17C6);   ';/'  = @(0x17C4, 0x17C7)
+    ";//" = @(0x17D6);           "'/"  = @(0x17C9)
+    "'//" = @(0x17C8);           ',/'  = @(0x17BB, 0x17C7)
+    ',//' = @(0x002C);           './'  = @(0x17D5)
+    './/' = @(0x002E);           ']/'  = @(0x17A7)
+    ']//'= @(0x17AA);            '\/'  = @(0x17C8)
+    '\//' = @(0x17AD);           '`/'  = @(0x00BB)
+    ' /'  = @(0x0020);           '///' = @(0x002F)
+    'rr/' = @(0x17AB);           '--/' = @(0x17A5)
+    '=/'  = @(0x17B2);           '=//' = @(0x17CE)
+    '1/'  = @(0x0021);           '2/'  = @(0x17D7)
+    '3/'  = @(0x0022);           '3//' = @(0x17D1)
+    '4/'  = @(0x17DB);           '5/'  = @(0x0025)
+    '6/'  = @(0x17CD);           '6//' = @(0x17D9)
+    '7/'  = @(0x17D0);           '7//' = @(0x17DA)
+    '8/'  = @(0x17CF);           '9/'  = @(0x0028)
+    '0/'  = @(0x0029)
+}
+foreach ($seq in $slashUpgrades.Keys) {
+    [void]$rules.Add((New-Rule $seq $slashUpgrades[$seq] 'Rule 3' 'universal slash upgrade'))
+}
+
+# Composite two-key vowel shortcuts:
 [void]$rules.Add((New-Rule 'ea' @(0x17C4) 'Rule 3' 'e then a -> au'))
 [void]$rules.Add((New-Rule 'ei' @(0x17BE) 'Rule 3' 'e then i -> oe'))
 [void]$rules.Add((New-Rule 'ua' @(0x17BD) 'Rule 3' 'u then a -> ua'))
-[void]$rules.Add((New-Rule 'u/' @(0x17BD) 'Rule 3' 'u slash -> ua'))
 [void]$rules.Add((New-Rule 'ai' @(0x17C3) 'Rule 3' 'a then i -> ai'))
-[void]$rules.Add((New-Rule 'i/' @(0x17C3) 'Rule 3' 'i slash -> ai'))
-[void]$rules.Add((New-Rule ' /' @(0x0020) 'Rule 3' 'space slash -> ASCII space'))
-[void]$rules.Add((New-Rule '2/' @(0x17D7) 'Rule 3' '2 slash -> lek too'))
-[void]$rules.Add((New-Rule '6/' @(0x17CD) 'Rule 3' '6 slash -> toandakhiat'))
-[void]$rules.Add((New-Rule '7/' @(0x17D0) 'Rule 3' '7 slash -> samyok sannya'))
-[void]$rules.Add((New-Rule '8/' @(0x17CF) 'Rule 3' '8 slash -> ahsda'))
-[void]$rules.Add((New-Rule '-/' @(0x17CC) 'Rule 3' 'minus slash -> robat'))
-[void]$rules.Add((New-Rule ';/' @(0x17D6) 'Rule 3' 'semicolon slash -> camnuc pii kuuh'))
-[void]$rules.Add((New-Rule './' @(0x002E) 'Rule 3' 'dot slash -> ASCII period'))
-[void]$rules.Add((New-Rule ',/' @(0x002C) 'Rule 3' 'comma slash -> ASCII comma'))
 
 # Keys that can begin a multi-key sequence under prefix buffering.
 $pendingKeys = @{}

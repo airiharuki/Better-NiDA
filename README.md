@@ -216,15 +216,15 @@ Measured on a **565.4 million character Khmer corpus** (scored via shortest-path
 **Better-NiDA "Midpoint"** (`scripts/midpoint_engine.ps1` $\rightarrow$ `midpoint_layout.json`) uses a two-tier architecture generated from a single source of truth:
 
 - **Static Layer (Zero-Lag, Universal — macOS `.keylayout`, Linux XKB `linux/nida_midpoint`)**:
-  - Moves high-frequency word-final marks (Nikahit `ំ` `U+17C6` and Reahmuk `ះ` `U+17C7`) off `Shift` onto unshifted `]` and `\`, saving 1 full keystroke on nearly every word while relocating `ឪ` (`U+17AA`), `ឮ` (`U+17AE`), and `ឳ` (`U+17B3`) to `AltGr+]`, `AltGr+\`, and `AltGr+U`.
-  - Places the 13 second-series consonants on the vacant `Shift+AltGr` (`Shift+Option`) layer, displacing nothing.
+  - **Bold Hybrid Rearrangement**: Promotes the 6 high-frequency second-series consonants directly onto unshifted keys that previously held rare aspirated consonants or independent vowels (`Q` $\rightarrow$ `ជ`, `F` $\rightarrow$ `ទ`, `P` $\rightarrow$ `ព`, `X` $\rightarrow$ `គ`, `Z` $\rightarrow$ `ញ`, `-` $\rightarrow$ `អ`), plus vowel `ៃ` (`=`) and word-final marks `ំ` (`]`) and `ះ` (`\`). All displaced characters (`ឆ`, `ថ`, `ផ`, `ខ`, `ឋ`, `ឥ`, `ឲ`, `ឪ`, `ឮ`, `ឳ`, `ឰ`, `៎`, `\`, `×`) remain 100% accessible on `AltGr` (and via `/` sequences).
+  - Places the 13 second-series/aspirated consonants on the `Shift+AltGr` (`Shift+Option`) layer, displacing nothing.
   - Makes `Shift+J` emit Coeng `្` (`U+17D2`) as a rollover-safe modifier, eliminating accidental `ញ` during rapid subscript typing.
 
 - **Sequence / Contextual Layer (Zero-Lag Inline — Windows Keyman `windows/better_nida_midpoint.kmn`, Linux `linux/m17n/nida-midpoint.mim`)**:
-  - **Universal Series Flip (`/`)**: An original Better-NiDA research invention—typing a base consonant followed by trailing `/` switches its series (`k/` $\rightarrow$ `គ`, `t/` $\rightarrow$ `ទ`, `b/` $\rightarrow$ `ព`, `c/` $\rightarrow$ `ជ`, `g/` $\rightarrow$ `អ`) or appends the appropriate series shifter (`m/` $\rightarrow$ `ម៉`, `s/` $\rightarrow$ `ស៊`) without holding `Shift`.
-  - **Rollover-Safe Coeng & `Shift`-Free `ញ` / `្ញ`**: `jj` emits standalone `ញ` (`U+1789`), `jj/` emits `ញ៉` (`U+1789 U+17C9`), and `j/` emits subscript `្ញ` (`U+17D2 U+1789`) in 2 unshifted keys instead of 3 presses.
-  - **Additive Double-Tap & Vowel/Space Upgrades**: Double-tapping or pairing vowels/signs upgrades them without `Shift` (`ii` $\rightarrow$ `ី`, `uu` $\rightarrow$ `ូ`, `ee` $\rightarrow$ `ែ`, `aa` $\rightarrow$ `ាំ`, `ea` $\rightarrow$ `ោ`, `ei` $\rightarrow$ `ើ`, `ua`/`u/` $\rightarrow$ `ួ`, `ai`/`i/` $\rightarrow$ `ៃ`, `  ` or ` /` $\rightarrow$ `U+0020` real space, `6/` $\rightarrow$ `៍`, `7/` $\rightarrow$ `័`, `\\` $\rightarrow$ `ៈ`, `;/` $\rightarrow$ `៖`).
-  - Preserves **100% of unshifted `A–Z`** and **100% of stock `Shift` chords** (except `Shift+J`) for total backwards compatibility.
+  - **100% Universal `/` Switch Across Every Key**: Typing any consonant, vowel, sign, or number followed by `/` switches its series or upgrades it to its shifted counterpart (`k/` $\rightarrow$ `គ`, `t/` $\rightarrow$ `ទ`, `b/` $\rightarrow$ `ព`, `c/` $\rightarrow$ `ជ`, `g/` $\rightarrow$ `អ`, `q/` $\rightarrow$ `ឆ`, `q//` $\rightarrow$ `ឈ`, `f/` $\rightarrow$ `ថ`, `f//` $\rightarrow$ `ធ`, `p/` $\rightarrow$ `ផ`, `p//` $\rightarrow$ `ភ`, `x/` $\rightarrow$ `ខ`, `x//` $\rightarrow$ `ឃ`, `m/` $\rightarrow$ `ម៉`, `s/` $\rightarrow$ `ស៊`).
+  - **Rollover-Safe Coeng & `Shift`-Free `ញ` / `្ញ`**: Direct unshifted `z` or `jj` emits `ញ` (`U+1789`), `z/` or `jj/` emits `ញ៉` (`U+1789 U+17C9`), `zz` emits `ឋ` (`U+178B`), `zz/` emits `ឍ` (`U+178D`), and `j/` emits subscript `្ញ` (`U+17D2 U+1789`).
+  - **Universal `/` & Double-Tap Vowel/Sign Upgrades**: Every vowel and sign upgrades via **both** `KEY + /` and double-tap `KEY + KEY` without `Shift` (`i/` or `ii` $\rightarrow$ `ី`, `u/` or `uu` $\rightarrow$ `ូ`, `e/` or `ee` $\rightarrow$ `ែ`, `w/` or `ww` $\rightarrow$ `ឺ`, `o/` or `oo` $\rightarrow$ `ៅ`, `a/` or `aa` $\rightarrow$ `ាំ`, `[/` or `[[` $\rightarrow$ `ឿ`, `;/` or `;;` $\rightarrow$ `ោះ`, `,/` or `,,` $\rightarrow$ `ុះ`, `'/` or `''` $\rightarrow$ `៉`, `./` or `..` $\rightarrow$ `៕`, `]/` $\rightarrow$ `ឧ`, `]]` $\rightarrow$ `ឪ`, `\/` $\rightarrow$ `ៈ`, `\\` $\rightarrow$ `ឭ`, `=/` $\rightarrow$ `ឲ`, `==` $\rightarrow$ `=`, ` /` or `  ` $\rightarrow$ `U+0020` real space, `//` $\rightarrow$ `?`).
+  - Preserves **100% of stock NiDA `/` flips** and **100% of letter `Shift` chords** (except `Shift+J`) for total backwards compatibility.
 
 Layout correctness and modifier load are verified and measured using **`scripts/verify_midpoint.ps1`** and **`scripts/score_midpoint.ps1`**.
 
@@ -260,7 +260,7 @@ For deep dives into layout limits, modifier capacity, and design trade-offs, con
 | [REVERSE_ENGINEERING_NIDA.md](REVERSE_ENGINEERING_NIDA.md) | Full technical specification and findings |
 | [ROADMAP.md](ROADMAP.md) | In-depth development plan, empirical baseline, and architecture trade-offs |
 | [nida_layout.json](nida_layout.json) | Machine-readable NiDA spec: 49 keys, all states, ligatures, official Unicode names |
-| [midpoint_layout.json](midpoint_layout.json) | Machine-readable Better-NiDA Midpoint spec: 49 keys, 5 modifier levels, 51 sequence rules |
+| [midpoint_layout.json](midpoint_layout.json) | Machine-readable Better-NiDA Midpoint spec: 49 keys, 5 modifier levels, 91 sequence rules |
 | [windows/better_nida_midpoint.kmn](windows/better_nida_midpoint.kmn) | Keyman keyboard source for Windows/cross-platform with zero-lag contextual rules |
 | [linux/m17n/nida-midpoint.mim](linux/m17n/nida-midpoint.mim) | Linux m17n input method implementing full Midpoint sequence and static layers |
 | [linux/nida_midpoint](linux/nida_midpoint) | Linux XKB `EIGHT_LEVEL` symbols for the Midpoint static subset |

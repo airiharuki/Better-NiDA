@@ -140,9 +140,9 @@ $doc = [ordered]@{
         characterNames = 'official Unicode Character Database (scripts/build_unicode_names.ps1)'
     }
     staticOverrides = [ordered]@{
-        Normal     = @(']', '\')
-        Shift      = @('J')
-        AltGr      = @(']', '\', 'J', 'U')
+        Normal     = @($engine.Static.Normal.Keys | Sort-Object)
+        Shift      = @($engine.Static.Shift.Keys | Sort-Object)
+        AltGr      = @($engine.Static.AltGr.Keys | Sort-Object)
         ShiftAltGr = @($engine.SecondSeries.Keys)
     }
     keys            = @($keys)

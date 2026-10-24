@@ -18,19 +18,25 @@
 (map
   (trans
     ;; --- sequence rules (Rules 1, 2, 3) ---
-    ("k/" "គ") ; U+1782 (Rule 1 - plosive 1st -> 2nd series)
-    ("x/" "ឃ") ; U+1783 (Rule 1 - plosive 1st -> 2nd series)
-    ("c/" "ជ") ; U+1787 (Rule 1 - plosive 1st -> 2nd series)
-    ("q/" "ឈ") ; U+1788 (Rule 1 - plosive 1st -> 2nd series)
-    ("d/" "ឌ") ; U+178C (Rule 1 - plosive 1st -> 2nd series)
-    ("z/" "ឍ") ; U+178D (Rule 1 - plosive 1st -> 2nd series)
-    ("t/" "ទ") ; U+1791 (Rule 1 - plosive 1st -> 2nd series)
-    ("f/" "ធ") ; U+1792 (Rule 1 - plosive 1st -> 2nd series)
-    ("b/" "ព") ; U+1796 (Rule 1 - plosive 1st -> 2nd series)
-    ("p/" "ភ") ; U+1797 (Rule 1 - plosive 1st -> 2nd series)
-    ("n/" "ណ") ; U+178E (Rule 1 - nasal/lateral/velar flip)
-    ("l/" "ឡ") ; U+17A1 (Rule 1 - nasal/lateral/velar flip)
-    ("g/" "អ") ; U+17A2 (Rule 1 - nasal/lateral/velar flip)
+    ("k/" "គ") ; U+1782 (Rule 1 - consonant series/aspirated flip)
+    ("x/" "ខ") ; U+1781 (Rule 1 - consonant series/aspirated flip)
+    ("x//" "ឃ") ; U+1783 (Rule 1 - consonant series/aspirated flip)
+    ("c/" "ជ") ; U+1787 (Rule 1 - consonant series/aspirated flip)
+    ("q/" "ឆ") ; U+1786 (Rule 1 - consonant series/aspirated flip)
+    ("q//" "ឈ") ; U+1788 (Rule 1 - consonant series/aspirated flip)
+    ("d/" "ឌ") ; U+178C (Rule 1 - consonant series/aspirated flip)
+    ("z/" "ញ៉") ; U+1789 U+17C9 (Rule 1 - consonant series/aspirated flip)
+    ("zz" "ឋ") ; U+178B (Rule 1 - consonant series/aspirated flip)
+    ("zz/" "ឍ") ; U+178D (Rule 1 - consonant series/aspirated flip)
+    ("t/" "ទ") ; U+1791 (Rule 1 - consonant series/aspirated flip)
+    ("f/" "ថ") ; U+1790 (Rule 1 - consonant series/aspirated flip)
+    ("f//" "ធ") ; U+1792 (Rule 1 - consonant series/aspirated flip)
+    ("b/" "ព") ; U+1796 (Rule 1 - consonant series/aspirated flip)
+    ("p/" "ផ") ; U+1795 (Rule 1 - consonant series/aspirated flip)
+    ("p//" "ភ") ; U+1797 (Rule 1 - consonant series/aspirated flip)
+    ("n/" "ណ") ; U+178E (Rule 1 - consonant series/aspirated flip)
+    ("l/" "ឡ") ; U+17A1 (Rule 1 - consonant series/aspirated flip)
+    ("g/" "អ") ; U+17A2 (Rule 1 - consonant series/aspirated flip)
     ("m/" "ម៉") ; U+1798 U+17C9 (Rule 1 - sonorant + muusikatoan)
     ("y/" "យ៉") ; U+1799 U+17C9 (Rule 1 - sonorant + muusikatoan)
     ("r/" "រ៉") ; U+179A U+17C9 (Rule 1 - sonorant + muusikatoan)
@@ -38,7 +44,6 @@
     ("s/" "ស៊") ; U+179F U+17CA (Rule 1 - fricative + traysap)
     ("h/" "ហ៊") ; U+17A0 U+17CA (Rule 1 - fricative + traysap)
     ("jj" "ញ") ; U+1789 (Rule 2 - double-tap j -> nyo)
-    ("jj/" "ញ៉") ; U+1789 U+17C9 (Rule 2 - nyo + muusikatoan)
     ("j/" "្ញ") ; U+17D2 U+1789 (Rule 2 - coeng + nyo)
     ("ii" "ី") ; U+17B8 (Rule 3 - double-tap upgrade)
     ("uu" "ូ") ; U+17BC (Rule 3 - double-tap upgrade)
@@ -53,22 +58,57 @@
     (",," "ុះ") ; U+17BB U+17C7 (Rule 3 - double-tap upgrade)
     ("]]" "ឧ") ; U+17A7 (Rule 3 - double-tap upgrade)
     ("\\\\" "ៈ") ; U+17C8 (Rule 3 - double-tap upgrade)
+    ("yy" "ួ") ; U+17BD (Rule 3 - double-tap upgrade)
+    ("vv" "េះ") ; U+17C1 U+17C7 (Rule 3 - double-tap upgrade)
+    ("rr" "ឬ") ; U+17AC (Rule 3 - double-tap upgrade)
+    ("``" "»") ; U+00BB (Rule 3 - double-tap upgrade)
+    ("--" "៌") ; U+17CC (Rule 3 - double-tap upgrade)
+    ("==" "=") ; U+003D (Rule 3 - double-tap upgrade)
+    ("//" "?") ; U+003F (Rule 3 - double-tap upgrade)
     ("  " " ") ; U+0020 (Rule 3 - double-tap upgrade)
+    ("i/" "ី") ; U+17B8 (Rule 3 - universal slash upgrade)
+    ("u/" "ូ") ; U+17BC (Rule 3 - universal slash upgrade)
+    ("e/" "ែ") ; U+17C2 (Rule 3 - universal slash upgrade)
+    ("w/" "ឺ") ; U+17BA (Rule 3 - universal slash upgrade)
+    ("o/" "ៅ") ; U+17C5 (Rule 3 - universal slash upgrade)
+    ("[/" "ឿ") ; U+17BF (Rule 3 - universal slash upgrade)
+    ("a/" "ាំ") ; U+17B6 U+17C6 (Rule 3 - universal slash upgrade)
+    (";/" "ោះ") ; U+17C4 U+17C7 (Rule 3 - universal slash upgrade)
+    (";//" "៖") ; U+17D6 (Rule 3 - universal slash upgrade)
+    ("'/" "៉") ; U+17C9 (Rule 3 - universal slash upgrade)
+    ("'//" "ៈ") ; U+17C8 (Rule 3 - universal slash upgrade)
+    (",/" "ុះ") ; U+17BB U+17C7 (Rule 3 - universal slash upgrade)
+    (",//" ",") ; U+002C (Rule 3 - universal slash upgrade)
+    ("./" "៕") ; U+17D5 (Rule 3 - universal slash upgrade)
+    (".//" ".") ; U+002E (Rule 3 - universal slash upgrade)
+    ("]/" "ឧ") ; U+17A7 (Rule 3 - universal slash upgrade)
+    ("]//" "ឪ") ; U+17AA (Rule 3 - universal slash upgrade)
+    ("\\/" "ៈ") ; U+17C8 (Rule 3 - universal slash upgrade)
+    ("\\//" "ឭ") ; U+17AD (Rule 3 - universal slash upgrade)
+    ("`/" "»") ; U+00BB (Rule 3 - universal slash upgrade)
+    (" /" " ") ; U+0020 (Rule 3 - universal slash upgrade)
+    ("///" "/") ; U+002F (Rule 3 - universal slash upgrade)
+    ("rr/" "ឫ") ; U+17AB (Rule 3 - universal slash upgrade)
+    ("--/" "ឥ") ; U+17A5 (Rule 3 - universal slash upgrade)
+    ("=/" "ឲ") ; U+17B2 (Rule 3 - universal slash upgrade)
+    ("=//" "៎") ; U+17CE (Rule 3 - universal slash upgrade)
+    ("1/" "!") ; U+0021 (Rule 3 - universal slash upgrade)
+    ("2/" "ៗ") ; U+17D7 (Rule 3 - universal slash upgrade)
+    ("3/" "\"") ; U+0022 (Rule 3 - universal slash upgrade)
+    ("3//" "៑") ; U+17D1 (Rule 3 - universal slash upgrade)
+    ("4/" "៛") ; U+17DB (Rule 3 - universal slash upgrade)
+    ("5/" "%") ; U+0025 (Rule 3 - universal slash upgrade)
+    ("6/" "៍") ; U+17CD (Rule 3 - universal slash upgrade)
+    ("6//" "៙") ; U+17D9 (Rule 3 - universal slash upgrade)
+    ("7/" "័") ; U+17D0 (Rule 3 - universal slash upgrade)
+    ("7//" "៚") ; U+17DA (Rule 3 - universal slash upgrade)
+    ("8/" "៏") ; U+17CF (Rule 3 - universal slash upgrade)
+    ("9/" "(") ; U+0028 (Rule 3 - universal slash upgrade)
+    ("0/" ")") ; U+0029 (Rule 3 - universal slash upgrade)
     ("ea" "ោ") ; U+17C4 (Rule 3 - e then a -> au)
     ("ei" "ើ") ; U+17BE (Rule 3 - e then i -> oe)
     ("ua" "ួ") ; U+17BD (Rule 3 - u then a -> ua)
-    ("u/" "ួ") ; U+17BD (Rule 3 - u slash -> ua)
     ("ai" "ៃ") ; U+17C3 (Rule 3 - a then i -> ai)
-    ("i/" "ៃ") ; U+17C3 (Rule 3 - i slash -> ai)
-    (" /" " ") ; U+0020 (Rule 3 - space slash -> ASCII space)
-    ("2/" "ៗ") ; U+17D7 (Rule 3 - 2 slash -> lek too)
-    ("6/" "៍") ; U+17CD (Rule 3 - 6 slash -> toandakhiat)
-    ("7/" "័") ; U+17D0 (Rule 3 - 7 slash -> samyok sannya)
-    ("8/" "៏") ; U+17CF (Rule 3 - 8 slash -> ahsda)
-    ("-/" "៌") ; U+17CC (Rule 3 - minus slash -> robat)
-    (";/" "៖") ; U+17D6 (Rule 3 - semicolon slash -> camnuc pii kuuh)
-    ("./" ".") ; U+002E (Rule 3 - dot slash -> ASCII period)
-    (",/" ",") ; U+002C (Rule 3 - comma slash -> ASCII comma)
 
     ;; --- unshifted base layer (Normal) ---
     ("1" "១") ; U+17E1
@@ -81,9 +121,9 @@
     ("8" "៨") ; U+17E8
     ("9" "៩") ; U+17E9
     ("0" "០") ; U+17E0
-    ("-" "ឥ") ; U+17A5
-    ("=" "ឲ") ; U+17B2
-    ("q" "ឆ") ; U+1786
+    ("-" "អ") ; U+17A2
+    ("=" "ៃ") ; U+17C3
+    ("q" "ជ") ; U+1787
     ("w" "ឹ") ; U+17B9
     ("e" "េ") ; U+17C1
     ("r" "រ") ; U+179A
@@ -92,13 +132,13 @@
     ("u" "ុ") ; U+17BB
     ("i" "ិ") ; U+17B7
     ("o" "ោ") ; U+17C4
-    ("p" "ផ") ; U+1795
+    ("p" "ព") ; U+1796
     ("[" "ៀ") ; U+17C0
     ("]" "ំ") ; U+17C6
     ("a" "ា") ; U+17B6
     ("s" "ស") ; U+179F
     ("d" "ដ") ; U+178A
-    ("f" "ថ") ; U+1790
+    ("f" "ទ") ; U+1791
     ("g" "ង") ; U+1784
     ("h" "ហ") ; U+17A0
     ("j" "្") ; U+17D2
@@ -107,8 +147,8 @@
     (";" "ើ") ; U+17BE
     ("'" "់") ; U+17CB
     ("\\" "ះ") ; U+17C7
-    ("z" "ឋ") ; U+178B
-    ("x" "ខ") ; U+1781
+    ("z" "ញ") ; U+1789
+    ("x" "គ") ; U+1782
     ("c" "ច") ; U+1785
     ("v" "វ") ; U+179C
     ("b" "ប") ; U+1794
@@ -181,20 +221,28 @@
     ((G-8) "*") ; AltGr+8 -> U+002A
     ((G-9) "{") ; AltGr+9 -> U+007B
     ((G-0) "}") ; AltGr+0 -> U+007D
-    ((G--) "×") ; AltGr+- -> U+00D7
-    ((G-=) "៎") ; AltGr+= -> U+17CE
+    ((G--) "ឥ") ; AltGr+- -> U+17A5
+    ((G-=) "ឲ") ; AltGr+= -> U+17B2
+    ((G-q) "ឆ") ; AltGr+Q -> U+1786
+    ((G-w) "×") ; AltGr+W -> U+00D7
     ((G-e) "ឯ") ; AltGr+E -> U+17AF
     ((G-r) "ឫ") ; AltGr+R -> U+17AB
+    ((G-y) "ឰ") ; AltGr+Y -> U+17B0
     ((G-u) "ឳ") ; AltGr+U -> U+17B3
     ((G-i) "ឦ") ; AltGr+I -> U+17A6
     ((G-o) "ឱ") ; AltGr+O -> U+17B1
-    ((G-p) "ឰ") ; AltGr+P -> U+17B0
+    ((G-p) "ផ") ; AltGr+P -> U+1795
     ((G-[) "ឩ") ; AltGr+[ -> U+17A9
     ((G-]) "ឪ") ; AltGr+] -> U+17AA
+    ((G-f) "ថ") ; AltGr+F -> U+1790
     ((G-j) "ញ") ; AltGr+J -> U+1789
+    ((G-k) "៎") ; AltGr+K -> U+17CE
     ((G-\;) "៖") ; AltGr+; -> U+17D6
     ((G-\') "ៈ") ; AltGr+' -> U+17C8
     ((G-\\) "ឮ") ; AltGr+\ -> U+17AE
+    ((G-z) "ឋ") ; AltGr+Z -> U+178B
+    ((G-x) "ខ") ; AltGr+X -> U+1781
+    ((G-v) "\\") ; AltGr+V -> U+005C
     ((G-,) ",") ; AltGr+, -> U+002C
     ((G-.) ".") ; AltGr+. -> U+002E
     ((G-/) "/") ; AltGr+/ -> U+002F

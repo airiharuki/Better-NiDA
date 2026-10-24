@@ -16,17 +16,35 @@
                    },
     "staticOverrides":  {
                             "Normal":  [
+                                           "-",
+                                           "\\",
                                            "]",
-                                           "\\"
+                                           "=",
+                                           "f",
+                                           "p",
+                                           "q",
+                                           "x",
+                                           "z"
                                        ],
                             "Shift":  [
                                           "J"
                                       ],
                             "AltGr":  [
-                                          "]",
+                                          "-",
                                           "\\",
+                                          "]",
+                                          "=",
+                                          "F",
                                           "J",
-                                          "U"
+                                          "K",
+                                          "P",
+                                          "Q",
+                                          "U",
+                                          "V",
+                                          "W",
+                                          "X",
+                                          "Y",
+                                          "Z"
                                       ],
                             "ShiftAltGr":  [
                                                "k",
@@ -433,13 +451,14 @@
                      "usLegend":  "-",
                      "chars":  {
                                    "Normal":  {
-                                                  "text":  "ឥ",
+                                                  "text":  "អ",
                                                   "codepoints":  [
-                                                                     "U+17A5"
+                                                                     "U+17A2"
                                                                  ],
                                                   "names":  [
-                                                                "KHMER INDEPENDENT VOWEL QI"
-                                                            ]
+                                                                "KHMER LETTER QA"
+                                                            ],
+                                                  "note":  "Rule 4: reclaimed unshifted key"
                                               },
                                    "Shift":  {
                                                  "text":  "៌",
@@ -452,13 +471,14 @@
                                              },
                                    "Control":  null,
                                    "AltGr":  {
-                                                 "text":  "×",
+                                                 "text":  "ឥ",
                                                  "codepoints":  [
-                                                                    "U+00D7"
+                                                                    "U+17A5"
                                                                 ],
                                                  "names":  [
-                                                               "MULTIPLICATION SIGN"
-                                                           ]
+                                                               "KHMER INDEPENDENT VOWEL QI"
+                                                           ],
+                                                 "note":  "Midpoint AltGr relocation"
                                              },
                                    "ShiftAltGr":  null
                                }
@@ -471,13 +491,14 @@
                      "usLegend":  "=",
                      "chars":  {
                                    "Normal":  {
-                                                  "text":  "ឲ",
+                                                  "text":  "ៃ",
                                                   "codepoints":  [
-                                                                     "U+17B2"
+                                                                     "U+17C3"
                                                                  ],
                                                   "names":  [
-                                                                "KHMER INDEPENDENT VOWEL QOO TYPE TWO"
-                                                            ]
+                                                                "KHMER VOWEL SIGN AI"
+                                                            ],
+                                                  "note":  "Rule 4: reclaimed unshifted key"
                                               },
                                    "Shift":  {
                                                  "text":  "=",
@@ -490,13 +511,14 @@
                                              },
                                    "Control":  null,
                                    "AltGr":  {
-                                                 "text":  "៎",
+                                                 "text":  "ឲ",
                                                  "codepoints":  [
-                                                                    "U+17CE"
+                                                                    "U+17B2"
                                                                 ],
                                                  "names":  [
-                                                               "KHMER SIGN KAKABAT"
-                                                           ]
+                                                               "KHMER INDEPENDENT VOWEL QOO TYPE TWO"
+                                                           ],
+                                                 "note":  "Midpoint AltGr relocation"
                                              },
                                    "ShiftAltGr":  null
                                }
@@ -509,13 +531,14 @@
                      "usLegend":  "Q",
                      "chars":  {
                                    "Normal":  {
-                                                  "text":  "ឆ",
+                                                  "text":  "ជ",
                                                   "codepoints":  [
-                                                                     "U+1786"
+                                                                     "U+1787"
                                                                  ],
                                                   "names":  [
-                                                                "KHMER LETTER CHA"
-                                                            ]
+                                                                "KHMER LETTER CO"
+                                                            ],
+                                                  "note":  "Rule 4: reclaimed unshifted key"
                                               },
                                    "Shift":  {
                                                  "text":  "ឈ",
@@ -527,7 +550,16 @@
                                                            ]
                                              },
                                    "Control":  null,
-                                   "AltGr":  null,
+                                   "AltGr":  {
+                                                 "text":  "ឆ",
+                                                 "codepoints":  [
+                                                                    "U+1786"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER LETTER CHA"
+                                                           ],
+                                                 "note":  "Midpoint AltGr relocation"
+                                             },
                                    "ShiftAltGr":  {
                                                       "text":  "ឈ",
                                                       "codepoints":  [
@@ -566,7 +598,16 @@
                                                            ]
                                              },
                                    "Control":  null,
-                                   "AltGr":  null,
+                                   "AltGr":  {
+                                                 "text":  "×",
+                                                 "codepoints":  [
+                                                                    "U+00D7"
+                                                                ],
+                                                 "names":  [
+                                                               "MULTIPLICATION SIGN"
+                                                           ],
+                                                 "note":  "Midpoint AltGr relocation"
+                                             },
                                    "ShiftAltGr":  null
                                }
                  },
@@ -711,7 +752,16 @@
                                                            ]
                                              },
                                    "Control":  null,
-                                   "AltGr":  null,
+                                   "AltGr":  {
+                                                 "text":  "ឰ",
+                                                 "codepoints":  [
+                                                                    "U+17B0"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER INDEPENDENT VOWEL QAI"
+                                                           ],
+                                                 "note":  "Midpoint AltGr relocation"
+                                             },
                                    "ShiftAltGr":  null
                                }
                  },
@@ -838,13 +888,14 @@
                      "usLegend":  "P",
                      "chars":  {
                                    "Normal":  {
-                                                  "text":  "ផ",
+                                                  "text":  "ព",
                                                   "codepoints":  [
-                                                                     "U+1795"
+                                                                     "U+1796"
                                                                  ],
                                                   "names":  [
-                                                                "KHMER LETTER PHA"
-                                                            ]
+                                                                "KHMER LETTER PO"
+                                                            ],
+                                                  "note":  "Rule 4: reclaimed unshifted key"
                                               },
                                    "Shift":  {
                                                  "text":  "ភ",
@@ -857,13 +908,14 @@
                                              },
                                    "Control":  null,
                                    "AltGr":  {
-                                                 "text":  "ឰ",
+                                                 "text":  "ផ",
                                                  "codepoints":  [
-                                                                    "U+17B0"
+                                                                    "U+1795"
                                                                 ],
                                                  "names":  [
-                                                               "KHMER INDEPENDENT VOWEL QAI"
-                                                           ]
+                                                               "KHMER LETTER PHA"
+                                                           ],
+                                                 "note":  "Midpoint AltGr relocation"
                                              },
                                    "ShiftAltGr":  {
                                                       "text":  "ភ",
@@ -1066,13 +1118,14 @@
                      "usLegend":  "F",
                      "chars":  {
                                    "Normal":  {
-                                                  "text":  "ថ",
+                                                  "text":  "ទ",
                                                   "codepoints":  [
-                                                                     "U+1790"
+                                                                     "U+1791"
                                                                  ],
                                                   "names":  [
-                                                                "KHMER LETTER THA"
-                                                            ]
+                                                                "KHMER LETTER TO"
+                                                            ],
+                                                  "note":  "Rule 4: reclaimed unshifted key"
                                               },
                                    "Shift":  {
                                                  "text":  "ធ",
@@ -1084,7 +1137,16 @@
                                                            ]
                                              },
                                    "Control":  null,
-                                   "AltGr":  null,
+                                   "AltGr":  {
+                                                 "text":  "ថ",
+                                                 "codepoints":  [
+                                                                    "U+1790"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER LETTER THA"
+                                                           ],
+                                                 "note":  "Midpoint AltGr relocation"
+                                             },
                                    "ShiftAltGr":  {
                                                       "text":  "ធ",
                                                       "codepoints":  [
@@ -1232,7 +1294,16 @@
                                                            ]
                                              },
                                    "Control":  null,
-                                   "AltGr":  null,
+                                   "AltGr":  {
+                                                 "text":  "៎",
+                                                 "codepoints":  [
+                                                                    "U+17CE"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER SIGN KAKABAT"
+                                                           ],
+                                                 "note":  "Midpoint AltGr relocation"
+                                             },
                                    "ShiftAltGr":  {
                                                       "text":  "គ",
                                                       "codepoints":  [
@@ -1412,13 +1483,14 @@
                      "usLegend":  "Z",
                      "chars":  {
                                    "Normal":  {
-                                                  "text":  "ឋ",
+                                                  "text":  "ញ",
                                                   "codepoints":  [
-                                                                     "U+178B"
+                                                                     "U+1789"
                                                                  ],
                                                   "names":  [
-                                                                "KHMER LETTER TTHA"
-                                                            ]
+                                                                "KHMER LETTER NYO"
+                                                            ],
+                                                  "note":  "Rule 4: reclaimed unshifted key"
                                               },
                                    "Shift":  {
                                                  "text":  "ឍ",
@@ -1430,7 +1502,16 @@
                                                            ]
                                              },
                                    "Control":  null,
-                                   "AltGr":  null,
+                                   "AltGr":  {
+                                                 "text":  "ឋ",
+                                                 "codepoints":  [
+                                                                    "U+178B"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER LETTER TTHA"
+                                                           ],
+                                                 "note":  "Midpoint AltGr relocation"
+                                             },
                                    "ShiftAltGr":  {
                                                       "text":  "ឍ",
                                                       "codepoints":  [
@@ -1451,13 +1532,14 @@
                      "usLegend":  "X",
                      "chars":  {
                                    "Normal":  {
-                                                  "text":  "ខ",
+                                                  "text":  "គ",
                                                   "codepoints":  [
-                                                                     "U+1781"
+                                                                     "U+1782"
                                                                  ],
                                                   "names":  [
-                                                                "KHMER LETTER KHA"
-                                                            ]
+                                                                "KHMER LETTER KO"
+                                                            ],
+                                                  "note":  "Rule 4: reclaimed unshifted key"
                                               },
                                    "Shift":  {
                                                  "text":  "ឃ",
@@ -1469,7 +1551,16 @@
                                                            ]
                                              },
                                    "Control":  null,
-                                   "AltGr":  null,
+                                   "AltGr":  {
+                                                 "text":  "ខ",
+                                                 "codepoints":  [
+                                                                    "U+1781"
+                                                                ],
+                                                 "names":  [
+                                                               "KHMER LETTER KHA"
+                                                           ],
+                                                 "note":  "Midpoint AltGr relocation"
+                                             },
                                    "ShiftAltGr":  {
                                                       "text":  "ឃ",
                                                       "codepoints":  [
@@ -1551,7 +1642,16 @@
                                                  "isLigature":  true
                                              },
                                    "Control":  null,
-                                   "AltGr":  null,
+                                   "AltGr":  {
+                                                 "text":  "\\",
+                                                 "codepoints":  [
+                                                                    "U+005C"
+                                                                ],
+                                                 "names":  [
+                                                               "REVERSE SOLIDUS"
+                                                           ],
+                                                 "note":  "Midpoint AltGr relocation"
+                                             },
                                    "ShiftAltGr":  null
                                }
                  },
@@ -1896,7 +1996,7 @@
                       {
                           "sequence":  "k/",
                           "rule":  "Rule 1",
-                          "note":  "plosive 1st -\u003e 2nd series",
+                          "note":  "consonant series/aspirated flip",
                           "text":  "គ",
                           "codepoints":  [
                                              "U+1782"
@@ -1908,7 +2008,19 @@
                       {
                           "sequence":  "x/",
                           "rule":  "Rule 1",
-                          "note":  "plosive 1st -\u003e 2nd series",
+                          "note":  "consonant series/aspirated flip",
+                          "text":  "ខ",
+                          "codepoints":  [
+                                             "U+1781"
+                                         ],
+                          "names":  [
+                                        "KHMER LETTER KHA"
+                                    ]
+                      },
+                      {
+                          "sequence":  "x//",
+                          "rule":  "Rule 1",
+                          "note":  "consonant series/aspirated flip",
                           "text":  "ឃ",
                           "codepoints":  [
                                              "U+1783"
@@ -1920,7 +2032,7 @@
                       {
                           "sequence":  "c/",
                           "rule":  "Rule 1",
-                          "note":  "plosive 1st -\u003e 2nd series",
+                          "note":  "consonant series/aspirated flip",
                           "text":  "ជ",
                           "codepoints":  [
                                              "U+1787"
@@ -1932,7 +2044,19 @@
                       {
                           "sequence":  "q/",
                           "rule":  "Rule 1",
-                          "note":  "plosive 1st -\u003e 2nd series",
+                          "note":  "consonant series/aspirated flip",
+                          "text":  "ឆ",
+                          "codepoints":  [
+                                             "U+1786"
+                                         ],
+                          "names":  [
+                                        "KHMER LETTER CHA"
+                                    ]
+                      },
+                      {
+                          "sequence":  "q//",
+                          "rule":  "Rule 1",
+                          "note":  "consonant series/aspirated flip",
                           "text":  "ឈ",
                           "codepoints":  [
                                              "U+1788"
@@ -1944,7 +2068,7 @@
                       {
                           "sequence":  "d/",
                           "rule":  "Rule 1",
-                          "note":  "plosive 1st -\u003e 2nd series",
+                          "note":  "consonant series/aspirated flip",
                           "text":  "ឌ",
                           "codepoints":  [
                                              "U+178C"
@@ -1956,7 +2080,33 @@
                       {
                           "sequence":  "z/",
                           "rule":  "Rule 1",
-                          "note":  "plosive 1st -\u003e 2nd series",
+                          "note":  "consonant series/aspirated flip",
+                          "text":  "ញ៉",
+                          "codepoints":  [
+                                             "U+1789",
+                                             "U+17C9"
+                                         ],
+                          "names":  [
+                                        "KHMER LETTER NYO",
+                                        "KHMER SIGN MUUSIKATOAN"
+                                    ]
+                      },
+                      {
+                          "sequence":  "zz",
+                          "rule":  "Rule 1",
+                          "note":  "consonant series/aspirated flip",
+                          "text":  "ឋ",
+                          "codepoints":  [
+                                             "U+178B"
+                                         ],
+                          "names":  [
+                                        "KHMER LETTER TTHA"
+                                    ]
+                      },
+                      {
+                          "sequence":  "zz/",
+                          "rule":  "Rule 1",
+                          "note":  "consonant series/aspirated flip",
                           "text":  "ឍ",
                           "codepoints":  [
                                              "U+178D"
@@ -1968,7 +2118,7 @@
                       {
                           "sequence":  "t/",
                           "rule":  "Rule 1",
-                          "note":  "plosive 1st -\u003e 2nd series",
+                          "note":  "consonant series/aspirated flip",
                           "text":  "ទ",
                           "codepoints":  [
                                              "U+1791"
@@ -1980,7 +2130,19 @@
                       {
                           "sequence":  "f/",
                           "rule":  "Rule 1",
-                          "note":  "plosive 1st -\u003e 2nd series",
+                          "note":  "consonant series/aspirated flip",
+                          "text":  "ថ",
+                          "codepoints":  [
+                                             "U+1790"
+                                         ],
+                          "names":  [
+                                        "KHMER LETTER THA"
+                                    ]
+                      },
+                      {
+                          "sequence":  "f//",
+                          "rule":  "Rule 1",
+                          "note":  "consonant series/aspirated flip",
                           "text":  "ធ",
                           "codepoints":  [
                                              "U+1792"
@@ -1992,7 +2154,7 @@
                       {
                           "sequence":  "b/",
                           "rule":  "Rule 1",
-                          "note":  "plosive 1st -\u003e 2nd series",
+                          "note":  "consonant series/aspirated flip",
                           "text":  "ព",
                           "codepoints":  [
                                              "U+1796"
@@ -2004,7 +2166,19 @@
                       {
                           "sequence":  "p/",
                           "rule":  "Rule 1",
-                          "note":  "plosive 1st -\u003e 2nd series",
+                          "note":  "consonant series/aspirated flip",
+                          "text":  "ផ",
+                          "codepoints":  [
+                                             "U+1795"
+                                         ],
+                          "names":  [
+                                        "KHMER LETTER PHA"
+                                    ]
+                      },
+                      {
+                          "sequence":  "p//",
+                          "rule":  "Rule 1",
+                          "note":  "consonant series/aspirated flip",
                           "text":  "ភ",
                           "codepoints":  [
                                              "U+1797"
@@ -2016,7 +2190,7 @@
                       {
                           "sequence":  "n/",
                           "rule":  "Rule 1",
-                          "note":  "nasal/lateral/velar flip",
+                          "note":  "consonant series/aspirated flip",
                           "text":  "ណ",
                           "codepoints":  [
                                              "U+178E"
@@ -2028,7 +2202,7 @@
                       {
                           "sequence":  "l/",
                           "rule":  "Rule 1",
-                          "note":  "nasal/lateral/velar flip",
+                          "note":  "consonant series/aspirated flip",
                           "text":  "ឡ",
                           "codepoints":  [
                                              "U+17A1"
@@ -2040,7 +2214,7 @@
                       {
                           "sequence":  "g/",
                           "rule":  "Rule 1",
-                          "note":  "nasal/lateral/velar flip",
+                          "note":  "consonant series/aspirated flip",
                           "text":  "អ",
                           "codepoints":  [
                                              "U+17A2"
@@ -2143,20 +2317,6 @@
                                          ],
                           "names":  [
                                         "KHMER LETTER NYO"
-                                    ]
-                      },
-                      {
-                          "sequence":  "jj/",
-                          "rule":  "Rule 2",
-                          "note":  "nyo + muusikatoan",
-                          "text":  "ញ៉",
-                          "codepoints":  [
-                                             "U+1789",
-                                             "U+17C9"
-                                         ],
-                          "names":  [
-                                        "KHMER LETTER NYO",
-                                        "KHMER SIGN MUUSIKATOAN"
                                     ]
                       },
                       {
@@ -2336,6 +2496,92 @@
                                     ]
                       },
                       {
+                          "sequence":  "yy",
+                          "rule":  "Rule 3",
+                          "note":  "double-tap upgrade",
+                          "text":  "ួ",
+                          "codepoints":  [
+                                             "U+17BD"
+                                         ],
+                          "names":  [
+                                        "KHMER VOWEL SIGN UA"
+                                    ]
+                      },
+                      {
+                          "sequence":  "vv",
+                          "rule":  "Rule 3",
+                          "note":  "double-tap upgrade",
+                          "text":  "េះ",
+                          "codepoints":  [
+                                             "U+17C1",
+                                             "U+17C7"
+                                         ],
+                          "names":  [
+                                        "KHMER VOWEL SIGN E",
+                                        "KHMER SIGN REAHMUK"
+                                    ]
+                      },
+                      {
+                          "sequence":  "rr",
+                          "rule":  "Rule 3",
+                          "note":  "double-tap upgrade",
+                          "text":  "ឬ",
+                          "codepoints":  [
+                                             "U+17AC"
+                                         ],
+                          "names":  [
+                                        "KHMER INDEPENDENT VOWEL RYY"
+                                    ]
+                      },
+                      {
+                          "sequence":  "``",
+                          "rule":  "Rule 3",
+                          "note":  "double-tap upgrade",
+                          "text":  "»",
+                          "codepoints":  [
+                                             "U+00BB"
+                                         ],
+                          "names":  [
+                                        "RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK"
+                                    ]
+                      },
+                      {
+                          "sequence":  "--",
+                          "rule":  "Rule 3",
+                          "note":  "double-tap upgrade",
+                          "text":  "៌",
+                          "codepoints":  [
+                                             "U+17CC"
+                                         ],
+                          "names":  [
+                                        "KHMER SIGN ROBAT"
+                                    ]
+                      },
+                      {
+                          "sequence":  "==",
+                          "rule":  "Rule 3",
+                          "note":  "double-tap upgrade",
+                          "text":  "=",
+                          "codepoints":  [
+                                             "U+003D"
+                                         ],
+                          "names":  [
+                                        "EQUALS SIGN"
+                                    ]
+                      },
+                      {
+                          "sequence":  "//",
+                          "rule":  "Rule 3",
+                          "note":  "double-tap upgrade",
+                          "text":  "?",
+                          "codepoints":  [
+                                             "U+003F"
+                                         ],
+                          "names":  [
+                                        "QUESTION MARK"
+                                    ]
+                      },
+                      {
                           "sequence":  "  ",
                           "rule":  "Rule 3",
                           "note":  "double-tap upgrade",
@@ -2345,6 +2591,480 @@
                                          ],
                           "names":  [
                                         "SPACE"
+                                    ]
+                      },
+                      {
+                          "sequence":  "i/",
+                          "rule":  "Rule 3",
+                          "note":  "universal slash upgrade",
+                          "text":  "ី",
+                          "codepoints":  [
+                                             "U+17B8"
+                                         ],
+                          "names":  [
+                                        "KHMER VOWEL SIGN II"
+                                    ]
+                      },
+                      {
+                          "sequence":  "u/",
+                          "rule":  "Rule 3",
+                          "note":  "universal slash upgrade",
+                          "text":  "ូ",
+                          "codepoints":  [
+                                             "U+17BC"
+                                         ],
+                          "names":  [
+                                        "KHMER VOWEL SIGN UU"
+                                    ]
+                      },
+                      {
+                          "sequence":  "e/",
+                          "rule":  "Rule 3",
+                          "note":  "universal slash upgrade",
+                          "text":  "ែ",
+                          "codepoints":  [
+                                             "U+17C2"
+                                         ],
+                          "names":  [
+                                        "KHMER VOWEL SIGN AE"
+                                    ]
+                      },
+                      {
+                          "sequence":  "w/",
+                          "rule":  "Rule 3",
+                          "note":  "universal slash upgrade",
+                          "text":  "ឺ",
+                          "codepoints":  [
+                                             "U+17BA"
+                                         ],
+                          "names":  [
+                                        "KHMER VOWEL SIGN YY"
+                                    ]
+                      },
+                      {
+                          "sequence":  "o/",
+                          "rule":  "Rule 3",
+                          "note":  "universal slash upgrade",
+                          "text":  "ៅ",
+                          "codepoints":  [
+                                             "U+17C5"
+                                         ],
+                          "names":  [
+                                        "KHMER VOWEL SIGN AU"
+                                    ]
+                      },
+                      {
+                          "sequence":  "[/",
+                          "rule":  "Rule 3",
+                          "note":  "universal slash upgrade",
+                          "text":  "ឿ",
+                          "codepoints":  [
+                                             "U+17BF"
+                                         ],
+                          "names":  [
+                                        "KHMER VOWEL SIGN YA"
+                                    ]
+                      },
+                      {
+                          "sequence":  "a/",
+                          "rule":  "Rule 3",
+                          "note":  "universal slash upgrade",
+                          "text":  "ាំ",
+                          "codepoints":  [
+                                             "U+17B6",
+                                             "U+17C6"
+                                         ],
+                          "names":  [
+                                        "KHMER VOWEL SIGN AA",
+                                        "KHMER SIGN NIKAHIT"
+                                    ]
+                      },
+                      {
+                          "sequence":  ";/",
+                          "rule":  "Rule 3",
+                          "note":  "universal slash upgrade",
+                          "text":  "ោះ",
+                          "codepoints":  [
+                                             "U+17C4",
+                                             "U+17C7"
+                                         ],
+                          "names":  [
+                                        "KHMER VOWEL SIGN OO",
+                                        "KHMER SIGN REAHMUK"
+                                    ]
+                      },
+                      {
+                          "sequence":  ";//",
+                          "rule":  "Rule 3",
+                          "note":  "universal slash upgrade",
+                          "text":  "៖",
+                          "codepoints":  [
+                                             "U+17D6"
+                                         ],
+                          "names":  [
+                                        "KHMER SIGN CAMNUC PII KUUH"
+                                    ]
+                      },
+                      {
+                          "sequence":  "\u0027/",
+                          "rule":  "Rule 3",
+                          "note":  "universal slash upgrade",
+                          "text":  "៉",
+                          "codepoints":  [
+                                             "U+17C9"
+                                         ],
+                          "names":  [
+                                        "KHMER SIGN MUUSIKATOAN"
+                                    ]
+                      },
+                      {
+                          "sequence":  "\u0027//",
+                          "rule":  "Rule 3",
+                          "note":  "universal slash upgrade",
+                          "text":  "ៈ",
+                          "codepoints":  [
+                                             "U+17C8"
+                                         ],
+                          "names":  [
+                                        "KHMER SIGN YUUKALEAPINTU"
+                                    ]
+                      },
+                      {
+                          "sequence":  ",/",
+                          "rule":  "Rule 3",
+                          "note":  "universal slash upgrade",
+                          "text":  "ុះ",
+                          "codepoints":  [
+                                             "U+17BB",
+                                             "U+17C7"
+                                         ],
+                          "names":  [
+                                        "KHMER VOWEL SIGN U",
+                                        "KHMER SIGN REAHMUK"
+                                    ]
+                      },
+                      {
+                          "sequence":  ",//",
+                          "rule":  "Rule 3",
+                          "note":  "universal slash upgrade",
+                          "text":  ",",
+                          "codepoints":  [
+                                             "U+002C"
+                                         ],
+                          "names":  [
+                                        "COMMA"
+                                    ]
+                      },
+                      {
+                          "sequence":  "./",
+                          "rule":  "Rule 3",
+                          "note":  "universal slash upgrade",
+                          "text":  "៕",
+                          "codepoints":  [
+                                             "U+17D5"
+                                         ],
+                          "names":  [
+                                        "KHMER SIGN BARIYOOSAN"
+                                    ]
+                      },
+                      {
+                          "sequence":  ".//",
+                          "rule":  "Rule 3",
+                          "note":  "universal slash upgrade",
+                          "text":  ".",
+                          "codepoints":  [
+                                             "U+002E"
+                                         ],
+                          "names":  [
+                                        "FULL STOP"
+                                    ]
+                      },
+                      {
+                          "sequence":  "]/",
+                          "rule":  "Rule 3",
+                          "note":  "universal slash upgrade",
+                          "text":  "ឧ",
+                          "codepoints":  [
+                                             "U+17A7"
+                                         ],
+                          "names":  [
+                                        "KHMER INDEPENDENT VOWEL QU"
+                                    ]
+                      },
+                      {
+                          "sequence":  "]//",
+                          "rule":  "Rule 3",
+                          "note":  "universal slash upgrade",
+                          "text":  "ឪ",
+                          "codepoints":  [
+                                             "U+17AA"
+                                         ],
+                          "names":  [
+                                        "KHMER INDEPENDENT VOWEL QUUV"
+                                    ]
+                      },
+                      {
+                          "sequence":  "\\/",
+                          "rule":  "Rule 3",
+                          "note":  "universal slash upgrade",
+                          "text":  "ៈ",
+                          "codepoints":  [
+                                             "U+17C8"
+                                         ],
+                          "names":  [
+                                        "KHMER SIGN YUUKALEAPINTU"
+                                    ]
+                      },
+                      {
+                          "sequence":  "\\//",
+                          "rule":  "Rule 3",
+                          "note":  "universal slash upgrade",
+                          "text":  "ឭ",
+                          "codepoints":  [
+                                             "U+17AD"
+                                         ],
+                          "names":  [
+                                        "KHMER INDEPENDENT VOWEL LY"
+                                    ]
+                      },
+                      {
+                          "sequence":  "`/",
+                          "rule":  "Rule 3",
+                          "note":  "universal slash upgrade",
+                          "text":  "»",
+                          "codepoints":  [
+                                             "U+00BB"
+                                         ],
+                          "names":  [
+                                        "RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK"
+                                    ]
+                      },
+                      {
+                          "sequence":  " /",
+                          "rule":  "Rule 3",
+                          "note":  "universal slash upgrade",
+                          "text":  " ",
+                          "codepoints":  [
+                                             "U+0020"
+                                         ],
+                          "names":  [
+                                        "SPACE"
+                                    ]
+                      },
+                      {
+                          "sequence":  "///",
+                          "rule":  "Rule 3",
+                          "note":  "universal slash upgrade",
+                          "text":  "/",
+                          "codepoints":  [
+                                             "U+002F"
+                                         ],
+                          "names":  [
+                                        "SOLIDUS"
+                                    ]
+                      },
+                      {
+                          "sequence":  "rr/",
+                          "rule":  "Rule 3",
+                          "note":  "universal slash upgrade",
+                          "text":  "ឫ",
+                          "codepoints":  [
+                                             "U+17AB"
+                                         ],
+                          "names":  [
+                                        "KHMER INDEPENDENT VOWEL RY"
+                                    ]
+                      },
+                      {
+                          "sequence":  "--/",
+                          "rule":  "Rule 3",
+                          "note":  "universal slash upgrade",
+                          "text":  "ឥ",
+                          "codepoints":  [
+                                             "U+17A5"
+                                         ],
+                          "names":  [
+                                        "KHMER INDEPENDENT VOWEL QI"
+                                    ]
+                      },
+                      {
+                          "sequence":  "=/",
+                          "rule":  "Rule 3",
+                          "note":  "universal slash upgrade",
+                          "text":  "ឲ",
+                          "codepoints":  [
+                                             "U+17B2"
+                                         ],
+                          "names":  [
+                                        "KHMER INDEPENDENT VOWEL QOO TYPE TWO"
+                                    ]
+                      },
+                      {
+                          "sequence":  "=//",
+                          "rule":  "Rule 3",
+                          "note":  "universal slash upgrade",
+                          "text":  "៎",
+                          "codepoints":  [
+                                             "U+17CE"
+                                         ],
+                          "names":  [
+                                        "KHMER SIGN KAKABAT"
+                                    ]
+                      },
+                      {
+                          "sequence":  "1/",
+                          "rule":  "Rule 3",
+                          "note":  "universal slash upgrade",
+                          "text":  "!",
+                          "codepoints":  [
+                                             "U+0021"
+                                         ],
+                          "names":  [
+                                        "EXCLAMATION MARK"
+                                    ]
+                      },
+                      {
+                          "sequence":  "2/",
+                          "rule":  "Rule 3",
+                          "note":  "universal slash upgrade",
+                          "text":  "ៗ",
+                          "codepoints":  [
+                                             "U+17D7"
+                                         ],
+                          "names":  [
+                                        "KHMER SIGN LEK TOO"
+                                    ]
+                      },
+                      {
+                          "sequence":  "3/",
+                          "rule":  "Rule 3",
+                          "note":  "universal slash upgrade",
+                          "text":  "\"",
+                          "codepoints":  [
+                                             "U+0022"
+                                         ],
+                          "names":  [
+                                        "QUOTATION MARK"
+                                    ]
+                      },
+                      {
+                          "sequence":  "3//",
+                          "rule":  "Rule 3",
+                          "note":  "universal slash upgrade",
+                          "text":  "៑",
+                          "codepoints":  [
+                                             "U+17D1"
+                                         ],
+                          "names":  [
+                                        "KHMER SIGN VIRIAM"
+                                    ]
+                      },
+                      {
+                          "sequence":  "4/",
+                          "rule":  "Rule 3",
+                          "note":  "universal slash upgrade",
+                          "text":  "៛",
+                          "codepoints":  [
+                                             "U+17DB"
+                                         ],
+                          "names":  [
+                                        "KHMER CURRENCY SYMBOL RIEL"
+                                    ]
+                      },
+                      {
+                          "sequence":  "5/",
+                          "rule":  "Rule 3",
+                          "note":  "universal slash upgrade",
+                          "text":  "%",
+                          "codepoints":  [
+                                             "U+0025"
+                                         ],
+                          "names":  [
+                                        "PERCENT SIGN"
+                                    ]
+                      },
+                      {
+                          "sequence":  "6/",
+                          "rule":  "Rule 3",
+                          "note":  "universal slash upgrade",
+                          "text":  "៍",
+                          "codepoints":  [
+                                             "U+17CD"
+                                         ],
+                          "names":  [
+                                        "KHMER SIGN TOANDAKHIAT"
+                                    ]
+                      },
+                      {
+                          "sequence":  "6//",
+                          "rule":  "Rule 3",
+                          "note":  "universal slash upgrade",
+                          "text":  "៙",
+                          "codepoints":  [
+                                             "U+17D9"
+                                         ],
+                          "names":  [
+                                        "KHMER SIGN PHNAEK MUAN"
+                                    ]
+                      },
+                      {
+                          "sequence":  "7/",
+                          "rule":  "Rule 3",
+                          "note":  "universal slash upgrade",
+                          "text":  "័",
+                          "codepoints":  [
+                                             "U+17D0"
+                                         ],
+                          "names":  [
+                                        "KHMER SIGN SAMYOK SANNYA"
+                                    ]
+                      },
+                      {
+                          "sequence":  "7//",
+                          "rule":  "Rule 3",
+                          "note":  "universal slash upgrade",
+                          "text":  "៚",
+                          "codepoints":  [
+                                             "U+17DA"
+                                         ],
+                          "names":  [
+                                        "KHMER SIGN KOOMUUT"
+                                    ]
+                      },
+                      {
+                          "sequence":  "8/",
+                          "rule":  "Rule 3",
+                          "note":  "universal slash upgrade",
+                          "text":  "៏",
+                          "codepoints":  [
+                                             "U+17CF"
+                                         ],
+                          "names":  [
+                                        "KHMER SIGN AHSDA"
+                                    ]
+                      },
+                      {
+                          "sequence":  "9/",
+                          "rule":  "Rule 3",
+                          "note":  "universal slash upgrade",
+                          "text":  "(",
+                          "codepoints":  [
+                                             "U+0028"
+                                         ],
+                          "names":  [
+                                        "LEFT PARENTHESIS"
+                                    ]
+                      },
+                      {
+                          "sequence":  "0/",
+                          "rule":  "Rule 3",
+                          "note":  "universal slash upgrade",
+                          "text":  ")",
+                          "codepoints":  [
+                                             "U+0029"
+                                         ],
+                          "names":  [
+                                        "RIGHT PARENTHESIS"
                                     ]
                       },
                       {
@@ -2384,18 +3104,6 @@
                                     ]
                       },
                       {
-                          "sequence":  "u/",
-                          "rule":  "Rule 3",
-                          "note":  "u slash -\u003e ua",
-                          "text":  "ួ",
-                          "codepoints":  [
-                                             "U+17BD"
-                                         ],
-                          "names":  [
-                                        "KHMER VOWEL SIGN UA"
-                                    ]
-                      },
-                      {
                           "sequence":  "ai",
                           "rule":  "Rule 3",
                           "note":  "a then i -\u003e ai",
@@ -2405,126 +3113,6 @@
                                          ],
                           "names":  [
                                         "KHMER VOWEL SIGN AI"
-                                    ]
-                      },
-                      {
-                          "sequence":  "i/",
-                          "rule":  "Rule 3",
-                          "note":  "i slash -\u003e ai",
-                          "text":  "ៃ",
-                          "codepoints":  [
-                                             "U+17C3"
-                                         ],
-                          "names":  [
-                                        "KHMER VOWEL SIGN AI"
-                                    ]
-                      },
-                      {
-                          "sequence":  " /",
-                          "rule":  "Rule 3",
-                          "note":  "space slash -\u003e ASCII space",
-                          "text":  " ",
-                          "codepoints":  [
-                                             "U+0020"
-                                         ],
-                          "names":  [
-                                        "SPACE"
-                                    ]
-                      },
-                      {
-                          "sequence":  "2/",
-                          "rule":  "Rule 3",
-                          "note":  "2 slash -\u003e lek too",
-                          "text":  "ៗ",
-                          "codepoints":  [
-                                             "U+17D7"
-                                         ],
-                          "names":  [
-                                        "KHMER SIGN LEK TOO"
-                                    ]
-                      },
-                      {
-                          "sequence":  "6/",
-                          "rule":  "Rule 3",
-                          "note":  "6 slash -\u003e toandakhiat",
-                          "text":  "៍",
-                          "codepoints":  [
-                                             "U+17CD"
-                                         ],
-                          "names":  [
-                                        "KHMER SIGN TOANDAKHIAT"
-                                    ]
-                      },
-                      {
-                          "sequence":  "7/",
-                          "rule":  "Rule 3",
-                          "note":  "7 slash -\u003e samyok sannya",
-                          "text":  "័",
-                          "codepoints":  [
-                                             "U+17D0"
-                                         ],
-                          "names":  [
-                                        "KHMER SIGN SAMYOK SANNYA"
-                                    ]
-                      },
-                      {
-                          "sequence":  "8/",
-                          "rule":  "Rule 3",
-                          "note":  "8 slash -\u003e ahsda",
-                          "text":  "៏",
-                          "codepoints":  [
-                                             "U+17CF"
-                                         ],
-                          "names":  [
-                                        "KHMER SIGN AHSDA"
-                                    ]
-                      },
-                      {
-                          "sequence":  "-/",
-                          "rule":  "Rule 3",
-                          "note":  "minus slash -\u003e robat",
-                          "text":  "៌",
-                          "codepoints":  [
-                                             "U+17CC"
-                                         ],
-                          "names":  [
-                                        "KHMER SIGN ROBAT"
-                                    ]
-                      },
-                      {
-                          "sequence":  ";/",
-                          "rule":  "Rule 3",
-                          "note":  "semicolon slash -\u003e camnuc pii kuuh",
-                          "text":  "៖",
-                          "codepoints":  [
-                                             "U+17D6"
-                                         ],
-                          "names":  [
-                                        "KHMER SIGN CAMNUC PII KUUH"
-                                    ]
-                      },
-                      {
-                          "sequence":  "./",
-                          "rule":  "Rule 3",
-                          "note":  "dot slash -\u003e ASCII period",
-                          "text":  ".",
-                          "codepoints":  [
-                                             "U+002E"
-                                         ],
-                          "names":  [
-                                        "FULL STOP"
-                                    ]
-                      },
-                      {
-                          "sequence":  ",/",
-                          "rule":  "Rule 3",
-                          "note":  "comma slash -\u003e ASCII comma",
-                          "text":  ",",
-                          "codepoints":  [
-                                             "U+002C"
-                                         ],
-                          "names":  [
-                                        "COMMA"
                                     ]
                       }
                   ],
